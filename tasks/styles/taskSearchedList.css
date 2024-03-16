@@ -1,0 +1,55 @@
+.taskListItems {
+  list-style: none;
+  width: auto;
+  display: flex;
+  /* flex: 1 0 0; */
+}
+
+.taskList {
+  --padding-x: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-auto-rows: 1fr;
+  padding: 1rem 0;
+  gap: 1.5rem;
+  justify-content: space-between;
+}
+
+/* .notaskItem {
+  --max-width: 100%;
+  max-width: var(--max-width) !important;
+  width: var(--max-width) !important;
+}
+
+@media screen and (max-width:768px) {
+
+
+  .taskListItems {
+    --max-width: 100%;
+    max-width: var(--max-width) !important;
+    width: var(--max-width) !important;/
+  }
+
+
+}
+
+@media screen and (min-width:1024px) {
+
+  .taskListItems {
+    --max-width: 50%;
+    max-width: var(--max-width) !important;
+    width: var(--max-width) !important;
+  }
+
+}
+
+@media screen and (min-width:1200px) {
+
+  .taskListItems {
+    --max-width: 50%;
+    max-width: var(--max-width) !important;
+    width: var(--max-width) !important;
+  }
+
+
+} */
