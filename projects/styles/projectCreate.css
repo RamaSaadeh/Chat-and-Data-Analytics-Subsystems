@@ -1,0 +1,69 @@
+.projectCreateBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  text-align: center;
+  padding: 1rem 17.5%;
+}
+
+.projectCreateBody p {
+  margin: 0;
+}
+
+.projectCreateBodyAll {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 0;
+  gap: 0.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.projectCreateBodyTitle {
+  color: var(--clr-grey600);
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 135.5%;
+  /* 2.0325rem */
+  letter-spacing: 0.3rem;
+}
+
+.projectCreateBodyInput {
+  border: 0;
+  display: inline-flex;
+  padding: 0.625rem;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 0.3125rem;
+  border-bottom: 1px solid var(--clr-placeholder);
+
+  text-align: center;
+  background: transparent;
+}
+
+.projectCreateBodyInput::placeholder {
+  font-weight: 300;
+  line-height: 135.5%;
+  /* 1.01625rem */
+  letter-spacing: 0.15rem;
+}
+
+.projectCreateBodyInput-Desc {
+  height: 12ch;
+  resize: none;
+}
+
+.projectCreateBodyInput-Date {
+  background-color: transparent;
+}
+
+.btn-projectCreateConfirm {
+  background-color: var(--clr-placeholder) !important;
+  color: var(--clr-white);
+}
+
+.btn-projectCreateConfirm:hover,
+.btn-projectCreateConfirm:focus {
+  color: var(--clr-grey600);
+}

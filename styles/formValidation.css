@@ -1,0 +1,11 @@
+input:focus:invalid {
+  border-color: red;
+}
+
+input:focus:valid {
+  border-color: green;
+}
+
+.differentPassword {
+  border-color: red;
+}

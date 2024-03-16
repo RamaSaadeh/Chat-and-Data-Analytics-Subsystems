@@ -1,0 +1,94 @@
+:root {
+  --clr-green: #7ac142;
+  --clr-red: #e97777;
+  --clr-grey: #aaa;
+  --clr-blue: #0d6efd;
+}
+
+.published__details {
+  color: var(--clr-grey);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 125%; /* 17.5px */
+  letter-spacing: 2.5px;
+}
+
+.btn {
+  border: none !important;
+}
+
+.forum__content:hover {
+  opacity: 0.75;
+  transition: 0.5s;
+}
+
+.forum__container:hover {
+  cursor: pointer;
+  border-color: var(--clr-grey600) !important;
+  box-shadow: 0 0 0 0.25rem rgba(150, 166, 248, 0.25) !important;
+  transition: box-shadow 0.5s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+
+.favourite__btn:hover {
+  border-color: var(--clr-grey600) !important;
+  box-shadow: 0 0 0 0.25rem rgba(150, 166, 248, 0.25) !important;
+  background-color: rgba(150, 166, 248, 0.25);
+}
+
+.comments__btn:hover {
+  border-color: var(--clr-grey600) !important;
+  box-shadow: 0 0 0 0.25rem rgba(150, 166, 248, 0.25) !important;
+  background-color: rgba(150, 166, 248, 0.25);
+}
+
+.forum__like__btn:hover {
+  border-radius: 0.375rem;
+  border-color: var(--clr-grey600) !important;
+  box-shadow: 0 0 0 0.25rem rgba(150, 166, 248, 0.25) !important;
+  background-color: rgba(150, 166, 248, 0.25);
+}
+
+.forum__dislike__btn:hover {
+  border-radius: 0.375rem;
+  border-color: var(--clr-grey600) !important;
+  box-shadow: 0 0 0 0.25rem rgba(150, 166, 248, 0.25) !important;
+  background-color: rgba(150, 166, 248, 0.25);
+}
+
+.forum__exit__btn:hover {
+  color: var(--clr-red);
+  border-radius: 0.375rem;
+  border-color: var(--clr-grey600) !important;
+  box-shadow: 0 0 0 0.25rem rgba(150, 166, 248, 0.25) !important;
+  background-color: rgba(150, 166, 248, 0.25);
+}
+
+#forum__search__input {
+  font-size: 0.85rem;
+}
+
+#forum__search__input:focus {
+  border-color: transparent !important;
+  box-shadow: 0 0 0 0.25rem rgba(150, 166, 248, 0.25) !important;
+  transition: box-shadow 0.5s cubic-bezier(0.445, 0.05, 0.55, 0.95), border-color 0.5s;
+}
+
+.moreBtn:hover {
+  border-radius: 0.375rem;
+  border-color: var(--clr-grey600) !important;
+  box-shadow: 0 0 0 0.25rem rgba(150, 166, 248, 0.25) !important;
+  background-color: rgba(150, 166, 248, 0.25);
+}
+
+.forumTag {
+  color: var(--clr-blue);
+}
+
+.forumTag:hover {
+  text-decoration: underline;
+}
+
+.forumTagFocus {
+  color: var(--clr-blue);
+}

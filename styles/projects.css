@@ -1,0 +1,116 @@
+@import url("../content/calendar-date.svg");
+
+.btn-edit {
+  border: 2px solid var(--clr-urgent);
+  opacity: 80%;
+}
+
+.btn-edit:hover,
+.btn-edit:focus {
+  border: 2px solid transparent;
+  background-color: var(--clr-urgent) !important;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  opacity: 100%;
+}
+
+.btn-view {
+  border: 2px solid var(--clr-pending);
+  opacity: 80%;
+}
+
+.btn-view:hover,
+.btn-view:focus {
+  border: 2px solid transparent;
+  background-color: var(--clr-pending) !important;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  opacity: 100%;
+}
+
+.btn-exit {
+  border: 2px solid var(--clr-error);
+  opacity: 80%;
+}
+
+.btn-exit:hover,
+.btn-exit:focus {
+  border: 2px solid transparent;
+  background-color: var(--clr-error) !important;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  opacity: 100%;
+}
+
+.btn-confirm {
+  border: 2px solid var(--clr-sucess);
+  opacity: 80%;
+}
+
+.btn-confirm:hover,
+.btn-confirm:focus {
+  border: 2px solid transparent;
+  background-color: var(--clr-sucess) !important;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  opacity: 100%;
+}
+
+.btn-new {
+  border: 2px solid var(--clr-sucess);
+  opacity: 80%;
+  padding: 0.5rem 2rem;
+}
+
+.btn-new:hover,
+.btn-new:focus {
+  border: 2px solid transparent;
+  background-color: var(--clr-sucess) !important;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  opacity: 100%;
+}
+
+.bi {
+  display: flex;
+  font-size: 1.25rem;
+}
+
+#newProjectDate,
+#editProjectDate {
+  pointer-events: none;
+}
+
+#newProjectDate::-webkit-calendar-picker-indicator,
+#editProjectDate::-webkit-calendar-picker-indicator {
+  display: flex;
+  background-image: url("../content/calendar-date.svg");
+  opacity: 0.5;
+  pointer-events: all;
+}
+
+#newProjectDate::-webkit-calendar-picker-indicator:hover,
+#editProjectDate::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+::-webkit-datetime-edit {
+  padding: 0.3em 0;
+}
+
+/* Background of date */
+/* ::-webkit-datetime-edit-fields-wrapper {
+  background: silver;
+} */
+
+/* Slash sign */
+::-webkit-datetime-edit-text {
+  padding: 0 0.3em;
+}
+
+::-webkit-datetime-edit-day-field:focus,
+::-webkit-datetime-edit-month-field:focus,
+::-webkit-datetime-edit-year-field:focus {
+  background-color: transparent;
+  color: #000;
+}

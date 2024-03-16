@@ -1,0 +1,36 @@
+footer {
+  z-index: 11;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: white;
+  letter-spacing: 1.1px;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.pipeline:not(:last-child)::before {
+  content: " |";
+}
+
+.social-links i {
+  margin: calc(0.8rem + 0.1vw);
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 495px) {
+  .footer-links a {
+    display: grid;
+  }
+
+  .footer-links a:after {
+    content: "";
+  }
+
+  .pipeline:not(:last-child)::before {
+    content: "";
+  }
+}

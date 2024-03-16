@@ -1,0 +1,15 @@
+.nav-filter-link {
+    color: var(--clr-placeholder) !important;
+}
+
+.nav-filter-link.active {
+    color: var(--clr-grey600) !important;
+}
+
+.tab-pane:focus-within,
+.tab-pane:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25) !important;
+    border-radius: 1rem;
+    transition: 0.5s;
+}

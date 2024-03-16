@@ -1,0 +1,92 @@
+.tab-content {
+    padding: 2rem 1rem;
+}
+
+.users-tab-content,
+.tasks-tab-content,
+.projects-tab-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-auto-rows: 1fr;
+    padding: 1rem;
+    gap: 2rem;
+    justify-content: space-between;
+}
+
+.users-tab-content-item,
+.tasks-tab-content-item,
+.projects-tab-content-item {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid var(--clr-placeholder);
+    border-radius: 0.625rem;
+}
+
+
+.users-tab-chart,
+.tasks-tab-chart,
+.projects-tab-chart {
+    --num-size: (3rem + 2vw);
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(150px + 5vw);
+
+    aspect-ratio: 1 / 1;
+}
+
+.users-tab-chart-content,
+.tasks-tab-chart-content,
+.projects-tab-chart-content {
+    z-index: 3 !important;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+}
+
+.users-tab-chart-content hr,
+.tasks-tab-chart-content hr,
+.projects-tab-chart-content hr {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    transform: translateY(-0.25rem);
+    color: var(--clr-placeholder);
+}
+
+.users-tab-chart-primary-num,
+.tasks-tab-chart-primary-num,
+.projects-tab-chart-primary-num {
+    font-size: calc(var(--num-size));
+    color: var(--clr-sucess);
+    text-align: center;
+    font-weight: 600;
+    line-height: 100%;
+    /* 5.42rem */
+    letter-spacing: -0.14rem;
+}
+
+.users-tab-chart-secondary-num,
+.tasks-tab-chart-secondary-num,
+.projects-tab-chart-secondary-num {
+    color: var(--clr-placeholder);
+    font-size: calc(var(--num-size) / 4);
+    display: flex;
+}
+
+.users-tab-chart-caption,
+.tasks-tab-chart-caption,
+.projects-tab-chart-caption {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 1rem;
+}

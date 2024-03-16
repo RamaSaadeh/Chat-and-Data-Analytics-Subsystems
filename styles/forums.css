@@ -1,0 +1,100 @@
+.filters{
+  text-align: center;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.filters button {
+  white-space: nowrap;
+  text-align: center;
+  border-radius: 30px;
+}
+
+
+.post{
+  padding: 1.3125rem 0.75rem 3.40406rem 0.75rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  flex-direction: column;
+  text-align: center;
+  flex-shrink: 0;
+  background: white;
+  /*border-radius: 1.25rem;
+  
+  box-shadow: 0px 4px 4px 4px rgba(0, 0, 0, 0.25);
+  */
+}
+
+.post:hover{
+  animation: pulse;
+  animation-duration: 2s;
+}
+
+.post p{
+  color: black;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.post h2{
+  color: black;
+}
+
+
+/* demo-post */
+
+.Question{
+  display: flex;
+  margin:  1rem 0rem 1rem 0rem;
+  padding: 0.6875rem 30.375rem 0rem 30.375rem;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+
+  border-radius: 1.25rem;
+  background: #e9ecef6e;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.add-comment{
+  margin-bottom: 1rem;
+}
+
+.comments{
+  margin-left: 10px;
+}
+
+.response{
+  width: 60.8125rem;
+  height: 8.25rem;
+
+  padding: 1rem 0.25rem 1rem 0rem;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+
+  border-radius: 1.25rem;
+  background:  #ffffff;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.pfp{
+  text-align: right;
+  align-items: right;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.response-left{
+  padding-left: 1rem;
+  padding-right: 0rem;
+  text-align: right;
+  align-items: right;
+}
+
+
+
+
+
+

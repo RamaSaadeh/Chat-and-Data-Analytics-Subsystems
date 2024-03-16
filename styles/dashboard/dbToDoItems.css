@@ -1,0 +1,139 @@
+#dashboard {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: space-between;
+}
+
+.nav-filter {
+    padding-left: calc(var(--bs-gutter-x) * .5) !important;
+}
+
+
+.todoHeader {
+    margin: 0;
+    color: var(--clr-placeholder);
+    text-align: start;
+    font-size: 4rem;
+    font-weight: 600;
+    line-height: 100%;
+    letter-spacing: 1rem;
+}
+
+.todoContent {
+
+    --grid-size: 350px;
+    list-style: none;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--grid-size), 1fr));
+    padding: 1rem 0;
+    gap: 1.5rem;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(var(--grid-size), 1fr);
+    overflow-x: auto;
+    grid-auto-rows: 1fr;
+    margin-left: 0.25rem;
+    scroll-snap-type: x mandatory;
+}
+
+
+.todoItems {
+    display: grid;
+    scroll-snap-align: none center;
+}
+
+.todo-card {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 0.5rem;
+}
+
+.todo-card-header {
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.todo-card-header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.todo-card-header-icon {
+    font-size: 2rem;
+    opacity: 0.3;
+}
+
+.todo-card-header-deadline {
+    color: var(--clr-grey400);
+    text-align: center;
+    font-size: calc(1rem + 0.25vw);
+    font-weight: 600;
+    letter-spacing: 0.3rem;
+    text-decoration: none;
+    pointer-events: none;
+}
+
+.todo-card-header-btn {
+    display: flex;
+    padding: 0.625rem;
+    justify-content: flex-end;
+    align-items: center;
+    border-radius: 0.625rem;
+    background: rgba(255, 255, 255, 0.25) !important;
+
+    color: var(--clr-grey400) !important;
+    font-size: 1rem;
+    letter-spacing: -0.03rem;
+}
+
+.todo-card-header-btn:focus-within,
+.todo-card-header-btn:hover,
+.todo-card-header-btn:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.25) !important;
+    transition: 0.5s;
+}
+
+.todo-card-body {
+    /* position: relative; */
+    display: flex;
+    padding: 2rem 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    align-self: stretch;
+}
+
+.todo-card-body-title {
+    color: var(--clr-grey600);
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 125%;
+    letter-spacing: 0.15rem;
+}
+
+.todo-card-body-desc {
+    color: var(--clr-placeholder);
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 135.5%;
+}
+
+.todo-card-body-id {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 0.5rem;
+    pointer-events: none;
+
+    color: var(--clr-placeholder);
+}

@@ -1,0 +1,16 @@
+.projectListItems {
+  list-style: none;
+  width: auto;
+  display: flex;
+  /* flex: 1 0 0; */
+}
+
+.projectList {
+  --padding-x: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-auto-rows: 1fr;
+  padding: 1rem 0;
+  gap: 1.5rem;
+  justify-content: space-between;
+}
