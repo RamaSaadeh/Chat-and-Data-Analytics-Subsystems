@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        #chat-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        #header {
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+            background-color: #fff;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 2;
+        }
+        #search-select-container {
+            display: inline-block;
+            text-align: left;
+        }
+        #search-input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            font-size: 16px;
+            outline: none;
+            margin-right: 10px;
+        }
+        #contact-select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            font-size: 16px;
+            outline: none;
+            min-width: 150px;
+        }
+        #messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            padding-top: 90px; /* Adjusted to account for the contact bar */
+            position: relative;
+            width: 100%; /* Full width */
+            box-sizing: border-box; /* Ensure padding is included in the width */
+        }
+        #messages {
+            display: flex;
+            flex-direction: column;
+        }
+        .message {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            max-width: 80%;
+            align-self: flex-start;
+            word-wrap: break-word;
+        }
+        .message.sent {
+            align-self: flex-end;
+            background-color: #d8c9e6; /* Slightly darker purple */
+        }
+        #message-input-container {
+            padding: 20px;
+            padding-right: 50px;
+            background-color: #f5f5f5;
+            border-top: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            position: fixed;
+            bottom: 0;
+            width: calc(100% - 35px);
+            z-index: 1;
+        }
+        #message-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            font-size: 16px;
+            outline: none;
+            margin-right: 10px;
+        }
+        #send-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #send-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <div id="search-select-container">
+            <input type="text" id="search-input" placeholder="Search Contact...">
+            <select id="contact-select">
+                <option value="">Select Contact</option>
+            </select>
+        </div>
+    </div>
+    <div id="chat-container">
+        <div id="messages-container">
+            <div id="messages">
+                <div class="message">Hello! How are you today?</div>
+                <div class="message sent">Hi there! I'm doing well, thanks for asking.</div>
+                <div class="message">That's great to hear!</div>
+                <div class="message sent">Yes, it is! How about you?</div>
+                <div class="message">I'm good too, thanks for asking!</div>
+                <div class="message sent">Awesome!</div>
+                <!-- Add more messages here -->
+            </div>
+        </div>
+        <div id="message-input-container">
+            <input type="text" id="message-input" placeholder="Type your message...">
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+    <script>
+        // Sample array of contacts
+        const contacts = [
+            { name: 'John Doe', id: 'john-doe' },
+            { name: 'Jane Smith', id: 'jane-smith' },
+            { name: 'Alice Johnson', id: 'alice-johnson' },
+            { name: 'Bob Brown', id: 'bob-brown' },
+            // Add more contacts as needed
+        ];
+    
+        // Populate the dropdown with contacts
+        const contactSelect = document.getElementById('contact-select');
+        contacts.forEach(contact => {
+            const option = document.createElement('option');
+            option.value = contact.id;
+            option.textContent = contact.name;
+            contactSelect.appendChild(option);
+        });
+    
+        // Function to filter contacts based on search input
+        function filterContacts() {
+            const searchInput = document.getElementById('search-input').value.toLowerCase();
+            const filteredContacts = contacts.filter(contact => contact.name.toLowerCase().includes(searchInput));
+            const contactSelect = document.getElementById('contact-select');
+            contactSelect.innerHTML = ''; // Clear existing options
+    
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.textContent = 'Select Contact';
+            contactSelect.appendChild(defaultOption);
+    
+            filteredContacts.forEach(contact => {
+                const option = document.createElement('option');
+                option.value = contact.id;
+                option.textContent = contact.name;
+                contactSelect.appendChild(option);
+            });
+        }
+    
+        // Event listener for search input
+        document.getElementById('search-input').addEventListener('input', filterContacts);
+    
+        // Function to send a message
+        function sendMessage() {
+            var messageInput = document.getElementById('message-input');
+            var messageText = messageInput.value.trim();
+            if (messageText !== '') {
+                var messageContainer = document.getElementById('messages-container');
+                var messageDiv = document.createElement('div');
+                messageDiv.className = 'message sent';
+                messageDiv.textContent = messageText;
+                messageContainer.querySelector('#messages').appendChild(messageDiv); // Append new message at the end
+                messageInput.value = '';
+                window.scrollTo(0, document.body.scrollHeight); // Scroll to bottom of the page
+            }
+        }
+    
+        // Event listener for send button
+        document.getElementById('send-button').addEventListener('click', function() {
+            sendMessage();
+        });
+    
+        // Event listener for Enter key in message input
+        document.getElementById('message-input').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault(); // Prevent newline
+                sendMessage();
+            }
+        });
+    </script>    
+</body>
+</html>
