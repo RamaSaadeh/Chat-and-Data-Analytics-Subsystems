@@ -142,8 +142,18 @@
         <div id="messages">
             <div th:each="message : ${messages}"
                  th:classappend="${#strings.toString(message.senderId) == session.userId} ? 'sender' : 'receiver'"
-                 class="message" th:text="${message.content}" ><label for="actions">^</label><select id = "actions" ><option>Edit</option><option>delete</option></select>
+                 class="message">
+                <span th:text="${message.content}"></span>
+
+                <label th:if="${#strings.toString(message.senderId) == session.userId}">
+                    <select th:id="'actions-' + ${message.id}" th:onclick="'dropdownListener(\'' + ${message.id} + '\')'">
+                        <option> ^</option>
+                        <option value = "edit">Edit</option>
+                        <option value = "delete">Delete</option>
+                    </select>
+                </label>
             </div>
+
         </div>
     </div>
 </div>
@@ -160,6 +170,8 @@
 
 
 <script>
+
+
     function sendMessage(event) {
         event.preventDefault();
 
@@ -192,6 +204,25 @@
         }).catch(error => {
             console.error("Error:", error);
         });
+    }
+
+    function actionHandler(messageId){
+        const selectTagId = "actions-"+messageId;
+        const optionSelected = document.getElementById(selectTagId).value;
+        if(optionSelected === 'delete'){
+            fetch("/messages/delete/"+messageId , {
+                method: "DELETE"
+            })
+        }
+
+        if(optionSelected === 'edit'){
+
+        }
+    }
+
+    function dropdownListener(messageId) {
+        console.log(messageId)
+        document.getElementById("actions-"+messageId).addEventListener('change',() => actionHandler(messageId));
     }
 
 
