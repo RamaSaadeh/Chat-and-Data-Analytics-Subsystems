@@ -143,7 +143,7 @@
             <div th:each="message : ${messages}"
                  th:classappend="${#strings.toString(message.senderId) == session.userId} ? 'sender' : 'receiver'"
                  class="message">
-                <span th:text="${message.content}"></span>
+                <span th:id="'message-' + ${message.id}" th:text="${message.content}"></span>
 
                 <label th:if="${#strings.toString(message.senderId) == session.userId}">
                     <select th:id="'actions-' + ${message.id}" th:onclick="'dropdownListener(\'' + ${message.id} + '\')'">
@@ -216,7 +216,24 @@
         }
 
         if(optionSelected === 'edit'){
+            var element =  document.getElementById("message-"+messageId)
+            var inputElement = document.createElement("input");
+            inputElement.value = element.textContent
+            element.innerHTML = "";
+            element.appendChild(inputElement);
 
+            inputElement.addEventListener("keypress", function (event){
+                if(event.key === "Enter"){
+                    element.textContent = inputElement.value;
+
+                    fetch("/messages/editMessage/"+messageId+"?content="+element.textContent, {
+                        method: "PUT"
+                    })
+                }
+            })
+
+
+            // element.innerHTML = "New Content here"
         }
     }
 
@@ -224,6 +241,8 @@
         console.log(messageId)
         document.getElementById("actions-"+messageId).addEventListener('change',() => actionHandler(messageId));
     }
+
+
 
 
 
