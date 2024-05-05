@@ -146,20 +146,21 @@
 <div id="chat-container">
     <div id="messages-container">
         <div id="messages">
+
+
             <div th:each="message : ${messages}"
                  th:classappend="${#strings.toString(message.senderId) == session.userId} ? 'sender' : 'receiver'"
-                 class="message">
-                <span th:id="'message-' + ${message.id}" th:text="${message.content}"></span>
+                 class="message"  th:id="'message-' + ${message.id}">
+
+                <span  th:text="${message.content}"></span>
 
                 <label th:if="${#strings.toString(message.senderId) == session.userId}">
-                    <select th:id="'actions-' + ${message.id}" th:onclick="'dropdownListener(\'' + ${message.id} + '\')'">
+                    <select th:id="'actions-' + ${message.id}" >
                         <option> ^</option>
                         <option value = "edit">Edit</option>
                         <option value = "delete">Delete</option>
                     </select>
                 </label>
-
-
             </div>
 
         </div>
@@ -179,6 +180,19 @@
 <script>
     var stompClient = null;
 
+
+    window.onload = function() {
+        connectWebsocket();
+        document.getElementById("messages").addEventListener('change', function(event) {
+            if (event.target.tagName === 'SELECT' && event.target.id.startsWith('actions-')) {
+                const messageId = event.target.id.split('-')[1];
+                console.log(messageId)
+                actionHandler(messageId);
+            }
+        });
+    };
+
+
     function connectWebsocket() {
         var socket = new SockJS('/websocket');
         stompClient = Stomp.over(socket);
@@ -187,12 +201,17 @@
             stompClient.subscribe('/topic/messages', function(message) {
                 showMessage(JSON.parse(message.body));
             });
+
+            stompClient.subscribe('/topic/deletedMessages', function(message) {
+                const messageId = message.body;  // Since the ID is sent as a simple string
+                const messageElement = document.getElementById(`message-${messageId}`);
+                if (messageElement) {
+                    messageElement.parentNode.removeChild(messageElement);
+                }
+            });
         });
     }
 
-    window.onload = function() {
-        connectWebsocket();
-    };
 
     function sendMessage(event) {
         event.preventDefault();
@@ -222,10 +241,11 @@
             fetch("/messages/delete/" + messageId, {
                 method: "DELETE"
             });
+
         }
 
         if (optionSelected === 'edit') {
-            var element = document.getElementById("message-" + messageId);
+            var element = document.getElementById("message-" + messageId).querySelector('span');
             var inputElement = document.createElement("input");
             inputElement.value = element.textContent;
             element.innerHTML = "";
@@ -243,14 +263,15 @@
         }
     }
 
-    function dropdownListener(messageId) {
-        console.log(messageId);
-        document.getElementById("actions-" + messageId).addEventListener('change', () => actionHandler(messageId));
-    }
+    // function dropdownListener(messageId) {
+    //     console.log(messageId);
+    //     document.getElementById("actions-" + messageId).addEventListener('change', () => actionHandler(messageId));
+    // }
 
     function showMessage(message) {
         var messagesContainer = document.getElementById("messages");
         var messageElement = document.createElement("div");
+        messageElement.id = 'message-'+ message.id;
         messageElement.classList.add("message");
 
 
@@ -266,10 +287,11 @@
         // th:classappend="${#strings.toString(message.senderId) == session.userId} ? 'sender' : 'receiver'"
 
 
-        messageElement.innerHTML = `<span id='message-${message.id}' >${message.content}</span>
+        messageElement.innerHTML = `
+                                <span>${message.content}</span>
                                 <label>
-                                    <select id='actions-${message.id}' onchange='dropdownListener("${message.id}")'>
-                                        <option>Choose action</option>
+                                    <select id='actions-${message.id}'>
+                                        <option></option>
                                         <option value="edit">Edit</option>
                                         <option value="delete">Delete</option>
                                     </select>

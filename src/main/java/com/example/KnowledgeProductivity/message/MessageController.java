@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,9 @@ public class MessageController {
 
     private final MessageService messageService;
     private final HttpSession httpSession;
+
+    @Autowired
+    private SimpMessagingTemplate template;
 
     @Autowired
     public MessageController(MessageService messageService, HttpSession httpSession) {
@@ -103,5 +107,6 @@ public class MessageController {
     @DeleteMapping("/delete/{messageId}")
     public void deleteMessage(@PathVariable Long messageId) {
         messageService.deleteMessage(messageId);
+        template.convertAndSend("/topic/deletedMessages", messageId.toString());
     }
 }
