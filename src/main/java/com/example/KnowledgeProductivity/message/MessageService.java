@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+
+//This Service class acts as the backend operation required with any dealings relating to the database
+//for example checking if a message you want to edit exists?
+
 @Service
 public class MessageService {
 
@@ -21,7 +25,9 @@ public class MessageService {
         return messageRepository.findAllByReceiverId(recieverId);
     }
 
+
     public void sendMessage(Message message) {
+        //saves messages to the database
         messageRepository.save(message);
     }
 
@@ -30,10 +36,13 @@ public class MessageService {
 
        Optional<Message> messageToEdit = messageRepository.findById(messageId);
 
+        //checks if the message is within the database if so replace the content
         messageToEdit.ifPresent(message -> message.setContent(content));
     }
 
     public void deleteMessage(Long messageId) {
+
+        //deletes the message of that unique id
         messageRepository.deleteById(messageId);
     }
 }

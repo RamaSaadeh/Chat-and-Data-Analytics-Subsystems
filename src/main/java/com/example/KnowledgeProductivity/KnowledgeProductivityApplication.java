@@ -13,6 +13,7 @@ import java.util.List;
 @SpringBootApplication
 public class KnowledgeProductivityApplication {
 
+	//main class to start the application
 	public static void main(String[] args) {
 		SpringApplication.run(KnowledgeProductivityApplication.class, args);
 	}

@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -152,6 +158,8 @@
                         <option value = "delete">Delete</option>
                     </select>
                 </label>
+
+
             </div>
 
         </div>
@@ -159,22 +167,35 @@
 </div>
 
 
-    <form id="message-input-container"  onsubmit="sendMessage(event)">
-        <!-- Hidden field to store session ID -->
-        <input type="hidden" id="session-id" name="sessionId" th:value="${session.userId}" />
-        <input type="text" id="message-input" placeholder="Type your message..." required>
-        <button id="send-button"  type="submit" >Send</button>
-    </form>
+<form id="message-input-container" onsubmit="sendMessage(event)">
+    <input type="hidden" id="session-id" name="sessionId" th:value="${session.userId}" />
+    <input type="text" id="message-input" placeholder="Type your message..." required>
+    <button id="send-button" type="submit">Send</button>
+</form>
 </div>
 </body>
 
 
 <script>
+    var stompClient = null;
 
+    function connectWebsocket() {
+        var socket = new SockJS('/websocket');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function(frame) {
+            console.log('Connected: ' + frame);
+            stompClient.subscribe('/topic/messages', function(message) {
+                showMessage(JSON.parse(message.body));
+            });
+        });
+    }
+
+    window.onload = function() {
+        connectWebsocket();
+    };
 
     function sendMessage(event) {
         event.preventDefault();
-
         const messageInput = document.getElementById("message-input").value;
         const sessionId = document.getElementById("session-id").value;  // Retrieve the sender ID from the hidden input
 
@@ -186,66 +207,75 @@
             timeStamp: new Date().toISOString()
         };
 
-        fetch("/messages/sendMessage", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(messageData),
-        }).then(response => {
-            if (response.ok) {
-                console.log("Message sent successfully!");
-                console.log(sessionId + " sessions id");
-                // Handle success scenario
-            } else {
-                console.log("Failed to send the message.");
-                // Handle error scenario
-            }
-        }).catch(error => {
-            console.error("Error:", error);
-        });
+        if (stompClient) {
+            stompClient.send("/app/sendMessage", {}, JSON.stringify(messageData));
+            document.getElementById("message-input").value = ''; // Clear the input field after sending
+        } else {
+            console.error("Not connected to WebSocket.");
+        }
     }
 
-    function actionHandler(messageId){
-        const selectTagId = "actions-"+messageId;
+    function actionHandler(messageId) {
+        const selectTagId = "actions-" + messageId;
         const optionSelected = document.getElementById(selectTagId).value;
-        if(optionSelected === 'delete'){
-            fetch("/messages/delete/"+messageId , {
+        if (optionSelected === 'delete') {
+            fetch("/messages/delete/" + messageId, {
                 method: "DELETE"
-            })
+            });
         }
 
-        if(optionSelected === 'edit'){
-            var element =  document.getElementById("message-"+messageId)
+        if (optionSelected === 'edit') {
+            var element = document.getElementById("message-" + messageId);
             var inputElement = document.createElement("input");
-            inputElement.value = element.textContent
+            inputElement.value = element.textContent;
             element.innerHTML = "";
             element.appendChild(inputElement);
 
-            inputElement.addEventListener("keypress", function (event){
-                if(event.key === "Enter"){
+            inputElement.addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
                     element.textContent = inputElement.value;
 
-                    fetch("/messages/editMessage/"+messageId+"?content="+element.textContent, {
+                    fetch("/messages/editMessage/" + messageId + "?content=" + element.textContent, {
                         method: "PUT"
-                    })
+                    });
                 }
-            })
-
-
-            // element.innerHTML = "New Content here"
+            });
         }
     }
 
     function dropdownListener(messageId) {
-        console.log(messageId)
-        document.getElementById("actions-"+messageId).addEventListener('change',() => actionHandler(messageId));
+        console.log(messageId);
+        document.getElementById("actions-" + messageId).addEventListener('change', () => actionHandler(messageId));
     }
 
+    function showMessage(message) {
+        var messagesContainer = document.getElementById("messages");
+        var messageElement = document.createElement("div");
+        messageElement.classList.add("message");
 
 
 
+        if(message.senderId === [[${session.userId}]]){
+            messageElement.classList.add("sender");
+        }
 
+        else {
+            messageElement.classList.add("receiver");
+        }
+
+        // th:classappend="${#strings.toString(message.senderId) == session.userId} ? 'sender' : 'receiver'"
+
+
+        messageElement.innerHTML = `<span id='message-${message.id}' >${message.content}</span>
+                                <label>
+                                    <select id='actions-${message.id}' onchange='dropdownListener("${message.id}")'>
+                                        <option>Choose action</option>
+                                        <option value="edit">Edit</option>
+                                        <option value="delete">Delete</option>
+                                    </select>
+                                </label>`;
+        messagesContainer.appendChild(messageElement);
+    }
 
 </script>
 </html>

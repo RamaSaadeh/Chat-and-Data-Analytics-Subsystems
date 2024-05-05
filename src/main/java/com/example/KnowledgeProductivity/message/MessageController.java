@@ -3,11 +3,16 @@ package com.example.KnowledgeProductivity.message;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -50,12 +55,17 @@ public class MessageController {
 
 
     //serve the html page
+
     @GetMapping("/chat")
     public String chatPage(Model model, @RequestParam Long receiverId) {
         List<Message> receiverAndSenderMessages = new ArrayList<>(messageService.retrieveMessages(receiverId));
         receiverAndSenderMessages.addAll(messageService.retrieveMessages(Long.valueOf( getUserIdFromSession(httpSession))));
 
+        Collections.sort(receiverAndSenderMessages, Comparator.comparing(Message::getTimeStamp));
+
         model.addAttribute("messages", receiverAndSenderMessages);
+
+
 
         return "chat"; // Points to 'chat.html' Thymeleaf template
     }
@@ -71,11 +81,16 @@ public class MessageController {
 //        return messagesList;
 //    }
 
-    @ResponseBody
-    @PostMapping("/sendMessage")
-    public void sendMessages(@RequestBody Message message) {
+
+    @MessageMapping("/sendMessage")
+    @SendTo("/topic/messages")
+    public Message sendMessage(Message message) {
         messageService.sendMessage(message);
+
+
+        return message;  // Send the message to the subscribed users
     }
+
 
     @ResponseBody
     @PutMapping("/editMessage/{messageId}")
