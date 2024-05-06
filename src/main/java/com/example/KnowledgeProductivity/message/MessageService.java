@@ -1,5 +1,6 @@
 package com.example.KnowledgeProductivity.message;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +22,8 @@ public class MessageService {
         this.messageRepository = messageRepository;
     }
 
-    public List<Message> retrieveMessages(Long recieverId) {
-        return messageRepository.findAllByReceiverId(recieverId);
+    public List<Message> retrieveMessages(Long recieverId , Long userId) {
+        return messageRepository.findAllByReceiverIdAndSenderId(recieverId , userId);
     }
 
 

@@ -1,4 +1,4 @@
-package com.example.KnowledgeProductivity.student;
+package com.example.KnowledgeProductivity.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -7,32 +7,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/v1/student")
-public class StudentController
+public class UserController
 {
 
 
-    private final StudentService studentService;
+    private final UserService studentService;
 
     @Autowired
-    public StudentController(StudentService studentService) {
+    public UserController(UserService studentService) {
         this.studentService = studentService;
     }
 
-
     @GetMapping
-    public List<Student> getStudents() {
+    public List<User> getStudents() {
         return studentService.getStudents();
     }
 
     @PostMapping
-    public void registerNewStudent(@RequestBody Student student) {
+    public void registerNewStudent(@RequestBody User student) {
         studentService.addNewStudent(student);
     }
 
     @PutMapping("{studentId}")
     public void updateStudent(@PathVariable("studentId") Long studentId,
-                              @RequestParam(required = false) Student name,
+                              @RequestParam(required = false) User name,
                               @RequestParam(required = false) String email) {
         studentService.updateStudent(studentId, name, email);
     }

@@ -27,7 +27,7 @@
             overflow: hidden;
             position: relative;
         }
-        #header {
+        .header {
             padding: 20px;
             border-bottom: 1px solid #ddd;
             background-color: #fff;
@@ -134,11 +134,11 @@
 </head>
 
 <body>
-<div id="header">
+<div id="contacts" class="header">
     <div id="search-select-container">
         <input type="text" id="search-input" placeholder="Search Contact...">
-        <select id="contact-select" th:each="contact : ${contacts}" th:change="location.href='@{/chat(receiverId=${contact.id})}'">
-            <option th:value="${contact.id}" th:text="${contact.name}">Select Contact</option>
+        <select id="contact-select" th:onchange="'window.location.href=\'/messages/chat?receiverId=\'+this.value'">
+            <option th:each="contact : ${contacts}" th:value="${contact.getId()}" th:text="${contact.getFname()}">Select Contact</option>
         </select>
     </div>
 </div>

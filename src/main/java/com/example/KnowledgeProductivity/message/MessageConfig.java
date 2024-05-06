@@ -1,14 +1,10 @@
 package com.example.KnowledgeProductivity.message;
 
-import com.example.KnowledgeProductivity.student.Student;
-import com.example.KnowledgeProductivity.student.StudentRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 
 @Configuration
@@ -43,7 +39,23 @@ public class MessageConfig {
                     Instant.now()
             );
 
-            messageRepository.saveAll(List.of(mariam,alex,blue));
+            Message red = new Message(
+                    "WOOOOW",
+                    "Text",
+                    1L,
+                    3L,
+                    Instant.now()
+            );
+
+            Message green = new Message(
+                    "wel then",
+                    "Text",
+                    3L,
+                    1L,
+                    Instant.now()
+            );
+
+            messageRepository.saveAll(List.of(mariam,alex,blue,red,green));
         };
     }
 
