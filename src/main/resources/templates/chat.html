@@ -275,19 +275,6 @@
         messageElement.id = 'message-'+ message.id;
         messageElement.classList.add("message");
 
-
-
-        if(message.senderId === [[${session.userId}]]){
-            messageElement.classList.add("sender");
-        }
-
-        else {
-            messageElement.classList.add("receiver");
-        }
-
-        // th:classappend="${#strings.toString(message.senderId) == session.userId} ? 'sender' : 'receiver'"
-
-
         messageElement.innerHTML = `
                                 <span>${message.content}</span>
                                 <label>
@@ -297,7 +284,26 @@
                                         <option value="delete">Delete</option>
                                     </select>
                                 </label>`;
+
+        var labelTag = messageElement.querySelector('label');
+
+
+
+        if(message.senderId === [[${session.userId}]]){
+            messageElement.classList.add("sender");
+
+        }
+
+        else {
+            messageElement.classList.add("receiver");
+
+            labelTag.style.display = 'none';
+        }
+
+        // th:classappend="${#strings.toString(message.senderId) == session.userId} ? 'sender' : 'receiver'"
+
         messagesContainer.appendChild(messageElement);
+
     }
 
 </script>

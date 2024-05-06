@@ -41,7 +41,11 @@ public class SecurityConfig {
     @Bean
     public AuthenticationSuccessHandler successHandler() {
         return (request, response, authentication) -> {
-                response.sendRedirect("/messages/set?userId=1");
+            Object principal = authentication.getPrincipal();
+
+
+
+            response.sendRedirect("/messages/set?userId=1");
 
         };
     }
