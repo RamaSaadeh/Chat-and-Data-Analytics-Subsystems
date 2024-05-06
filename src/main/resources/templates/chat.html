@@ -138,6 +138,7 @@
     <div id="search-select-container">
         <input type="text" id="search-input" placeholder="Search Contact...">
         <select id="contact-select" th:onchange="'window.location.href=\'/messages/chat?receiverId=\'+this.value'">
+            <option>Select Contact</option>
             <option th:each="contact : ${contacts}" th:value="${contact.getId()}" th:text="${contact.getFname()}">Select Contact</option>
         </select>
     </div>
