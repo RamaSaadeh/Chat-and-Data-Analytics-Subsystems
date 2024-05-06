@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+	
+    <!-- Include FontAwesome CSS -->
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	
+	    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
+	
+	<!-- font for header -->
+	<link href="https://db.onlinewebfonts.com/c/77009ab521bc15b6e38fcc22dd5270f4?family=Churchward+Design+Bold" rel="stylesheet">
+	
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+	<!-- css file for styling -->
+	<link rel="stylesheet" href="all-posts.css">
+	
+	<title>Blog Page</title>
+	
+	
+</head>
+
+<body onload="checkLogin()">
+	<!-- navbar -->
+	<nav class="myNav">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="#">
+				<img src="logo.PNG" id="logo" />
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" id="dashboard" href="#">Dashboard</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Posts
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="create-post.html">Create Post</a>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="btnInviteUser" onclick="openForm()" href="#">Invite User</a>
+					</li>
+					<li class="nav-item dropdown" id="accountBox">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span id="profileIcon" class="material-symbols-outlined">
+							account_circle
+						</span>    Account</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="profile.html">My Profile</a>
+							<a class="dropdown-item logout" href="login.html">Logout</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</nav>
+
+	<!-- form for inviting user-->
+	<div class="popup-background" id="inviteuseropaquebg">
+		<form class="inviteuser-form" action="javascript:getData()" method="get">
+			<h1>Invite User</h1>
+
+			<label for="email"><b>Email</b></label>
+			<input type="text" placeholder="Enter Email" id="email" name="email">
+			<label id="emailError" style="color: red; display: none">Email address is not valid</label>
+
+			<button type="submit" class="btn" onclick="sendInvite()">Send Invite Link</button>
+			<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+		</form>
+	</div>
+	
+	<!-- main content-->
+	<div class="container-fluid">
+
+		
+		<div class="row">
+			<div class="col-lg-4 col-md-4 order-md-2 order-sm-1">
+				<div class="sidebar">
+				
+					<div class="section search">
+					  <h2 class="section-title">Search Title</h2>
+					  <input type="text" id="search-term" class="text-input" placeholder="Search...">
+					</div>
+				
+				
+								
+					<div class="section topics">
+					  <h2 class="section-title">Filter Topics</h2>
+					  <ul id="dynamic-topics">
+
+					  </ul>
+					</div>
+
+
+				</div>
+			</div>
+			<div class="col-lg-8 col-md-8 order-md-1 order-sm-2">
+				<div class ="all-content">
+			
+					<div class="posts-header">
+					  <h1>All Posts</h1>
+					  <button id="topPostsBtn" class="sort-button">Top Posts</button>
+					  <button id="newestPostsBtn" class="sort-button">Newest Posts</button>
+					</div>
+																																															
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+
+	
+	<!-- footer -->
+	
+	<div class = "footer">
+		<div class = "footer-content">
+			<div class = "footer-section about">
+			
+				<h1 class ="footer-title"> Make-It-All</h1>
+
+				<div class="contact-details">
+					<span><i class="fas fa-phone"></i> &nbsp; 01509 888999</span>
+					<span><i class="fas fa-envelope"></i> &nbsp; king@make‐it‐all.co.uk</span>
+			
+			
+				</div>
+			</div>
+
+		</div>
+	</div>
+		
+		
+	
+	<!-- footer end -->
+	
+	<!-- jquery -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	
+	<!-- Slick carousel -->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+	
+	<!-- javascript -->
+	<script src="all-posts.js"></script>
+	<script src="create-post.js"></script>
+	
+	
+	
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>
+	
+</body>
+
+</html>

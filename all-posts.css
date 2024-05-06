@@ -1,0 +1,701 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Quicksand', sans-serif;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	box-sizing: border-box;
+}
+body {
+	padding: 0px;
+	margin: 0px;
+	background: #f6f6f6;
+}
+
+.clearfix::after {
+	
+	content: '';
+	display: block;
+	clear: both;
+}
+
+
+.text-input {
+	padding: 0.2rem 1rem;
+	display: block;
+	width: 100%;
+	border-radius: 0px;
+	border: 1px solid #e0e0e0;
+	outline: none;
+	color: #444;
+	line-height: 1.5rem;
+	font-size: 1.1em;
+	
+}
+
+/*Beginning of css for navbar*/
+
+
+.myNav{
+  grid-area: myNav;
+  background-color: #faf9f9;
+  width: 100%;
+  background-color: #efbf1a;
+  overflow: visible
+  
+}
+
+/* The popup form - hidden by default */
+.popup-background {
+display: none; 
+position: fixed; 
+z-index: 1; 
+left: 0;
+top: 0;
+width: 100%; 
+height: 100%; 
+overflow: auto;
+background-color: rgba(0,0,0,0.4);
+}
+.inviteuser-form{
+width: 25%;
+padding: 10px;
+background-color: white;
+margin: auto;
+margin-top: 90px;
+}
+.inviteuser-form input[type=text], .form-container input[type=password] {
+width: 100%;
+padding: 15px;
+margin: 5px 0 22px 0;
+border: none;
+background: #f1f1f1;
+}
+.inviteuser-form input[type=text]:focus, .form-container input[type=password]:focus {
+background-color: #ddd;
+outline: none;
+}
+.inviteuser-form .btn {
+background-color: #efbf1a;
+color: white;
+padding: 16px 20px;
+border: none;
+cursor: pointer;
+width: 100%;
+margin-bottom:10px;
+opacity: 0.8;
+}
+.inviteuser-form .cancel {
+background-color: #bbb;
+transition: 0.4s;
+}
+.inviteuser-form .cancel:hover {
+background-color: red;
+opacity: 1;
+}
+
+.nav{
+  max-width: fit-content;
+  max-height: 90px;
+}
+
+.navbar{
+height: 90px;
+border: none;
+
+}
+
+.navbar-brand {
+  margin-left: 1px; /* or whatever size you want */
+  padding-top: 7px; /* this will push it down */
+  padding-bottom: 7px; /* this can give more space at the bottom */
+  
+}
+
+#logo {
+max-width: 1000px; /* Set a maximum width for the logo */
+height: auto; /* Maintain the aspect ratio */
+margin-right: -1000px; /* Add some margin to separate the logo from text */
+}
+
+.navbar-collapse {
+  position: relative;  /* Ensure it's positioned */
+  z-index: 1000;       /* Any high number to ensure it's on top of other page elements */
+}
+
+.navbar.navbar-expand-lg.navbar-dark.bg-dark {
+  background-color: #efbf1a !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: white;
+  font-size: 1.2em;
+  text-decoration: none;
+  padding: 23px 30px; /* Keep padding between elements on the nav bar horizontally and vertically*/
+  height: 90px;
+  padding-top: 30px;
+  background-color: #efbf1a;
+
+
+}
+
+
+
+
+.navbar-dark .navbar-nav .nav-link:hover {
+  background-color: #f6dc80; /* Background color on hover */
+  color: black; /* Text color on hover */
+}
+
+
+
+
+/* Style the dropdown menu */
+.navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+  position: absolute;
+  top: 90px;
+  width: 170px;
+  background: white;
+  box-shadow: none;
+  border: 0; /* Remove any border that might create a gap */
+  padding: 0; /* Remove any padding to ensure full highlighting */
+  margin: 0; /* Remove any margin that might create a gap */
+  
+}
+
+/* Style the dropdown menu links */
+.navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu .dropdown-item {
+  padding: 10px;
+  color: black;
+  font-size: 1.2em;
+  text-decoration: none;
+  border: 0; /* Remove any border on the dropdown items */
+  margin: 0; /* Remove any margin on the dropdown items */
+}
+
+
+
+/* Style the dropdown menu links on hover */
+.navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu .dropdown-item:hover {
+  background-color: #f6dc80;; /* Background color on hover */
+  color: black; /* Text color on hover */
+}
+
+/* Style the logo */
+.navbar .navbar-brand {
+  float: left;
+  height: inherit;
+  margin-left: 1em;
+  color: white;
+  display: flex;
+  
+  
+}
+
+.material-symbols-outlined {
+font-variation-settings:
+'FILL' 0,
+'wght' 400,
+'GRAD' 0,
+'opsz' 24;
+}
+
+#profileIcon {
+font-size: 38px;
+vertical-align: middle;
+}
+
+.logo{
+  /* want the image to stretch to larger than original size */
+  max-width: 100%; 
+  height: auto;
+  max-height: fit-content;
+  background-size: cover;
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*End of css for navbar*/
+
+.parent-container { 
+    display: flex;
+    flex-direction: column; 
+    height: 100%; 
+}
+
+.row {
+    flex-grow: 1;
+}
+
+
+
+.post-slider {
+    position: relative;
+
+    background: #f8f9fa; 
+	flex-grow: 1;
+}
+
+
+.slider-nav {
+    position: absolute; 
+    top: 50%; 
+    left: 0;
+    right: 0;
+    transform: translateY(-50%); 
+    display: flex;
+    justify-content: space-between; 
+    width: 100%; 
+}
+
+
+.post-slider .slider-title {
+    text-align: center;
+    margin: 0;
+	padding: 0;
+}
+
+.post-slider .post-wrapper {
+	width: 80%;
+    overflow: hidden;
+	margin: 0 auto; 
+ 
+    padding: 10px 0;
+	margin-bottom: 4px;
+}
+
+.post-wrapper {
+    position: relative;
+	height: 100%;
+	
+}
+
+
+.post-slider .post {
+    width: 100%; 
+    display: inline-block;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+    margin: 0 5px;
+    vertical-align: top;
+	height: 200px;
+}
+
+.post-slider .post-info {
+    padding: 15px;
+    text-align: center;
+}
+
+
+.prev, .next {
+    position: absolute; 
+    top: 50%; 
+    transform: translateY(-50%);
+    z-index: 10; 
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px; 
+}
+
+.prev, .next {
+    cursor: pointer;
+    font-size: 40px; 
+    margin: 30px auto;
+}
+
+.media-body {
+  word-wrap: break-word;
+  overflow-wrap: break-word; 
+}
+
+
+
+
+.post-info p {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; 
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0;
+
+}
+
+
+
+.post {
+  position: relative;
+  margin-bottom: 10px; 
+  box-sizing: border-box;
+  padding-bottom: 60px; 
+  
+}
+
+
+
+.posts-header {
+  margin-top: 30px;
+  display: flex; 
+  align-items: center; 
+  
+  flex-wrap: wrap; 
+}
+
+.posts-header h1 {
+  margin-right: 10px; 
+
+}
+
+.posts-header button {
+  margin-left: 10px; 
+  margin-bottom: 5px;
+}
+
+
+.post .post-topic {
+  color: #2980B9; 
+}
+
+
+#topPostsBtn, #newestPostsBtn {
+    padding: 8px 10px; 
+    cursor: pointer;
+    background-color: #787878; 
+    color: #ffffff; 
+    border: none; 
+    border-radius: 5px;
+    font-weight: 500; 
+    transition: background-color 0.3s, transform 0.3s; 
+}
+
+#topPostsBtn:hover, #newestPostsBtn:hover {
+    background-color: #404040;
+    transform: scale(1.05); 
+}
+
+#topPostsBtn {
+    margin-left: 10px; 
+}
+
+#newestPostsBtn {
+    margin-left: 10px;
+
+}
+
+
+
+
+.btn {
+  padding: 0;
+  margin: 0;
+}
+
+.all-content{
+	margin-left: 10px;
+}
+
+
+.all-content .post {
+  position: relative;
+  background: #ffffff; 
+  border-radius: 4px;
+  margin-bottom: 20px; 
+  padding: 20px; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  max-height: auto; 
+  overflow: hidden; 
+  
+}
+
+.all-content .post .media-body {
+  max-height: auto; 
+  overflow-y: auto; 
+}
+
+
+.all-content .post .comment-metadata {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.all-content .post .comment-metadata .comment-user-date {
+  display: flex;
+  align-items: center;
+}
+
+.all-content .post .comment-metadata .comment-actions {
+  display: flex;
+  align-items: center;
+}
+
+.all-content .post .comment-metadata .comment-actions i {
+  margin-right: 10px; 
+  cursor: pointer;
+}
+
+
+.like-comment.liked {
+  color: #2980B9; 
+}
+
+
+
+.sidebar {
+  width: 90%;
+  height: auto; 
+  float: left;
+
+}
+
+.sidebar .section {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.sidebar .section.search {
+  margin-top: 86px;
+  font-size: 1.2em;
+  padding: 10px;
+}
+
+.sidebar .section.topics {
+  font-size: 1.2em;
+}
+
+.sidebar .section.topics ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid #e0e0e0;
+  font-size: 1.1em;
+}
+
+.sidebar .section.topics ul li a {
+  display: block;
+  padding: 15px 0;
+  border-bottom: 1px solid #e0e0e0;
+  color: #2980B9
+}
+
+
+.sidebar .section.topics ul li a.active {
+  background-color: #f0f0f0; 
+  font-weight: bold;
+  color: #333; 
+  border-left: 4px solid #2980B9; 
+}
+
+.sidebar .section.topics ul li a {
+  cursor: pointer;
+}
+
+.sidebar .section.topics ul li a:hover {
+  background-color: #e9ecef; 
+  transition: background-color 0.3s ease;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.container-fluid {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+}
+
+.row {
+  flex: 0 1 auto; 
+  min-height: 0; 
+}
+
+.sidebar .section.search .text-input {
+  padding: 10px; 
+  font-size: 1em; 
+  line-height: 1.5; 
+  height: auto; 
+  margin-bottom: 5px; 
+  box-sizing: border-box; 
+  width: 100%;
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+}
+
+/*Footer Content*/
+.footer {
+  background: #303036;
+  color: #d3d3d3;
+  height: 140px;
+  position: relative;
+}
+.footer .footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  margin-left: 2vw;
+}
+.footer-title {
+  font-family: 'Churchward Design Bold'; 
+  font-size: 3vh;  
+  margin-bottom: 0.5vh; 
+}
+.footer .footer-content .footer-section {
+  flex: 1;
+  padding: 2px;
+}
+.footer .footer-content .about .contact-details span {
+  display: block;
+  font-size: 1.1em;
+}
+
+
+.preview-text {
+  white-space: pre-line; 
+}
+
+
+
+button.active {
+  background-color: #4CAF50; 
+  color: white;
+}
+
+.post-read-more .btn {
+  padding: 5px 15px;
+  background-color: #2980B9;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.85em;
+  border-radius: 3px;
+  transition: background-color 0.3s, transform 0.3s;
+  display: inline-block;
+  margin-top: 8px;
+  margin-bottom: 20px; 
+}
+
+.post-read-more .btn:hover,
+.post-read-more .btn:focus {
+  background-color: #2980B9;
+  transform: translateY(-1px);
+  cursor: pointer;
+  outline: none; 
+}
+
+.post-read-more .btn:focus {
+  outline: 0;
+}
+
+.post-read-more .btn:active {
+  transform: translateY(1px);
+  outline: 0; 
+}
+
+.post-read-more .btn:focus-visible {
+  box-shadow: 0 0 0 2px white;
+  outline-offset: 2px;
+}
+
+.sort-button {
+  background-color: #f8f9fa; 
+  color: #333;
+  border: 1px solid #ddd;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sort-button.active {
+  background-color: #2980B9 !important; 
+  color: white !important; 
+}
+
+.sort-button:hover {
+  background-color: #2980B9; 
+  color: white;
+}
+
+
+@media (max-width: 991px) {
+
+    .navbar-collapse {
+        background-color: #de6b25; 
+        padding: 10px; 
+    }
+	
+	.navbar-dark .navbar-nav .nav-link {
+		color: white;
+		font-size: 1.2em;
+		text-decoration: none;
+		padding: 25px 30px;
+		padding-top: 20px;
+
+	
+	}
+
+    .navbar-dark .navbar-nav .nav-item {
+        background-color: transparent; 
+        padding: 10px 0; 
+    }
+
+    .navbar-dark .navbar-nav .nav-item .nav-link {
+        color: white; 
+    }
+
+    .navbar-dark .navbar-nav .nav-item .nav-link:hover {
+        background-color: #ffa200; 
+        color: black; 
+    }
+	
+	.post-slider .post {
+        width: auto; 
+    }
+
+	.post-info p {
+		-webkit-line-clamp: 2; 
+	}
+
+
+	
+	.sidebar {
+	    flex: 0 0 0%; 
+		width: 100%;
+		
+		height: 0%;
+		padding: 0%;
+	}
+	
+
+
+	
+}
+
+@media (max-width: 767px) {
+	
+	.sidebar .section.search {
+	  margin-top: 36px;
+	  font-size: 1.2em;
+	  padding: 10px;
+	}
+}

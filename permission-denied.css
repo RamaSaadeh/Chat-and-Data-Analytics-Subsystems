@@ -1,0 +1,271 @@
+* {
+    font-family: 'Quicksand', sans-serif;
+}
+
+body {
+    background-color: #f6f6f6;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+#main {
+    background-color: white;
+    max-width: 90%;
+    margin: auto;
+    overflow: hidden;
+    border: 1px solid #777;
+    min-height: 100%;
+}
+
+#content {
+    flex-grow: 1;
+    width: 100%;
+}
+
+/*Beginning of css for navbar*/
+
+
+.myNav {
+    grid-area: myNav;
+    background-color: #faf9f9;
+    width: 100%;
+    background-color: #efbf1a;
+    overflow: visible
+}
+
+/* The popup form - hidden by default */
+.popup-background {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.inviteuser-form {
+    width: 25%;
+    padding: 10px;
+    background-color: white;
+    margin: auto;
+    margin-top: 90px;
+}
+
+    .inviteuser-form input[type=text], .form-container input[type=password] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        border: none;
+        background: #f1f1f1;
+    }
+
+        .inviteuser-form input[type=text]:focus, .form-container input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+    .inviteuser-form .btn {
+        background-color: #efbf1a;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom: 10px;
+        opacity: 0.8;
+    }
+
+    .inviteuser-form .cancel {
+        background-color: #bbb;
+        transition: 0.4s;
+    }
+
+        .inviteuser-form .cancel:hover {
+            background-color: red;
+            opacity: 1;
+        }
+
+.nav {
+    max-width: fit-content;
+    max-height: 90px;
+}
+
+.navbar {
+    height: 90px;
+    border: none;
+}
+
+.navbar-brand {
+    margin-left: 1px; /* or whatever size you want */
+    padding-top: 7px; /* this will push it down */
+    padding-bottom: 7px; /* this can give more space at the bottom */
+}
+
+#logo {
+    max-width: 1000px; /* Set a maximum width for the logo */
+    height: auto; /* Maintain the aspect ratio */
+    margin-right: -1000px; /* Add some margin to separate the logo from text */
+}
+
+.navbar-collapse {
+    position: relative; /* Ensure it's positioned */
+    z-index: 1000; /* Any high number to ensure it's on top of other page elements */
+}
+
+.navbar.navbar-expand-lg.navbar-dark.bg-dark {
+    background-color: #efbf1a !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: white;
+    font-size: 1.2em;
+    text-decoration: none;
+    padding: 23px 30px; /* Keep padding between elements on the nav bar horizontally and vertically*/
+    height: 90px;
+    padding-top: 30px;
+    background-color: #efbf1a;
+}
+
+
+
+
+    .navbar-dark .navbar-nav .nav-link:hover {
+        background-color: #f6dc80; /* Background color on hover */
+        color: black; /* Text color on hover */
+    }
+
+
+
+
+/* Style the dropdown menu */
+.navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+    position: absolute;
+    top: 90px;
+    width: 170px;
+    background: white;
+    box-shadow: none;
+    border: 0; /* Remove any border that might create a gap */
+    padding: 0; /* Remove any padding to ensure full highlighting */
+    margin: 0; /* Remove any margin that might create a gap */
+}
+
+    /* Style the dropdown menu links */
+    .navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu .dropdown-item {
+        padding: 10px;
+        color: black;
+        font-size: 1.2em;
+        text-decoration: none;
+        border: 0; /* Remove any border on the dropdown items */
+        margin: 0; /* Remove any margin on the dropdown items */
+    }
+
+
+
+        /* Style the dropdown menu links on hover */
+        .navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu .dropdown-item:hover {
+            background-color: #f6dc80;
+            ; /* Background color on hover */
+            color: black; /* Text color on hover */
+        }
+
+/* Style the logo */
+.navbar .navbar-brand {
+    float: left;
+    height: inherit;
+    margin-left: 1em;
+    color: white;
+    display: flex;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+#profileIcon {
+    font-size: 38px;
+    vertical-align: middle;
+}
+
+.logo {
+    /* want the image to stretch to larger than original size */
+    max-width: 100%;
+    height: auto;
+    max-height: fit-content;
+    background-size: cover;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*End of css for navbar*/
+
+/*Footer Content*/
+.myFooter {
+    grid-area: myFooter;
+    text-align: left;
+    height: 13.5vh;
+}
+
+.footer {
+    background: #303036;
+    color: #d3d3d3;
+    height: 140px;
+    position: relative;
+}
+
+    .footer .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        float: left;
+        height: 100%;
+        margin-left: 2vw;
+    }
+
+.footer-title {
+    font-family: 'Churchward Design Bold';
+    font-size: 3vh;
+    margin-bottom: 0.5vh;
+}
+
+.footer .footer-content .footer-section {
+    flex: 1;
+    padding: 2px;
+}
+
+.footer .footer-content .about .contact-details span {
+    display: block;
+    font-size: 1.1em;
+}
+
+
+.preview-text {
+    white-space: pre-line;
+}
+
+@media (max-width: 1300px) {
+    .inviteuser-form {
+        width: 40%
+    }
+}
+
+@media (max-width: 830px) {
+    .inviteuser-form {
+        width: 60%
+    }
+}
+
+@media (min-width: 768px) {
+    #content {
+        width: 50%;
+    }
+}

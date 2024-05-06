@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Permission Denied | Make-It-All</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://db.onlinewebfonts.com/c/77009ab521bc15b6e38fcc22dd5270f4?family=Churchward+Design+Bold" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="permission-denied.css">
+</head>
+<body onload="checkLogin()">
+
+    <nav class="myNav">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">
+                <img src="logo.PNG" id="logo" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" id="dashboard" href="#">Dashboard</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Posts
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="all-posts.html">All Posts</a>
+                            <a class="dropdown-item" href="create-post.html">Create Post</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="btnInviteUser" onclick="openForm()" href="#">Invite User</a>
+                    </li>
+                    <li class="nav-item dropdown" id="accountBox">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span id="profileIcon" class="material-symbols-outlined">
+                                account_circle
+                            </span>    Account
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="profile.html">My Profile</a>
+                            <a class="dropdown-item logout" href="login.html">Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </nav>
+
+    <div class="popup-background" id="inviteuseropaquebg">
+        <form class="inviteuser-form" action="javascript:getData()" method="get">
+            <h1>Invite User</h1>
+
+            <label for="email"><b>Email</b></label>
+            <input type="text" placeholder="Enter Email" id="email" name="email">
+            <label id="emailError" style="color: red; display: none">Email address is not valid</label>
+
+            <button type="submit" class="btn" onclick="sendInvite()">Send Invite Link</button>
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </form>
+    </div>
+    <div id="content" class="container-fluid">
+    <br>
+    You do not have permission to access this page!    
+    </div>
+    <footer class="myFooter">
+        <div class="footer">
+            <div class="footer-content">
+                <div class="footer-section about">
+
+                    <h1 class="footer-title"> Make-It-All</h1>
+
+                    <div class="contact-details">
+                        <span><i class="fas fa-phone"></i> &nbsp; 01509 888999</span>
+                        <span><i class="fas fa-envelope"></i> &nbsp; king@make-it-all.co.uk</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        var details = sessionStorage.getItem("user");
+        var role = JSON.parse(details).role;
+        var email = JSON.parse(details).email;
+        //Decides which Dash to link to
+        dashboard.addEventListener("click", function () {
+            var a = document.getElementById("dashboard");
+            switch (role) {
+                case "a":
+                    a.href = "AdminDashboard.html";
+                    break;
+                case "g":
+                    a.href = "userdash.html";
+                    break;
+                case "m":
+                    a.href = "accessproject.php";
+                    break;
+                case 'l':
+                    a.href = "accessproject.php";
+                    break;
+                default:
+                    a.href = "#";
+            }
+        });
+
+        var inviteForm = document.getElementById("inviteuseropaquebg");
+
+        function openForm() {
+            inviteForm.style.display = "block";
+        }
+
+        function closeForm() {
+            inviteForm.style.display = "none";
+            document.getElementById("email").value = "";
+            document.getElementById("emailError").style.display = "none";
+        }
+
+        function sendInvite() {
+            var email = document.getElementById("email").value;
+            var label = document.getElementById("emailError");
+            if (email.slice(email.length - 18).toLowerCase() != "@make-it-all.co.uk") {
+                label.innerHTML = "Email address is not valid";
+                label.style.color = "red";
+                label.style.display = "block";
+            }
+            else {
+                label.innerHTML = "Invite sent!";
+                label.style.color = "#2fe617";
+                label.style.display = "block";
+            }
+        }
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>
+</body>
+</html>

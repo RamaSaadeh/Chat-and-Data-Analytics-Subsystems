@@ -1,0 +1,2019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="" />
+
+  <!-- Include FontAwesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <!-- Include Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
+  <!-- font for header -->
+  <link href="https://db.onlinewebfonts.com/c/77009ab521bc15b6e38fcc22dd5270f4?family=Churchward+Design+Bold" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+		
+  <style>
+* {
+  box-sizing: border-box;
+}
+
+#allContent{
+    width: 100vw;
+    height: 100vh;
+
+    display: grid;
+
+    grid-template-areas:"myNav myNav"
+    "myMain myMain"
+    "myFooter myFooter";
+    grid-template-columns: 22% 78%;
+    
+}
+
+.clearfix::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+
+.myNav{
+    grid-area: myNav;
+    background-color: #faf9f9;
+    width: 100%;
+    background-color: #be6b25;
+    
+}
+
+
+
+/* The popup form - hidden by default */
+.popup-background {
+	display: none; 
+	position: fixed; 
+	z-index: 1; 
+	left: 0;
+	top: 0;
+	width: 100%; 
+	height: 100%; 
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgba(0,0,0,0.4);
+}
+.inviteuser-form{
+  width: 25%;
+  padding: 10px;
+  background-color: white;
+  margin: auto;
+  margin-top: 90px;
+}
+
+
+/* Full-width input fields */
+.inviteuser-form input[type=text], .form-container input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.inviteuser-form input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+.inviteuser-form .btn {
+  background-color: #be6b25;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.inviteuser-form .cancel {
+  background-color: #bbb;
+  transition: 0.4s;
+}
+
+/* Add some hover effects to buttons */
+.inviteuser-form .cancel:hover {
+  background-color: red;
+  opacity: 1;
+}
+
+.nav{
+    width: 100%;
+	height: 90px;
+}
+
+.navbar{
+	height: 90px;
+	border: none;
+}
+
+.navbar-brand {
+    margin-left: 13px; /* or whatever size you want */
+    padding-top: 15px; /* this will push it down */
+    padding-bottom: 15px; /* this can give more space at the bottom */
+    font-family: 'Churchward Design Bold';
+}
+
+
+.navbar-collapse {
+    position: relative;  /* Ensure it's positioned */
+    z-index: 1000;       /* Any high number to ensure it's on top of other page elements */
+}
+
+.navbar.navbar-expand-lg.navbar-dark.bg-dark {
+    background-color: #be6b25 !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+    padding: 23px 30px; /* Keep padding between elements on the nav bar horizontally and vertically*/
+	height: 90px;
+	padding-top: 30px;
+    background-color: #be6b25;
+}
+
+
+
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    background-color: #ffa200; /* Background color on hover */
+    color: black; /* Text color on hover */
+}
+
+
+
+
+/* Style the dropdown menu */
+.navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+    position: absolute;
+    top: 90px;
+    width: 170px;
+    background: white;
+    box-shadow: none;
+    border: 0; /* Remove any border that might create a gap */
+    padding: 0; /* Remove any padding to ensure full highlighting */
+    margin: 0; /* Remove any margin that might create a gap */
+    
+}
+
+/* Style the dropdown menu links */
+.navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu .dropdown-item {
+    padding: 10px;
+    color: black;
+    font-size: 1.2em;
+    text-decoration: none;
+    border: 0; /* Remove any border on the dropdown items */
+    margin: 0; /* Remove any margin on the dropdown items */
+}
+
+
+
+/* Style the dropdown menu links on hover */
+.navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu .dropdown-item:hover {
+    background-color: #ffd200; /* Background color on hover */
+    color: black; /* Text color on hover */
+}
+
+/* Style the logo (optional) */
+.navbar .navbar-brand {
+    float: left;
+    height: inherit;
+    margin-left: 2em;
+    color: white;
+    font-size: 24px;
+    
+}
+
+#profileIcon {
+	font-size: 38px;
+	vertical-align: middle;
+}
+
+
+
+/* Styles for the collapsed (mobile) navigation bar */
+@media (max-width: 991px) {
+
+    .navbar-collapse {
+        background-color: #de6b25; /* Background color for the mobile menu */
+        padding: 10px; /* Add padding to the mobile menu */
+    }
+
+    .navbar-dark .navbar-nav .nav-link {
+        color: white;
+        font-size: 1.2em;
+        text-decoration: none;
+        padding: 25px 30px; /* Keep padding between elements on the nav bar horizontally and vertically*/
+        padding-top: 20px;
+
+
+    }
+
+    .navbar-dark .navbar-nav .nav-item {
+        background-color: transparent; /* Background color for the menu items */
+        padding: 10px 0; /* Adjust padding for the menu items */
+    }
+
+    .navbar-dark .navbar-nav .nav-item .nav-link {
+        color: white; /* Text color for the menu items */
+    }
+
+    .navbar-dark .navbar-nav .nav-item .nav-link:hover {
+        background-color: #ffa200; /* Background color on hover */
+        color: black; /* Text color on hover */
+    }
+}
+
+
+.mainContent{
+    text-align: center;
+    color: black;
+    grid-area: myMain;
+    height: 76vh;
+}
+
+
+#adminButtons {
+ 
+    height: 10vh;
+    display: flex;
+    justify-content: space-between; /* Distribute buttons evenly */
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+#adminButtons span {
+    background-color: rgb(174, 168, 162);
+    padding: 1vh 3vh; /* Adjust padding as needed */
+    border-radius: 3% 3%;
+    height: 84%; /* You can set a specific height here */
+    display: flex;
+    align-items: center; /* Vertically center text */
+    justify-content: center; /* Horizontally center text */
+    flex: 1; /* Distribute available space equally among buttons */
+    margin-left: 1%;
+    margin-right: 1%;
+    color: black;
+}
+
+
+
+#adminButtons span:hover{
+    font-weight: bold;
+    background-color: rgb(255, 149, 35);
+} 
+
+
+#bttnInfo{
+    height: 60vh;
+    width: 100vw;
+}
+
+
+#adminInfoContainer{
+    height: 62vh;
+    width: 100vw;
+    max-height: 66vh;
+}
+
+
+
+
+
+/*staff content*/
+
+#staffSearch {
+  background-position: 2% 3%;
+  background-repeat: no-repeat;
+  width: 60%;
+  font-size: 100%;
+  border: 1% solid #ddd;
+  margin-left: 5vw;
+}
+
+
+
+#staffToDoContainer{
+    height: 66vh;
+    width: 100vw;
+}
+
+.staffTableContainer{
+    background-color: white;
+    height: 54vh;
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+
+.staffContainer{
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+    min-width: 100%;
+}
+
+.staffContainer tr{
+    th:nth-child(even),td:nth-child(even) {
+    background-color: rgba(150, 212, 212, 0.4);
+}
+}
+
+#staffInfo td{
+    padding-left: 2%;
+    text-align: left;
+    font-size: 1.5vw;
+    padding-right: 5%;
+    
+}
+
+#staffInfo th {
+    text-align: left;
+    font-size: 100%;
+    padding-left: 2%;
+    font-size: 2vw;
+    
+}
+
+.staffHeader{
+    height: 12vh;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    background-color: orange;
+    margin-top: 2%;
+    margin-bottom: 2%;
+
+}
+
+
+
+.staffHeader h2{
+    margin-left: 6vw;
+    font-size: 100%;
+
+    height: 100%;
+}
+
+
+
+.staffHeader {
+    text-align: left;
+}
+
+
+
+.deleteUserBttn{
+
+}
+
+
+.adminAddBttn{
+    width: 5%;
+    font-size: 100%;
+    padding-left: 3%;
+    padding-right: 4%;
+
+}
+
+.sortOption{
+    width: 20%;
+    font-size: 100%;
+    margin-top: 1%;
+    margin-bottom: 1%
+}
+
+
+
+/*end of staff content*/
+
+
+/* styling the projects list*/
+/*staff content*/
+
+/* for projects pop up*/
+/* proj pop up*/
+.projectsWindow {
+                    display: none;
+                    position: fixed;
+                    z-index: 1;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    overflow: auto;
+                    background-color: rgba(0, 0, 0, 0.4);
+                  }
+                  
+                  .projectsWindowContent {
+                    background-color: #fefefe;
+                    margin: 15% auto;
+                    padding: 20px;
+                    border: 1px solid #888;
+                    width: 80%;
+                    max-width: 400px;
+                  }
+                  
+                  .closeProj {
+                    color: #aaa;
+                    float: right;
+                    font-size: 28px;
+                    font-weight: bold;
+                    cursor: pointer;
+                  }
+
+
+
+
+
+
+
+/* end of pop up*/
+#projectsSearch {
+  background-position: 2% 3%;
+  background-repeat: no-repeat;
+  width: 60%;
+  font-size: 100%;
+  border: 1% solid #ddd;
+  margin-left: 5vw;
+}
+
+
+
+#staffProjectsContainer{
+    height: 66vh;
+    width: 100vw;
+}
+
+.staffTableContainer{
+    background-color: white;
+    height: 54vh;
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+
+.staffContainer{
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+    min-width: 100%;
+}
+
+.staffContainer tr{
+    th:nth-child(even),td:nth-child(even) {
+    background-color: rgba(150, 212, 212, 0.4);
+}
+}
+
+#projectsInfo{
+    margin-bottom: 8%;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-right: 3%;
+    padding-right: 5%;
+    
+}
+
+
+#projectsInfo td{
+    padding-left: 2%;
+    text-align: left;
+    font-size: 1.5vw;;
+    padding-right: 3%;
+    
+}
+
+#projectsInfo th {
+    text-align: left;
+    font-size: 100%;
+    padding-left: 2%;
+    font-size: 2vw;
+    
+}
+
+
+
+
+
+
+/*styling thr to-do list*/
+/* styling the to do list */
+#toDoList{
+    width: 100vw;
+    height: 100%; 
+    padding-top: 5%;
+    padding-left: 2vw;
+    padding-right: 2.5vw;
+    margin-right: 15vw;
+    background-color: #f0efef;
+    overflow-y: auto;
+    text-align: left;
+    margin-bottom: 5%;
+    padding-bottom: 10%;                     
+}
+
+
+/* Remove margins and padding from the list */
+#toDoUL {
+  margin: 0;
+  padding-left: 2vw;
+  max-width: 100%;
+
+}
+
+#toDoUL li p{
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Display "..." for long words */
+  display: inline-block; /* Allow text to adjust font size */
+  font-size: calc(1vw + 10px); /* Define font size using a combination of vw units and px */
+  max-width: 100%; /* Ensure that text does not exceed the width of the <ul> */
+  vertical-align: top; /* Align text to the top of the <li> element */
+
+}
+
+/* Style the list items */
+#toDoUL li {
+  cursor: pointer;
+  position: relative;
+  padding: 12px 8px 12px 40px;
+  list-style-type: none;
+  background: #faf9f9;
+  font-size: 18px;
+  transition: 0.2s;
+  
+  /* make the list items unselectable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Set all odd list items to a different color (zebra-stripes) */
+#toDoUL li:nth-child(odd) {
+    background: #f2ececf9;
+}
+
+/* Darker background-color on hover */
+#toDoUL li:hover {
+    background: #eec46b;
+}
+
+#toDoUL li {
+    display: block;
+}
+
+
+
+/* When clicked on, add a background color and strike out text */
+#toDoUL li.checked {
+  background: #888;
+  color: #fff;
+  text-decoration: line-through;
+}
+
+#toDoUL li.checked p {
+  text-decoration: line-through;
+  background: #888;
+}
+
+
+/* Style the close button */
+.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 12px 16px 12px 16px;
+}
+
+.close:hover {
+    background-color: #f2372a;
+    color: white;
+}
+
+/* Style the header */
+#toDoHeader {
+  text-align: left;
+  margin-bottom: 3%;
+  color: #2c2b2a;
+  text-align: left;
+}
+
+/* Clear floats after the header */
+#toDoHeader:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+/* Style the "Add" button */
+#toDoAddBtn {
+    padding: 4%;
+    width: 25%;
+    background: #d9d9d9;
+    color: #555;
+    float: left;
+    text-align: center;
+    font-size: 80%;
+    cursor: pointer;
+    transition: 0.2s;
+    border-radius: 0;
+    height: 100%;
+}
+
+#toDoAddBtn:hover {
+  background-color: #bbb;
+}
+
+
+#toDoInput{
+    margin-left: 5%;
+    height: 100%;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    width: 75%;
+    padding: 4%;
+    float: left;
+    font-size: 100%;
+}
+
+
+/*styling the footer*/
+.myFooter{
+    grid-area: myFooter;
+    text-align: left;
+    height: 13.5vh;
+}
+	
+	
+
+/* Footer styles */
+.footer {
+    background: #303036;
+    color: #d3d3d3;
+    height: inherit;
+    position: relative;
+}
+
+.footer .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    margin-left: 2vw;
+}
+
+.footer-title {
+    font-family: 'Churchward Design Bold';  /* specify the font */
+    font-size: 3vh;  /* adjust to desired size */
+    margin-bottom: 0.5vh;  /* spacing below the title */
+
+}
+
+.footer .contact-details{
+    font-size: 1.5vh;
+}
+
+
+.footer .footer-content .footer-section {
+    flex: 1;
+    padding: 2px;
+}
+
+.footer .footer-content .about .contact-details span {
+    display: block;
+    font-size: 1.1em;
+}
+
+
+
+
+
+
+
+  </style>
+</head>
+<body>
+    <div id="allContent">
+        <nav class="myNav" style="height:90px">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="#" "Make-it-all">
+				<h1 class="logo-text">Make-It-All</h1>
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" id="dashboard" href="#">Dashboard</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Posts
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="all-posts.html">All Posts</a>
+							<a class="dropdown-item" href="create-post.html">Create Post</a>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="btnInviteUser" onclick="openForm()" href="#">Invite User</a>
+					</li>
+					<li class="nav-item dropdown" id="accountBox">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span id="profileIcon" class="material-symbols-outlined">
+							account_circle
+						</span>    Account</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="profile.html">My Profile</a>
+							<a class="dropdown-item logout" href="standard_index.html">Logout</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</nav>
+
+	<div class="popup-background" id="inviteuseropaquebg">
+		<form class="inviteuser-form" action="javascript:getData()" method="get">
+			<h1>Invite User</h1>
+
+			<label for="email"><b>Email</b></label>
+			<input type="text" placeholder="Enter Email" id="email" name="email">
+			<label id="emailError" style="color: red; display: none">Email address is not valid</label>
+
+			<button type="submit" class="btn" onclick="sendInvite()">Send Invite Link</button>
+			<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+		</form>
+	</div>
+        <!--end of header -->
+
+        <!--main content -->
+        <div class="mainContent">
+            <!-- Total height 76vh -->
+            <div id="adminButtons">
+                <span id="staffBttn" onclick="staffClicked()">Staff</span>
+                <span id="projectsBttn" onclick="projectsClicked()">Projects</span>
+                <span id="toDoBttn" onclick="toDoClicked()">To-Do</span>
+            </div>
+
+            <div id="adminInfoContainer">
+
+                <div id="staffToDoContainer" style="display: none;">
+                    <div id="toDoList" style>
+                        <div id="toDoHeader">
+                        <h2>To Do List</h2>
+                        <input type="text" id="toDoInput" placeholder="New item..."></textarea>
+                        <span onclick="newElement()" id="toDoAddBtn">Add</span>
+                        </div>
+                        
+                        <ul id="toDoUL">
+                        <li><p>Send out meeting notes</p></li>
+                        <li class="checked"><p>Book time off</p></li>
+                        <li><p>Organize mentor meeting</p></li>
+                        <li><p>Order printing ink</p></li>
+                        <li><p>Set up meeting with client</p></li>
+                        <li><p>Book team dinner</p></li>
+                        </ul>
+                        </div>
+                </div>
+
+
+<!--projects option-->
+
+
+
+ <!--for add projects pop up-->
+ <div id="projectsWindow" class="projectsWindow">
+    <div class="projectsWindowContent">
+      <span class="closeProj">&times;</span>
+      <h2>Add Project</h2>
+      <p>Project Name:</p>
+      <input  required type="text" id="projInputField">
+      <p>Team Manager:</p>
+      <input required type="text">
+      <p>Manager Email:</p>
+      <input required type="text" id="projInputField">
+      <p>Team Leader:</p>
+      <input required type="text" id="projInputField">
+      <p>Leader Email:</p>
+      <input required type="text" id="projInputField"><br>
+      <button id="projSubmitButton">Submit</button>
+    </div>
+  </div>
+
+  <script>
+    // Get the modal and close button
+var modal = document.getElementById("projectsWindow");
+var closeButton = document.querySelector(".closeProj");
+
+// Show the modal when needed
+function showProject() {
+modal.style.display = "block";
+}
+
+// Close the modal when the close button is clicked
+closeButton.onclick = function () {
+modal.style.display = "none";
+};
+
+// Handle form submission when the Submit button is clicked
+var submitButton = document.getElementById("projSubmitButton");
+var inputField = document.getElementById("projInputField");
+
+submitButton.onclick = function () {
+var inputValue = inputField.value;
+// Process the input or perform other actions here
+alert("Project Added");
+modal.style.display = "none";
+};
+
+// Close the modal if the overlay is clicked
+window.onclick = function (event) {
+if (event.target == modal) {
+modal.style.display = "none";
+}
+}; </script>
+
+
+
+
+
+
+
+
+
+
+<script>
+  // Get the modal and close button
+var modal = document.getElementById("projectsWindow");
+var closeButton = document.querySelector(".closeProj");
+
+// Show the modal when needed
+function showProject() {
+modal.style.display = "block";
+}
+
+// Close the modal when the close button is clicked
+closeButton.onclick = function () {
+modal.style.display = "none";
+};
+
+// Handle form submission when the Submit button is clicked
+var submitButton = document.getElementById("projSubmitButton");
+var inputField = document.getElementById("projInputField");
+
+submitButton.onclick = function () {
+var inputValue = inputField.value;
+// Process the input or perform other actions here
+alert("Project Added");
+modal.style.display = "none";
+};
+
+// Close the modal if the overlay is clicked
+window.onclick = function (event) {
+if (event.target == modal) {
+modal.style.display = "none";
+}
+}; </script>
+
+
+
+
+
+                <div id="staffProjectsContainer" style="display: block;">
+                    <div class="staffHeader">
+                        <h2>Projects
+                        <input type="text" id="projectsSearch" onkeyup="projectsSearch()" placeholder="Search through projects" title="Search through projects">
+                        <input type="button" id="projectsAdd" class="adminAddBttn" onclick="showProject()" value="+">
+                        <br>
+                        <label>Sort By:</label>
+                        <select class="sortOption" id="projectSort">
+                            <option value="deadline">Deadline</option>
+                            <option value="alphabet">Alphabetical</option>
+                            
+                            <option value="progress">Progress</option>
+                        </select>	
+                    
+                    </h2>
+                    </div>
+                
+
+
+                <div class="staffTableContainer">
+                    <div class="staffContainer">
+                        
+                        <table id="projectsInfo">
+                            <tr class="project">
+                                <th class="projectName">
+                                    Project Name
+                                </th>
+                                <th class="projectId">
+                                    Project ID
+                                </th>
+                                <th class="teamManager">
+                                    Team Manager
+                                </th>
+                                <th class="managerId">
+                                    Manager ID
+                                </th>
+                                <th class="teamLeader">
+                                    Team Leader
+                                </th>
+                                <th class="leaderId">
+                                    Leader ID
+                                </th>
+                                <th class="deadline">
+                                    Deadline
+                                </th>
+                                <th class="projectProgress">
+                                    Progress
+                                </th>
+                                <th class="totalTasks">
+                                    Total Tasks
+                                </th>
+                                <th class="editProject">
+                                    Edit Project
+                                </th>
+                                <th class="deleteProject">
+                                    Delete Project
+                                </th>
+                            </tr>
+                
+                            <tr class="project">
+                                <td class="projectId">
+                                    User Dashboard Creation
+                                </td>
+                                <td class="projectId">
+                                    #0001
+                                </td>
+                                <td class="teamManager">
+                                    king@make-it-all.co.uk
+                                </td>
+                                <td class="managerId">
+                                    #0001
+                                </td>
+                                <td class="teamLeader">
+                                    johndoe@make-it-all.co.uk
+                                </td>
+                                <td class="leaderId">
+                                    #0003
+                                </td>
+                                <td class="deadline">
+                                    20/11/23
+                                </td>
+                                <td class="projectProgress">
+                                    80%
+                                </td>
+                                <td class="totalStaff">
+                                    16
+                                </td>
+                                <td class="editProject">
+                                    <button id="editProjectBttn1" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
+                                        &#x270E;
+                                    </button>
+                                </td>
+                                <td class="deleteProject">
+                                    <button id="deleteProjectBttn1" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                        &#x2718;
+                                    </button>
+                                </td>
+                                
+                            </tr>
+
+                            <tr class="project">
+                                <td class="projectId">
+                                    Tech audit 1
+                                </td>
+                                <td class="projectId">
+                                    #0002
+                                </td>
+                                <td class="teamManager">
+                                    Jeremy Doe
+                                </td>
+                                <td class="managerId">
+                                    #0001
+                                </td>
+                                <td class="teamLeader">
+                                    Gareth Den
+                                </td>
+                                <td class="leaderId">
+                                    #0002
+                                </td>
+                                <td class="deadline">
+                                    21/11/23
+                                </td>
+                                <td class="projectProgress">
+                                    75%
+                                </td>
+                                <td class="totalStaff">
+                                    5
+                                </td>
+                                <td class="editProject">
+                                    <button id="editProjectBttn2" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
+                                        &#x270E;
+                                    </button>
+                                </td>
+                                <td class="deleteProject">
+                                    <button id="deleteProjectBttn2" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                        &#x2718;
+                                    </button>
+                                </td>
+                                
+                            </tr>
+                            <tr class="project">
+                                <td class="projectId">
+                                    Tech Summer Intern Recruitment
+                                </td>
+                                <td class="projectId">
+                                    #0004
+                                </td>
+                                <td class="teamManager">
+                                    Jeremy Dean
+                                </td>
+                                <td class="managerId">
+                                    #0006
+                                </td>
+                                <td class="teamLeader">
+                                    #Mary Jones
+                                </td>
+                                <td class="leaderId">
+                                    #0015
+                                </td>
+                                <td class="deadline">
+                                    29/11/23
+                                </td>
+                                <td class="projectProgress">
+                                    20%
+                                </td>
+                                <td class="totalStaff">
+                                    13
+                                </td>
+                                <td class="editProject">
+                                    <button id="editProjectBttn3" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
+                                        &#x270E;
+                                    </button>
+                                </td>
+                                <td class="deleteProject">
+                                    <button id="deleteProjectBttn3" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                        &#x2718;
+                                    </button>
+                                </td>
+                                
+                            </tr>
+                            <tr class="project">
+                                <td class="projectId">
+                                    Tech audit 2
+                                </td>
+                                <td class="projectId">
+                                    #0014
+                                </td>
+                                <td class="teamManager">
+                                    Henry Smith
+                                </td>
+                                <td class="managerId">
+                                    #0018
+                                </td>
+                                <td class="teamLeader">
+                                    Gareth Den
+                                </td>
+                                <td class="leaderId">
+                                    #0002
+                                </td>
+                                <td class="deadline">
+                                    02/12/23
+                                </td>
+                                <td class="projectProgress">
+                                    81%
+                                </td>
+                                <td class="totalStaff">
+                                    12
+                                </td>
+                                <td class="editProject">
+                                    <button id="editProjectBttn4" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
+                                        &#x270E;
+                                    </button>
+                                </td>
+                                <td class="deleteProject">
+                                    <button id="deleteProjectBttn4" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                        &#x2718;
+                                    </button>
+                                </td>
+                                
+                            </tr>
+                            <tr class="project">
+                                <td class="projectId">
+                                    Tech audit 3
+                                </td>
+                                <td class="projectId">
+                                    #0017
+                                </td>
+                                <td class="teamManager">
+                                    Jeremy Doe
+                                </td>
+                                <td class="managerId">
+                                    #0001
+                                </td>
+                                <td class="teamLeader">
+                                    Gareth Den
+                                </td>
+                                <td class="leaderId">
+                                    #0002
+                                </td>
+                                <td class="deadline">
+                                    03/12/23
+                                </td>
+                                <td class="projectProgress">
+                                    50%
+                                </td>
+                                <td class="totalStaff">
+                                    11
+                                </td>
+                                <td class="editProject">
+                                    <button id="editProjectBttn5" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
+                                        &#x270E;
+                                    </button>
+                                </td>
+                                <td class="deleteProject">
+                                    <button id="deleteProjectBttn5" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                        &#x2718;
+                                    </button>
+                                </td>
+                                
+                            </tr>
+
+                            <tr class="project">
+                                <td class="projectId">
+                                    Tech audit 4
+                                </td>
+                                <td class="projectId">
+                                    #0016
+                                </td>
+                                <td class="teamManager">
+                                    Jeremy Doe
+                                </td>
+                                <td class="managerId">
+                                    #0001
+                                </td>
+                                <td class="teamLeader">
+                                    Gareth Den
+                                </td>
+                                <td class="leaderId">
+                                    #0002
+                                </td>
+                                <td class="deadline">
+                                    04/12/23
+                                </td>
+                                <td class="projectProgress">
+                                    78%
+                                </td>
+                                <td class="totalStaff">
+                                    8
+                                </td>
+                                <td class="editProject">
+                                    <button id="editProjectBttn6" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
+                                        &#x270E;
+                                    </button>
+                                </td>
+                                <td class="deleteProject">
+                                    <button id="deleteProjectBttn6" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                        &#x2718;
+                                    </button>
+                                </td>
+                                
+                            </tr>
+                            <tr class="project">
+                                <td class="projectId">
+                                    Tech audit 5
+                                </td>
+                                <td class="projectId">
+                                    #0019
+                                </td>
+                                <td class="teamManager">
+                                    Jeremy Doe
+                                </td>
+                                <td class="managerId">
+                                    #0001
+                                </td>
+                                <td class="teamLeader">
+                                    Gareth Den
+                                </td>
+                                <td class="leaderId">
+                                    #0002
+                                </td>
+                                <td class="deadline">
+                                    05/12/23
+                                </td>
+                                <td class="projectProgress">
+                                    20%
+                                </td>
+                                <td class="totalStaff">
+                                    6
+                                </td>
+                                <td class="editProject">
+                                    <button id="editProjectBttn7" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
+                                        &#x270E;
+                                    </button>
+                                </td>
+                                <td class="deleteProject">
+                                    <button id="deleteProjectBttn7" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                        &#x2718;
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="project">
+                                <td class="projectId">
+                                    Tech audit 6
+                                </td>
+                                <td class="projectId">
+                                    #0011
+                                </td>
+                                <td class="teamManager">
+                                    Jeremy Doe
+                                </td>
+                                <td class="managerId">
+                                    #0001
+                                </td>
+                                <td class="teamLeader">
+                                    Gareth Den
+                                </td>
+                                <td class="leaderId">
+                                    #0002
+                                </td>
+                                <td class="deadline">
+                                    07/12/23
+                                </td>
+                                <td class="projectProgress">
+                                    12%
+                                </td>
+                                <td class="totalStaff">
+                                    3
+                                </td>
+                                <td class="editProject">
+                                    <button id="editProjectBttn8" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
+                                        &#x270E;
+                                    </button>
+                                </td>
+                                <td class="deleteProject">
+                                    <button id="deleteProjectBttn8" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                        &#x2718;
+                                    </button>
+                                </td>
+                                
+                            </tr>
+                            <tr class="project">
+                                <td class="projectId">
+                                    Tech audit 9
+                                </td>
+                                <td class="projectId">
+                                    #0015
+                                </td>
+                                <td class="teamManager">
+                                    Jeremy Doe
+                                </td>
+                                <td class="managerId">
+                                    #0001
+                                </td>
+                                <td class="teamLeader">
+                                    Gareth Den
+                                </td>
+                                <td class="leaderId">
+                                    #0002
+                                </td>
+                                <td class="deadline">
+                                    10/12/23
+                                </td>
+                                <td class="projectProgress">
+                                    10%
+                                </td>
+                                <td class="totalStaff">
+                                    4
+                                </td>
+                                <td class="editProject">
+                                    <button id="editProjectBttn9" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
+                                        &#x270E;
+                                    </button>
+                                </td>
+                                <td class="deleteProject">
+                                    <button id="deleteProjectBttn9" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                        &#x2718;
+                                    </button>
+                                </td>
+                                
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+
+
+
+<!-- staff list option -->
+                <div id="staffInfoContainer" style="display: none">
+                    <div class="staffHeader">
+                        <h2>Staff List
+                        <input type="text" id="staffSearch" onkeyup="staffSearch()" placeholder="Search for staff" title="Type in a staff name">
+                        <input type="button" id="staffAdd" class="adminAddBttn" onclick="openForm()" value="+">
+                    
+                    </h2>
+                    </div>
+                    <div class="staffTableContainer">
+                        <div class="staffContainer">
+                            
+                            <table id="staffInfo">
+                                <tr class="staffMember">
+                                    <th class="fullName">
+                                        Full Name
+                                    </th>
+                                    <th class="staffId">
+                                        System ID
+                                    </th>
+                                    <th class="userLevel">
+                                        User Level
+                                    </th>
+                                    <th class="email">
+                                        Email
+                                    </th>
+                                    <th class="teamMembership">
+                                        Team Membership
+                                    </th>
+                                    <th class="teamLeading">
+                                        Team(s) Leading
+                                    </th>
+                                    <th class="teamManaging">
+                                        Team(s) Managing
+                                    </th>
+                                    <th class="enrolmentDate">
+                                        Enrolment Date
+                                    </th>
+                                    <th class="invitedBy">
+                                        Invited By
+                                    </th>
+                                    <th class="editUser">
+                                        Edit
+                                    </th>
+                                    <th class="deleteUser">
+                                        Delete
+                                    </th>
+                                </tr>
+                    
+                                <tr class="staffMember">
+                                    
+                                    <td class="fullName">
+                                        John Doe
+                                    </td>
+                                    <td class="staffId">
+                                        #0011
+                                    </td>
+                                    <td class="userLevel">
+                                        Team Leader
+                                    </td>
+                                    <td class="email">
+                                        johndoe@make-it-all.co.uk
+                                    </td>
+                                    <td class="teamMembership">
+                                        #3 #7 #13
+                                    </td>
+                                    <td class="teamLeading">
+                                        #7
+                                    </td>
+                                    <td class="teamManaging">
+                                        
+                                    </td>
+                                    <td class="enrolmentDate">
+                                        05/10/23
+                                    </td>
+                                    <td class="invitedBy">
+                                        #0001
+                                    </td>
+                                    <td class="editUser">
+                                        <button id="editUserBttn1" class="editUserBttn" onclick="confirm('Do you want to edit this project?')">
+                                            &#x270E;
+                                        </button>
+                                    </td>
+                                    <td class="deleteUser">
+                                        <button id="deleteUserBttn1" class="deleteUserBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                            &#x2718;
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="staffMember">
+                                    
+                                    <td class="fullName">
+                                        King
+                                    </td>
+                                    <td class="staffId">
+                                        #0001
+                                    </td>
+                                    <td class="userLevel">
+                                        Team Manager
+                                    </td>
+                                    <td class="email">
+                                        king@make-it-all.co.uk
+                                    </td>
+                                    <td class="teamMembership">
+                                        #1
+                                    </td>
+                                    <td class="teamLeading">
+                                        
+                                    </td>
+                                    <td class="teamManaging">
+                                        #1
+                                    </td>
+                                    <td class="enrolmentDate">
+                                        05/10/23
+                                    </td>
+                                    <td class="invitedBy">
+                                        #0001
+                                    </td>
+                                    <td class="editUser">
+                                        <button id="editUserBttn2" class="editUserBttn" onclick="confirm('Do you want to edit this project?')">
+                                            &#x270E;
+                                        </button>
+                                    </td>
+                                    <td class="deleteUser">
+                                        <button id="deleteUserBttn2" class="deleteUserBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                            &#x2718;
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="staffMember">
+                                    
+                                    <td class="fullName">
+                                        Kari Eden
+                                    </td>
+                                    <td class="staffId">
+                                        #0004
+                                    </td>
+                                    <td class="userLevel">
+                                        Team Leader
+                                    </td>
+                                    <td class="email">
+                                        karieden@make-it-all.co.uk
+                                    </td>
+                                    <td class="teamMembership">
+                                        #4
+                                    </td>
+                                    <td class="teamLeading">
+                                        #4
+                                    </td>
+                                    <td class="teamManaging">
+                                        
+                                    </td>
+                                    <td class="enrolmentDate">
+                                        07/10/23
+                                    </td>
+                                    <td class="invitedBy">
+                                        #0001
+                                    </td>
+                                    <td class="editUser">
+                                        <button id="editUserBttn3" class="editUserBttn" onclick="confirm('Do you want to edit this project?')">
+                                            &#x270E;
+                                        </button>
+                                    </td>
+                                    <td class="deleteUser">
+                                        <button id="deleteUserBttn3" class="deleteUserBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                            &#x2718;
+                                        </button>
+                                    </td>
+                                </tr>
+                    
+                                <tr class="staffMember">
+                                    
+                                    <td class="fullName">
+                                        Len Valentina
+                                    </td>
+                                    <td class="staffId">
+                                        #0007
+                                    </td>
+                                    <td class="userLevel">
+                                        Team Manager
+                                    </td>
+                                    <td class="email">
+                                        lenvalentina@make-it-all.co.uk
+                                    </td>
+                                    <td class="teamMembership">
+                                        #4
+                                    </td>
+                                    <td class="teamLeading">
+                                        
+                                    </td>
+                                    <td class="teamManaging">
+                                        #4
+                                    </td>
+                                    <td class="enrolmentDate">
+                                        05/10/23
+                                    </td>
+                                    <td class="invitedBy">
+                                        #0001
+                                    </td>
+                                    <td class="editUser">
+                                        <button id="editUserBttn4" class="editUserBttn" onclick="confirm('Do you want to edit this project?')">
+                                            &#x270E;
+                                        </button>
+                                    </td>
+                                    <td class="deleteUser">
+                                        <button id="deleteUserBttn4" class="deleteUserBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                            &#x2718;
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="staffMember">
+                                    
+                                    <td class="fullName">
+                                        Jimmie Duncan
+                                    </td>
+                                    <td class="staffId">
+                                        #0010
+                                    </td>
+                                    <td class="userLevel">
+                                        Team Leader
+                                    </td>
+                                    <td class="email">
+                                        jimmieduncan@make-it-all.co.uk
+                                    </td>
+                                    <td class="teamMembership">
+                                        #7 #13
+                                    </td>
+                                    <td class="teamLeading">
+                                        
+                                    </td>
+                                    <td class="teamManaging">
+                                        #7 #13
+                                    </td>
+                                    <td class="enrolmentDate">
+                                        06/10/23
+                                    </td>
+                                    <td class="invitedBy">
+                                        #0001
+                                    </td>
+                                    <td class="editUser">
+                                        <button id="editUserBttn5" class="editUserBttn" onclick="confirm('Do you want to edit this project?')">
+                                            &#x270E;
+                                        </button>
+                                    </td>
+                                    <td class="deleteUser">
+                                        <button id="deleteUserBttn5" class="deleteUserBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                            &#x2718;
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="staffMember">
+                                    
+                                    <td class="fullName">
+                                        Maria Chrissy
+                                    </td>
+                                    <td class="staffId">
+                                        #0009
+                                    </td>
+                                    <td class="userLevel">
+                                        Team Member
+                                    </td>
+                                    <td class="email">
+                                        mariachrissy@make-it-all.co.uk
+                                    </td>
+                                    <td class="teamMembership">
+                                        #3 #7
+                                    </td>
+                                    <td class="teamLeading">
+                                        
+                                    </td>
+                                    <td class="teamManaging">
+                                        
+                                    </td>
+                                    <td class="enrolmentDate">
+                                        08/10/23
+                                    </td>
+                                    <td class="invitedBy">
+                                        #0004
+                                    </td>
+                                    <td class="editUser">
+                                        <button id="editUserBttn6" class="editUserBttn" onclick="confirm('Do you want to edit this project?')">
+                                            &#x270E;
+                                        </button>
+                                    </td>
+                                    <td class="deleteUser">
+                                        <button id="deleteUserBttn6" class="deleteUserBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                            &#x2718;
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="staffMember">
+                                    
+                                    <td class="fullName">
+                                        Zach Page
+                                    </td>
+                                    <td class="staffId">
+                                        #0013
+                                    </td>
+                                    <td class="userLevel">
+                                        Team Member
+                                    </td>
+                                    <td class="email">
+                                        zachpage@make-it-all.co.uk
+                                    </td>
+                                    <td class="teamMembership">
+                                        #4
+                                    </td>
+                                    <td class="teamLeading">
+                                    
+                                    </td>
+                                    <td class="teamManaging">
+                                        
+                                    </td>
+                                    <td class="enrolmentDate">
+                                        10/10/23
+                                    </td>
+                                    <td class="invitedBy">
+                                        #0009
+                                    </td>
+                                    <td class="editUser">
+                                        <button id="editUserBttn7" class="editUserBttn" onclick="confirm('Do you want to edit this project?')">
+                                            &#x270E;
+                                        </button>
+                                    </td>
+                                    <td class="deleteUser">
+                                        <button id="deleteUserBttn7" class="deleteUserBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                            &#x2718;
+                                        </button>
+                                    </td>
+                                </tr>
+                    
+                    
+                                <tr class="staffMember">
+                                    
+                                    <td class="fullName">
+                                        Teddie Garrick
+                                    </td>
+                                    <td class="staffId">
+                                        #0012
+                                    </td>
+                                    <td class="userLevel">
+                                        Team Member
+                                    </td>
+                                    <td class="email">
+                                        teddiegarrick@make-it-all.co.uk
+                                    </td>
+                                    <td class="teamMembership">
+                                        #1 #7
+                                    </td>
+                                    <td class="teamLeading">
+                                    
+                                    </td>
+                                    <td class="teamManaging">
+                                        
+                                    </td>
+                                    <td class="enrolmentDate">
+                                        09/10/23
+                                    </td>
+                                    <td class="invitedBy">
+                                        #0011
+                                    </td>
+                                    <td class="editUser">
+                                        <button id="editUserBttn8" class="editUserBttn" onclick="confirm('Do you want to edit this project?')">
+                                            &#x270E;
+                                        </button>
+                                    </td>
+                                    <td class="deleteUser">
+                                        <button id="deleteUserBttn8" class="deleteUserBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                            &#x2718;
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="staffMember">
+                                    
+                                    <td class="fullName">
+                                        Max Dylan
+                                    </td>
+                                    <td class="staffId">
+                                        #0014
+                                    </td>
+                                    <td class="userLevel">
+                                        Team Member
+                                    </td>
+                                    <td class="email">
+                                        maxdylan@make-it-all.co.uk
+                                    </td>
+                                    <td class="teamMembership">
+                                        #4 #13
+                                    </td>
+                                    <td class="teamLeading">
+                                
+                                    </td>
+                                    <td class="teamManaging">
+                                        
+                                    </td>
+                                    <td class="enrolmentDate">
+                                        11/10/23
+                                    </td>
+                                    <td class="invitedBy">
+                                        #0009
+                                    </td>
+                                    <td class="editUser">
+                                        <button id="editUserBttn9" class="editUserBttn" onclick="confirm('Do you want to edit this project?')">
+                                            &#x270E;
+                                        </button>
+                                    </td>
+                                    <td class="deleteUser">
+                                        <button id="deleteUserBttn9" class="deleteUserBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                            &#x2718;
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="staffMember">
+                                    
+                                    <td class="fullName">
+                                        wilfordlindsey
+                                    </td>
+                                    <td class="staffId">
+                                        #0016
+                                    </td>
+                                    <td class="userLevel">
+                                        Team Member
+                                    </td>
+                                    <td class="email">
+                                        wilfordlindsey@make-it-all.co.uk
+                                    </td>
+                                    <td class="teamMembership">
+                                        #3
+                                    </td>
+                                    <td class="teamLeading">
+                        
+                                    </td>
+                                    <td class="teamManaging">
+                                        
+                                    </td>
+                                    <td class="enrolmentDate">
+                                        18/10/23
+                                    </td>
+                                    <td class="invitedBy">
+                                        #0009
+                                    </td>
+                                    <td class="editUser">
+                                        <button id="editUserBttn10" class="editUserBttn" onclick="confirm('Do you want to edit this project?')">
+                                            &#x270E;
+                                        </button>
+                                    </td>
+                                    <td class="deleteUser">
+                                        <button id="deleteUserBttn10" class="deleteUserBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                            &#x2718;
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                
+
+
+
+            </div>
+
+    <!-- end of main content -->
+    </div>
+
+        <footer class="myFooter">
+            <!-- footer -->
+
+        <div class = "footer">
+            <div class = "footer-content">
+                <div class = "footer-section about">
+                
+                    <h1 class ="footer-title"> Make-It-All</h1>
+
+                    <div class="contact-details">
+                        <span><i class="fas fa-phone"></i> &nbsp; 01509 888999</span>
+                        <span><i class="fas fa-envelope"></i> &nbsp; king@make‐it‐all.co.uk</span>
+                
+                
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>
+    <script>
+        // Create a "close" button and append it to each list item
+        var myNodelist = document.getElementById("toDoList").getElementsByTagName("LI");
+        var i;
+        for (i = 0; i < myNodelist.length; i++) {
+          var span = document.createElement("SPAN");
+          var txt = document.createTextNode("\u{1F5D1}");
+          span.className = "close";
+          span.appendChild(txt);
+          myNodelist[i].appendChild(span);
+        }
+        
+        // Click on a close button to hide the current list item
+        var close = document.getElementsByClassName("close");
+        var i;
+        for (i = 0; i < close.length; i++) {
+          close[i].onclick = function() {
+            var div = this.parentElement;
+            div.style.display = "none";
+          }
+        }
+        
+        // Add a "checked" symbol when clicking on a list item
+        var list = document.getElementById("toDoList").querySelector('ul');
+        list.addEventListener('click', function(ev) {
+      if (ev.target.tagName === 'LI' || ev.target.tagName === 'P') {
+        const listItem = (ev.target.tagName === 'LI') ? ev.target : ev.target.closest('li');
+        if (listItem) {
+          listItem.classList.toggle('checked');
+        }
+      }
+    }, false);
+        
+        // Create a new list item when clicking on the "Add" button
+        function newElement() {
+          var li = document.createElement("li");
+          var p = document.createElement("p");
+          var inputValue = document.getElementById("toDoInput").value;
+          var t = document.createTextNode(inputValue);
+          p.appendChild(t);
+          li.appendChild(p);
+          if (inputValue === '') {
+            // they didn't type anything
+          } else {
+            document.getElementById("toDoUL").appendChild(li);
+          }
+          document.getElementById("toDoInput").value = "";
+        
+          var span = document.createElement("SPAN");
+          var txt = document.createTextNode("\u{1F5D1}");
+          span.className = "close";
+          span.appendChild(txt);
+          li.appendChild(span);
+        
+          for (i = 0; i < close.length; i++) {
+            close[i].onclick = function() {
+              var div = this.parentElement;
+              div.style.display = "none";
+            }
+          }
+        }
+        </script>
+
+        <script>
+    function staffSearch() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("staffSearch");
+    
+    filter = input.value.toUpperCase();
+    table = document.getElementById("staffInfo");
+    tr = table.getElementsByTagName("tr");
+    
+
+    for (i = 1; i < tr.length; i++) {
+        
+
+        fullName = tr[i].getElementsByClassName("fullName")[0];
+        fullName = (fullName.textContent || fullName.innerText).toUpperCase().indexOf(filter) > -1;
+        userLevel = tr[i].getElementsByClassName("userLevel")[0];
+        userLevel = (userLevel.textContent || userLevel.innerText).toUpperCase().indexOf(filter) > -1;
+        staffId = tr[i].getElementsByClassName("staffId")[0];
+        staffId = (staffId.textContent || staffId.innerText).toUpperCase().indexOf(filter) > -1;
+        teamMem = tr[i].getElementsByClassName("teamMembership")[0];
+        teamMem = (teamMem.textContent || teamMem.innerText).toUpperCase().indexOf(filter) > -1;
+        teamLead = tr[i].getElementsByClassName("teamLeading")[0];
+        teamLead = (teamLead.textContent || teamLead.innerText).toUpperCase().indexOf(filter) > -1;
+        teamMan = tr[i].getElementsByClassName("teamManaging")[0];
+        teamMan = (teamMan.textContent || teamMan.innerText).toUpperCase().indexOf(filter) > -1;
+        invitedBy = tr[i].getElementsByClassName("invitedBy")[0];
+        invitedBy = (invitedBy.textContent || invitedBy.innerText).toUpperCase().indexOf(filter) > -1;
+
+
+        if (fullName){
+            tr[i].style.display = "";
+        } else if (userLevel){
+            tr[i].style.display = "";
+        } else if (staffId){
+            tr[i].style.display = "";
+        } else if (teamMem){
+            tr[i].style.display = "";
+        } else if (teamLead){
+            tr[i].style.display = "";
+        } else if (teamMan){
+            tr[i].style.display = "";
+        } else if (invitedBy){
+            tr[i].style.display = "";
+        } else{
+            tr[i].style.display = "none";
+        }
+        
+    }
+    
+}
+</script>
+
+<script>
+    function staffClicked(){
+        document.getElementById("toDoBttn").style.backgroundColor = "rgb(174, 168, 162)";
+        document.getElementById("staffToDoContainer").style.display = "none";
+        document.getElementById("projectsBttn").style.backgroundColor = "rgb(174, 168, 162)";
+        document.getElementById("staffProjectsContainer").style.display = "none";
+        document.getElementById("staffBttn").style.backgroundColor = "#be6b25";
+        document.getElementById("staffInfoContainer").style.display = "block";
+
+    }
+
+    function toDoClicked(){
+        document.getElementById("staffBttn").style.backgroundColor = "rgb(174, 168, 162)";
+        document.getElementById("staffInfoContainer").style.display = "none";
+        
+        document.getElementById("projectsBttn").style.backgroundColor = "rgb(174, 168, 162)";
+        document.getElementById("staffProjectsDoContainer").style.display = "none";
+
+        document.getElementById("toDoBttn").style.backgroundColor = "#be6b25";
+        document.getElementById("staffToDoContainer").style.display = "block";
+    
+    }
+
+    function projectsClicked(){
+        document.getElementById("toDoBttn").style.backgroundColor = "rgb(174, 168, 162)";
+        document.getElementById("staffToDoContainer").style.display = "none";
+        document.getElementById("staffBttn").style.backgroundColor = "rgb(174, 168, 162)";
+        document.getElementById("staffInfoContainer").style.display = "none";
+        document.getElementById("projectsBttn").style.backgroundColor = "#be6b25";
+        document.getElementById("staffProjectsContainer").style.display = "block";
+    }
+
+
+    // setting projects as the initial display
+    projectsClicked();
+	
+	dashboard.addEventListener("click", function() {
+		var user = sessionStorage.getItem("user");
+		var a = document.getElementById("dashboard");
+		switch (user) {
+			case "a":
+				a.href = "AdminDashboard.html";
+				break;
+			case "g":
+				a.href = "userdash.html";
+				break;					
+			case "m":
+				a.href = "managerdash.html";
+				break;
+			default:
+				a.href = "#";
+		}
+	});
+		
+	var inviteForm = document.getElementById("inviteuseropaquebg");
+	
+	function openForm() {
+		inviteForm.style.display = "block";
+	}
+
+	function closeForm() {
+		inviteForm.style.display = "none";
+		document.getElementById("email").value = "";
+		document.getElementById("emailError").style.display = "none";
+	}
+	
+	function sendInvite() {
+		var email = document.getElementById("email").value;
+		var label = document.getElementById("emailError");
+		if (email.slice(email.length - 18).toLowerCase() != "@make-it-all.co.uk") {
+			label.innerHTML = "Email address is not valid";
+			label.style.color = "red";
+			label.style.display = "block";
+		}
+		else {
+			label.innerHTML = "Invite sent!";
+			label.style.color = "#2fe617";
+			label.style.display = "block";
+		}
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Register | Make-It-All</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="loginStyle.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
+	<script src="Register.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+	<br>
+	<div id="content" class="container-fluid">
+		<div id="top">
+			<img src="logo.PNG" id="logo" />
+			<h2 id="title"><b>Register</b></h2>
+		</div><br>
+		<div id="main">
+			<form method="get" id="portal">
+				<p>
+					<label for="firstName" id="lblFirstName">First Name</label>
+					<input name="firstName" type="text" id="firstName" class="details" required /><br><br>
+				</p>
+				<p>
+					<label for="surname" id="lblSurname">Surname</label>
+					<input name="surname" type="text" id="surname" class="details" required /><br><br>
+				</p>
+				<p>
+					<label for="email" id="lblEmail">Email</label>
+					<input name="email" type="text" id="email" class="details" oninput="detailsInput('email')" required /><br><br>
+				</p>
+				<p>
+					<label for="role" id="lblRole">Role</label>
+					<select name="role" id="role" class="details">
+						<option value="Admin">Admin</option>
+						<option value="General Staff">General Staff</option>
+						<option value="Manager">Manager</option>
+					</select><br><br>
+				</p>
+				<p>
+					<label for="password" id="lblPassword">Password</label>
+					<input name="password" type="password" id="password" class="details" onfocusout="passwordClose()" onfocus="passwordClick()" oninput="detailsInput('password')" /><br><br>
+				</p>
+				<p>
+					<label for="confirm" id="lblConfirm">Confirm Password</label>
+					<input name="confirm" type="password" id="confirm" class="details" onfocusout="passwordClose()" onfocus="passwordClick()" oninput="detailsInput('confirm')" /><br>
+				</p>
+				<div id="passwordDetails" style="display: none; text-align: left; padding: 1%; padding-left: 5%; width: 107%">
+					<br>
+					<h5 id="length" style="color: red;">Password must be at least 8 characters</h5>
+					<h5 id="lowercase" style="color: red">Password must contain a lowercase letter</h5>
+					<h5 id="uppercase" style="color: red">Password must contain an uppercase letter</h5>
+					<h5 id="number" style="color: red">Password must contain a number</h5>
+					<h5 id="special" style="color: red">Password must contain a special character</h5>
+					<h5 id="match" style="color: #2fe617">Passwords must match</h5>
+				</div>
+				<br>
+				<input type="submit" id="register" name="register" value="Register" onclick="submitClick()" />
+				<input type="submit" id="submit" name="submit" value="Login" style="float:right" onclick="parent.location='login.html'"/><br>
+				<h5 id="registerError" style="text-align: left; padding: 1%; color: red; display: none"></h5>
+			</form>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>
+</body>
+</html>

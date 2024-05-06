@@ -1,0 +1,1305 @@
+/* single.html CSS */
+* {
+  box-sizing: border-box;
+  font-family: 'Quicksand', sans-serif;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	box-sizing: border-box;
+}
+
+:root {
+    --footer-height: 100px; 
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+	background: #f6f6f6;
+}
+
+.page-wrapper {
+    flex: 1;
+}
+
+
+
+.clearfix::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.text-input {
+    padding: 0.2rem 1rem;
+    display: block;
+    width: 100%;
+    border-radius: 0px;
+    border: 1px solid #e0e0e0;
+    outline: none;
+    color: #444;
+    line-height: 1.5rem;
+    font-size: 1.1em;
+    margin-bottom: 25px;
+
+}
+
+.edit-post, .delete-post {
+  display: none; /* initially hide edit/delete until its confirmed user created the post */
+}
+
+
+/*Beginning of css for navbar*/
+
+
+.myNav{
+  grid-area: myNav;
+  background-color: #faf9f9;
+  width: 100%;
+  background-color: #efbf1a;
+  overflow: visible
+  
+}
+
+/* The popup form - hidden by default */
+.popup-background {
+display: none; 
+position: fixed; 
+z-index: 1; 
+left: 0;
+top: 0;
+width: 100%; 
+height: 100%; 
+overflow: auto;
+background-color: rgba(0,0,0,0.4);
+}
+.inviteuser-form{
+width: 25%;
+padding: 10px;
+background-color: white;
+margin: auto;
+margin-top: 90px;
+}
+.inviteuser-form input[type=text], .form-container input[type=password] {
+width: 100%;
+padding: 15px;
+margin: 5px 0 22px 0;
+border: none;
+background: #f1f1f1;
+}
+.inviteuser-form input[type=text]:focus, .form-container input[type=password]:focus {
+background-color: #ddd;
+outline: none;
+}
+.inviteuser-form .btn {
+background-color: #efbf1a;
+color: white;
+padding: 16px 20px;
+border: none;
+cursor: pointer;
+width: 100%;
+margin-bottom:10px;
+opacity: 0.8;
+}
+.inviteuser-form .cancel {
+background-color: #bbb;
+transition: 0.4s;
+}
+.inviteuser-form .cancel:hover {
+background-color: red;
+opacity: 1;
+}
+
+.nav{
+  max-width: fit-content;
+  max-height: 90px;
+}
+
+.navbar{
+height: 90px;
+border: none;
+
+}
+
+.navbar-brand {
+  margin-left: 1px; /* or whatever size you want */
+  padding-top: 7px; /* this will push it down */
+  padding-bottom: 7px; /* this can give more space at the bottom */
+  
+}
+
+#logo {
+max-width: 1000px; /* Set a maximum width for the logo */
+height: auto; /* Maintain the aspect ratio */
+margin-right: -1000px; /* Add some margin to separate the logo from text */
+}
+
+.navbar-collapse {
+  position: relative;  /* Ensure it's positioned */
+  z-index: 1000;       /* Any high number to ensure it's on top of other page elements */
+}
+
+.navbar.navbar-expand-lg.navbar-dark.bg-dark {
+  background-color: #efbf1a !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: white;
+  font-size: 1.2em;
+  text-decoration: none;
+  padding: 23px 30px; /* Keep padding between elements on the nav bar horizontally and vertically*/
+  height: 90px;
+  padding-top: 30px;
+  background-color: #efbf1a;
+
+
+}
+
+
+
+
+.navbar-dark .navbar-nav .nav-link:hover {
+  background-color: #f6dc80; /* Background color on hover */
+  color: black; /* Text color on hover */
+}
+
+
+
+
+/* Style the dropdown menu */
+.navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+  position: absolute;
+  top: 90px;
+  width: 170px;
+  background: white;
+  box-shadow: none;
+  border: 0; /* Remove any border that might create a gap */
+  padding: 0; /* Remove any padding to ensure full highlighting */
+  margin: 0; /* Remove any margin that might create a gap */
+  
+}
+
+/* Style the dropdown menu links */
+.navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu .dropdown-item {
+  padding: 10px;
+  color: black;
+  font-size: 1.2em;
+  text-decoration: none;
+  border: 0; /* Remove any border on the dropdown items */
+  margin: 0; /* Remove any margin on the dropdown items */
+}
+
+
+
+/* Style the dropdown menu links on hover */
+.navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu .dropdown-item:hover {
+  background-color: #f6dc80;; /* Background color on hover */
+  color: black; /* Text color on hover */
+}
+
+/* Style the logo */
+.navbar .navbar-brand {
+  float: left;
+  height: inherit;
+  margin-left: 1em;
+  color: white;
+  display: flex;
+  
+  
+}
+
+.material-symbols-outlined {
+font-variation-settings:
+'FILL' 0,
+'wght' 400,
+'GRAD' 0,
+'opsz' 24;
+}
+
+#profileIcon {
+font-size: 38px;
+vertical-align: middle;
+}
+
+.logo{
+  /* want the image to stretch to larger than original size */
+  max-width: 100%; 
+  height: auto;
+  max-height: fit-content;
+  background-size: cover;
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*End of css for navbar*/
+
+
+textarea {
+    width: 50%; 
+    height: 200px;
+    padding: 10px; 
+    margin-top: 5px; 
+    border: 1px solid #ccc;
+    border-radius: 5px; 
+    font-size: 1em; 
+    resize: none;
+	margin-left: 5px;
+}
+
+
+.post-content p {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: keep-all;
+  hyphens: auto; 
+}
+
+.post-content {
+  padding-right: 10px; 
+}
+
+
+
+.page-wrapper.d-flex {
+    display: flex;
+    flex-direction: row;
+}
+
+.content-wrapper {
+    padding-left: 30px;
+}
+
+.post-content {
+  box-sizing: border-box; 
+  }
+
+
+.comments {
+
+	
+    flex: 1;    
+    overflow-x: hidden; 
+    box-sizing: border-box;  
+}
+	
+
+
+.sidebar {
+    flex: 0 0 30%;
+    border-left: 1px solid #ccc;
+    padding-left: 20px;
+	overflow-x: hidden; 
+	height: 100%;
+	padding: 5%;
+	border-left: 1px solid #ccc; 
+	width: 100%; 
+
+}
+
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.container-fluid {
+  display: flex; /* Makes it a flex container */
+  flex-direction: column; /* Stacks children vertically */
+  height: 100%; /* Ensures it takes up full parent height */
+}
+
+
+
+
+#comment {
+    width: 65%;
+    height: 200px;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    resize: none;
+	margin-bottom: 20px;
+}
+
+/* Button styles */
+#postButton {
+  
+	background: #2980B9; 
+  color: white; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px; 
+  font-size: 1.2em; 
+  cursor: pointer; 
+	margin-top: 10px;
+	display: inline-block; 
+	margin-right: 5px;
+	cursor: pointer;
+	text-align: center;
+	margin-bottom: 15px;
+	vertical-align: middle;
+  margin-left: 5px; 
+  margin-bottom: 50px;
+
+}
+
+
+
+
+#postButton:hover {
+    background-color: #216a9b; 
+}
+
+
+
+
+
+
+.media {
+    margin: 0;
+    padding: 0;
+}
+
+.media-body {
+	margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+	border-radius: 5px;
+
+}
+
+
+
+
+
+.media.comment {
+    display: flex;
+	flex-direction: column;
+    justify-content: space-between;
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    position: relative; 
+	align-items: flex-start;
+	
+
+}
+
+.media.comment {
+  
+    border: 1px solid #ddd;
+    
+   
+    border-radius: 10px; 
+    
+  
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9; 
+}
+
+
+
+
+.media.comment .comment-metadata {
+    
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+}
+
+
+.content {
+    display: flex; 
+    align-items: flex-start;
+}
+
+.comment.sidebar-comment {
+    max-width: 90%;
+}
+
+.page-wrapper.d-flex {
+    display: flex;
+}
+
+
+.content-wrapper {
+    padding-left: 30px;
+    flex-grow: 0; 
+    flex-basis: 70%;   
+    max-width: 70%; 
+
+}
+
+
+
+
+
+
+.comment-content {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-line;
+    flex-grow: 1; 
+	
+	
+	
+}
+
+#contentCharsLeft {
+  font-weight: normal;
+  font-size: 0.8em;
+  color: #6c757d;
+  display: none; 
+  position: relative;
+  margin-right: 10px;
+}
+
+.media-body.comment-content {
+    margin-bottom: 10px; 
+}
+
+
+.comment-actions {
+
+    bottom: 10px;
+    right: 10px;
+
+    display: flex;
+    gap: 10px; 
+
+}
+
+.comment-actions i {
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+
+.comments .media.comment {
+    max-width: 100%;
+}
+
+.sidebar .media.comment {
+    max-width: 100%; 
+}
+
+.comment-content, .comment p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-line;
+    max-width: 100%;
+}
+
+
+
+.previous-comments {
+    margin-bottom: 40px;
+}
+
+
+/*Footer Content*/
+.footer {
+  background: #303036;
+  color: #d3d3d3;
+  height: 160px;
+  position: relative;
+}
+.footer .footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  margin-left: 2vw;
+}
+.footer-title {
+  font-family: 'Churchward Design Bold'; 
+  font-size: 3vh;  
+  margin-bottom: 0.5vh; 
+}
+.footer .footer-content .footer-section {
+  flex: 1;
+  padding: 2px;
+}
+.footer .footer-content .about .contact-details span {
+  display: block;
+  font-size: 1.1em;
+}
+
+
+
+
+.comment-actions .fa-edit:hover {
+    color: #ffa200;
+}
+
+.comment-actions .fa-trash-alt:hover {
+    color: #ff0000;
+}
+
+
+
+.post-user, .post-date {
+    font-size: 0.9em;
+    color: #777;
+    margin-bottom: 5px;
+}
+
+.post-date {
+    float: right;
+}
+
+
+.comment-container {
+    position: relative;
+}
+
+
+
+.comment-metadata {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+	flex-wrap: wrap; 
+    width: 100%;
+    bottom: 0;
+    left: 0;
+}
+
+.comment-user-date {
+    display: flex;
+    align-items: center;
+}
+
+.fa-user, .fa-calendar {
+    margin-right: 5px;
+}
+
+.comment-actions {
+    display: flex;
+    align-items: center;
+	flex-wrap: wrap; 
+}
+
+
+
+
+
+.like-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.like-comment, .like-post {
+  cursor: pointer;
+  color: black; 
+}
+
+.like-comment.liked, .like-post.liked {
+  color: #2980B9; 
+}
+
+.like-comment.liked:hover, .like-post.liked:hover {
+  color: #2980B9; 
+}
+
+
+.error-message-wrapper, .success-message-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    width: 70%; 
+    margin: 10px auto;
+}
+
+.message {
+    font-size: 1em;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    display: inline-flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+#error-message {
+    background: #FFC1C1;
+    color: #D90429; 
+    display: none;
+}
+
+#success-message {
+    background: #D5ECC2; 
+    color: #31A24C; 
+    display: none;
+}
+
+
+.error-icon {
+    color: #D90429;
+}
+
+.success-icon {
+    color: #31A24C;
+}
+
+
+#error-message.show, #success-message.show {
+    display: block;
+}
+
+
+.submit-message-container {
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
+}
+
+
+.message-container {
+    display: flex;
+    align-items: center; 
+}
+
+.submit-message-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; 
+    gap: 10px; 
+	margin-bottom: 40px;
+}
+
+.combined-message-wrapper {
+    position: relative; 
+}
+
+.error-message-wrapper, .success-message-wrapper {
+    position: relative; 
+    top: 0;
+    left: 0;
+}
+
+
+
+.comments-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    margin: 10px 0; 
+    padding-left: 0; 
+}
+
+
+.comments-header h2 {
+    margin-right: 5px;
+    flex-shrink: 0; 
+}
+
+
+#topCommentsBtn, #newestCommentsBtn {
+    padding: 8px 20px;
+    cursor: pointer;
+    background-color: #787878;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.3s;
+  
+}
+
+#topCommentsBtn:hover, #newestCommentsBtn:hover {
+    background-color: #404040;
+    transform: scale(1.05);
+}
+
+
+#topCommentsBtn, #newestCommentsBtn {
+
+    margin-bottom: 10px; 
+}
+
+
+
+
+.container {
+  height: 100%;
+  width: 100%;
+  max-width: none; 
+  padding-left: 20px;
+  padding-right: 20px; 
+  margin-left: auto; 
+  margin-right: auto; 
+}
+
+
+
+.row {
+  width: calc(100% - 40px); 
+  margin: 0;
+  flex-grow: 1; 
+  overflow-y: auto;
+ 
+  
+}
+
+
+.post-header h2 {
+  margin-top: 20px; 
+  margin-bottom: 20px; 
+}
+
+
+.col-lg-8 {
+  padding-left: 30px; 
+}
+
+.col-lg-4 {
+  position: relative;
+  padding-top: 20px; 
+  padding-left: 30px;
+}
+
+.col-lg-4::before {
+  content: ""; 
+  position: absolute;
+  top: 0; 
+  left: 0; 
+  bottom: 0; 
+  border-left: 1px solid #ccc; 
+  padding-left: 29px; 
+}
+.row{
+	width: 100%;
+}
+
+
+.col-lg-4, .col-lg-8 {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  padding: 0; 
+}
+
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.far {
+  margin-right: 5px; 
+}
+
+
+.comments-header {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px; 
+    width: 100%;
+    margin: 10px auto;
+    margin-left: 1%;
+}
+
+
+.comments-header button {
+    width: auto; 
+    max-width: 100%; 
+	margin-bottom: 10px;
+}
+
+.user-comments .media.comment.content-comment,
+.user-comments .media.comment {
+    max-width: 95%;
+  
+    margin-right: auto;
+}
+
+
+
+
+
+
+.post.single-post {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  position: relative;
+
+}
+
+
+.post.single-post {
+  margin-top: 20px; 
+  width: 80%; 
+
+  background: #ffffff;
+  border-radius: 4px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  overflow: hidden; 
+}
+
+.post-content p {
+  white-space: pre-line;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+#topCommentsBtnBtn, #newestCommentsBtn {
+    padding: 8px 10px;
+    cursor: pointer;
+    background-color: #787878; 
+    color: #ffffff; 
+    border: none; 
+    border-radius: 5px;
+    font-weight: 500; 
+    transition: background-color 0.3s, transform 0.3s; 
+}
+
+#topPostsBtn:hover, #newestPostsBtn:hover {
+    background-color: #404040; 
+    transform: scale(1.05);
+}
+
+#topPostsBtn {
+    margin-left: 10px; 
+}
+
+#newestPostsBtn {
+    margin-left: 10px; 
+
+}
+
+
+
+.post .post-topic {
+  color: #2980B9;
+}
+
+.comment-actions .edit-post,
+.comment-actions .delete-post {
+  margin-right: 5px; 
+  cursor: pointer;
+}
+
+
+.comment-actions .edit-post,
+.comment-actions .delete-post {
+  color: #333; 
+  font-size: 16px; 
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0, 0, 0, 0.5); 
+}
+
+.modal-content {
+  background-color: #ffffff;
+  margin: 10% auto; 
+  padding: 20px;
+  border-radius: 5px; 
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  width: 80%;
+  max-width: 500px; 
+}
+
+.modal-header,
+.modal-footer {
+  padding: 10px 0;
+  text-align: center;
+  background: #f2f2f2; 
+  border-bottom: 1px solid #eaeaea; 
+}
+
+.modal-footer {
+  border-top: none; 
+  border-bottom-left-radius: 5px; 
+  border-bottom-right-radius: 5px;
+}
+
+.modal-title {
+  margin: 0;
+  color: #333; 
+}
+
+.modal-body {
+  margin: 15px 0;
+  padding: 15px;
+  border: 1px solid #eaeaea;
+  border-radius: 5px; 
+  background: #fff; 
+  color: #555; 
+}
+
+.modal-actions {
+  text-align: center; 
+  padding: 10px 0;
+}
+
+.modal-yes, .modal-no {
+  padding: 10px 20px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 3px; 
+  cursor: pointer;
+  font-weight: bold; 
+}
+
+.modal-yes {
+  background-color: #2980B9; 
+  color: white; 
+}
+
+.modal-no {
+  background-color: #6c757d; 
+  color: white; 
+}
+
+
+
+.modal-yes:hover {
+  background-color: #216a9b; 
+}
+
+.modal-no:hover {
+  background-color: #545b62;
+}
+
+
+.comment {
+
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.comment.fade-out {
+  opacity: 0;
+  transform: scale(0.95); 
+}
+
+.delete-post-confirm {
+  background-color: red; 
+}
+
+#deletePostModal .confirm-delete {
+  background-color: red; 
+}
+
+
+#confirmationModal .modal-yes {
+  background-color: #2980B9; 
+
+}
+
+
+#confirmationModal .modal-no {
+  background-color: #6c757d; 
+ 
+}
+
+
+#deletePostModal .modal-yes {
+  background-color: red; 
+ 
+}
+
+
+#deletePostModal .modal-no {
+  background-color: #6c757d; 
+
+}
+
+
+
+#confirmationModal .modal-yes:hover {
+  background-color: #216a9b; 
+}
+
+
+#confirmationModal .modal-no:hover {
+  background-color: #545b62; 
+}
+
+
+#deletePostModal .modal-yes:hover {
+  background-color: #cc0000; 
+}
+
+
+#deletePostModal .modal-no:hover {
+  background-color: #545b62;
+}
+
+
+.comments-buttons-wrapper button {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  background-color: #f8f8f8;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.comments-buttons-wrapper button:hover {
+  background-color: #e7e7e7;
+}
+
+.comments-buttons-wrapper button.active {
+  color: white;
+  background-color: #2980B9;
+  border-color: #2980B9;
+}
+
+
+
+#topCommentsBtn, #newestCommentsBtn {
+  background-color: #e0e0e0;
+  color: #333; 
+  border: 1px solid #ddd; 
+  padding: 10px 20px;
+  cursor: pointer;
+  outline: none;
+}
+
+
+#topCommentsBtn:hover, #newestCommentsBtn:hover {
+  background-color: #e7e7e7;
+  color: #222; 
+}
+
+
+#topCommentsBtn.active, #newestCommentsBtn.active {
+  background-color: #2980B9; 
+  color: white; 
+  border-color: #2980B9; 
+}
+
+
+#topCommentsBtn.active:hover, #newestCommentsBtn.active:hover {
+  background-color: #216a9b; 
+}
+
+
+.comments-buttons-wrapper button {
+  color: #333;
+  background-color: #f0f0f0; 
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  margin: 0 5px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+.comments-buttons-wrapper button:hover {
+  background-color: #e0e0e0; 
+}
+
+
+.comments-buttons-wrapper button.active {
+  color: #fff;
+  background-color: #2980B9;
+  border-color: #2980B9; 
+}
+
+
+#topCommentsBtn, #newestCommentsBtn {
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+}
+
+#savePostModal .modal-content {
+
+  width: 70%; 
+}
+
+
+
+#savePostModal #confirmSave,
+#savePostModal #cancelSave {
+  padding: 10px 20px; 
+  margin-top: 20px;
+  border: none; 
+  border-radius: 4px;
+  cursor: pointer; 
+  
+  transition: background-color 0.3s ease; 
+  width: auto; 
+  box-sizing: border-box; 
+  display: inline-block; 
+}
+
+
+#savePostModal #confirmSave {
+  background-color: #4CAF50; 
+  color: white;
+  margin-right: 0px; 
+}
+
+#savePostModal #cancelSave {
+  background-color: #f44336;
+  color: white;
+  margin-right: 0; 
+}
+
+
+#savePostModal #confirmSave:hover,
+#savePostModal #cancelSave:hover {
+  opacity: 0.8;
+}
+
+#savePostModal .close {
+  display: none; 
+}
+
+
+
+
+@media (max-width: 991px) {
+
+    .navbar-collapse {
+        background-color: #de6b25; 
+        padding: 10px; 
+    }
+	
+	.navbar-dark .navbar-nav .nav-link {
+		color: white;
+		font-size: 1.2em;
+		text-decoration: none;
+		padding: 25px 30px;
+		padding-top: 20px;
+
+	
+	}
+
+    .navbar-dark .navbar-nav .nav-item {
+        background-color: transparent;
+	}
+
+    .navbar-dark .navbar-nav .nav-item .nav-link {
+        color: white; 
+    }
+
+    .navbar-dark .navbar-nav .nav-item .nav-link:hover {
+        background-color: #ffa200; 
+        color: black; 
+    }
+	
+
+  .col-lg-8 .post-content {
+    width: 90%;
+  
+    margin-right: auto;
+  }
+  
+  
+  #comment-form #comment {
+    width: 80%;
+    display: block; 
+
+    margin-right: auto; 
+  }
+  
+
+  .comments-header {
+    width: 95%; 
+    margin-right: 5px;
+  }
+
+
+  .previous-comments .media.comment.content-comment,
+  .previous-comments .media.comment {
+    max-width: 95%;
+  
+    margin-right: auto;
+  }
+  
+  .user-comments .media.comment.content-comment,
+  .user-comments .media.comment {
+    max-width: 95%;
+  
+    margin-right: auto;
+  }
+  
+  .col-lg-8 .post-content {
+	width: 100%;
+  
+  
+}
+  
+  
+
+  .post.single-post {
+	  margin-top: 20px; 
+
+	  width: 95%; 
+	  margin-left: -2px; 
+	  margin-right: auto;
+	  background: #ffffff; 
+	  border-radius: 4px; 
+	  padding: 20px; 
+	  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+	  overflow: hidden; 
+	}
+	  
+  #comment {
+    width: 100%;
+    margin-left: 5px; 
+    margin-right: 0; 
+    padding-left: 0;
+    padding-right: 0; 
+  }
+  
+  .comments textarea#comment {
+    width: 100%; 
+    box-sizing: border-box; 
+ 
+    padding: 8px 12px; 
+    border: 1px solid #ccc; 
+  }
+  
+  .comments {
+    width: 100%; 
+
+  }
+  
+  
+	  
+}

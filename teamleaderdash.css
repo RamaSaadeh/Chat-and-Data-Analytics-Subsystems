@@ -1,0 +1,1169 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Quicksand', sans-serif;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	box-sizing: border-box;
+}
+
+/*Beginning of css for navbar*/
+
+
+.myNav{
+	grid-area: myNav;
+	background-color: #faf9f9;
+	width: 100%;
+	background-color: #efbf1a;
+	overflow: visible
+	
+  }
+  
+  /* The popup form - hidden by default */
+  .popup-background {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+  }
+  .inviteuser-form{
+  width: 25%;
+  padding: 10px;
+  background-color: white;
+  margin: auto;
+  margin-top: 90px;
+  }
+  .inviteuser-form input[type=text], .form-container input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+  }
+  .inviteuser-form input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+  }
+  .inviteuser-form .btn {
+  background-color: #be6b25;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+  }
+  .inviteuser-form .cancel {
+  background-color: #bbb;
+  transition: 0.4s;
+  }
+  .inviteuser-form .cancel:hover {
+  background-color: red;
+  opacity: 1;
+  }
+  
+  .nav{
+	max-width: fit-content;
+	max-height: fit-content;
+  }
+  
+  .navbar{
+  height: 90px;
+  border: none;
+  
+  }
+  
+  .navbar-brand {
+	margin-left: 1px; /* or whatever size you want */
+	padding-top: 7px; /* this will push it down */
+	padding-bottom: 7px; /* this can give more space at the bottom */
+	
+  }
+  
+  #logo {
+  max-width: 1000px; /* Set a maximum width for the logo */
+  height: auto; /* Maintain the aspect ratio */
+  margin-right: -1000px; /* Add some margin to separate the logo from text */
+  }
+  
+  .navbar-collapse {
+	position: relative;  /* Ensure it's positioned */
+	z-index: 1000;       /* Any high number to ensure it's on top of other page elements */
+  }
+  
+  .navbar.navbar-expand-lg.navbar-dark.bg-dark {
+	background-color: #efbf1a !important;
+  }
+  
+  .navbar-dark .navbar-nav .nav-link {
+	color: white;
+	font-size: 1.2em;
+	text-decoration: none;
+	padding: 23px 30px; /* Keep padding between elements on the nav bar horizontally and vertically*/
+	height: 90px;
+	padding-top: 30px;
+	background-color: #efbf1a;
+  
+  
+  }
+  
+  
+  
+  
+  .navbar-dark .navbar-nav .nav-link:hover {
+	background-color: #f6dc80; /* Background color on hover */
+	color: black; /* Text color on hover */
+  }
+  
+  
+  
+  
+  /* Style the dropdown menu */
+  .navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+	display: block;
+	position: absolute;
+	top: 90px;
+	width: 170px;
+	background: white;
+	box-shadow: none;
+	border: 0; /* Remove any border that might create a gap */
+	padding: 0; /* Remove any padding to ensure full highlighting */
+	margin: 0; /* Remove any margin that might create a gap */
+	
+  }
+  
+  /* Style the dropdown menu links */
+  .navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu .dropdown-item {
+	padding: 10px;
+	color: black;
+	font-size: 1.2em;
+	text-decoration: none;
+	border: 0; /* Remove any border on the dropdown items */
+	margin: 0; /* Remove any margin on the dropdown items */
+  }
+  
+  
+  
+  /* Style the dropdown menu links on hover */
+  .navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu .dropdown-item:hover {
+	background-color: #f6dc80;; /* Background color on hover */
+	color: black; /* Text color on hover */
+  }
+  
+  /* Style the logo */
+  .navbar .navbar-brand {
+	float: left;
+	height: inherit;
+	margin-left: 1em;
+	color: white;
+	display: flex;
+	
+	
+  }
+  
+  .material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
+  }
+  
+  #profileIcon {
+  font-size: 38px;
+  vertical-align: middle;
+  }
+  
+  .logo{
+	/* want the image to stretch to larger than original size */
+	max-width: 100%; 
+	height: auto;
+	max-height: fit-content;
+	background-size: cover;
+	text-align: center;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+  }
+  
+  /*End of css for navbar*/
+
+
+#pageheader {
+	color: #5e5d5a;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 15px;
+	padding-right: 15px;
+	font-size: 32;
+	background-color: white;
+}
+.switchprojbtn {
+	background-color: #d3d3d3;
+	color: white;
+	padding: 10px;
+	font-size: 14px;
+	border: 1px solid white;
+	cursor: pointer;
+	border-radius: 10px;
+}
+#switchsymbol {
+	padding-left: 5px;
+	vertical-align: top;
+	font-size: 20;
+}
+.switchprojbtn:hover, .switchprojbtn:focus {
+  background-color: #2980B9;
+}
+#ToDoListbtn {
+	background-color: #d3d3d3;
+	color: white;
+	padding: 10px;
+	font-size: 14px;
+	border: 1px solid white;
+	cursor: pointer;
+	border-radius: 10px;
+}
+#listsymbol {
+	padding-left: 5px;
+	vertical-align: top;
+	font-size: 20;
+}
+#ToDoListbtn:hover, #ToDoListbtn:focus {
+	background-color: #2980B9;
+  }
+
+
+.SwitchProject {
+	float: right;
+	position: relative;
+}
+
+.switchprojdropdown-content a:hover {background-color: #ddd;}
+
+.ToDoList-form{
+	background-color: #d3d3d3;
+	margin: 5% auto;
+	padding-left: 10px;
+	padding-right: 20px;
+	padding-bottom: 20px;
+	padding-top: 10px;
+	width: 50%;
+	height: auto;
+	border-radius: 20px;
+}
+.ToDoList-form #formheader{
+	color: white;
+}
+#toDoList{
+    width: 100%;
+	border-radius: 10px;
+    height: fit-content;
+    background-color: #f0efef;
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+#toDoUL {
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+}
+
+#toDoUL li p{
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  display: inline-block;
+  font-size: 15;
+  max-width: 100%;
+  vertical-align: top;
+}
+
+/* Style the list items */
+#toDoUL li {
+  cursor: pointer;
+  position: relative;
+  padding: 12px 8px 12px 40px;
+  list-style-type: none;
+
+  background: #faf9f9;
+  font-size: 18px;
+  transition: 0.2s;
+  
+  /* make the list items unselectable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+#toDoUL li:nth-child(odd) {
+    background: #f2ececf9;
+}
+#toDoUL li:hover {
+    background: #eec46b;
+}
+#toDoUL li {
+    display: block;
+}
+#toDoUL li.checked {
+  background: #888;
+  color: #fff;
+  text-decoration: line-through;
+}
+#toDoUL li.checked p {
+  text-decoration: line-through;
+  background: #888;
+}
+.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 12px 16px 12px 16px;
+}
+.close:hover {
+    background-color: #f2372a;
+    color: white;
+}
+#toDoHeader {
+  text-align: left;
+  color: #2c2b2a;
+  text-align: left;
+  height: 40px;
+}
+#toDoHeader:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+#toDoAddBtn {
+    width: 25%;
+	padding-top: 7px;
+    background: #d9d9d9;
+    color: #555;
+    float: left;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+    border-radius: 5px;
+	height: 100%;
+}
+#toDoAddBtn:hover {
+  background-color: #bbb;
+}
+#toDoInput{
+	float: left;
+	height: 100%;
+	border-radius: 5px;
+	font-size: 16px;
+	width: 75%;
+}
+
+
+ /*All boxes*/
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: white;
+}
+.flex-item-myproject {
+	flex: 60%;
+	margin: 0.5%;
+	background-color: #d3d3d3;
+	padding: 15px;
+	border-radius:15px;
+	height: 400px;
+}
+.flex-item-projectstatussection {
+	flex: 20%;
+	margin: 0.5%;
+	background-color: #d3d3d3;
+	border-radius:15px;
+	height: 400px;
+	padding-bottom: 10%;
+}
+.flex-item-myteamsection {
+	flex: 30%;
+	margin: 0.5%;
+	background-color: #d3d3d3;
+	padding: 15px;
+	border-radius:15px;
+	height: 400px;
+}
+.flex-item-workloadsection {
+	flex: 30%;
+	margin: 0.5%;
+	background-color: #d3d3d3;
+	padding: 15px;
+	border-radius:15px;
+	height: 400px;
+}
+.flex-item-alertssection {
+	flex: 15%;
+	margin: 0.5%;
+	background-color: #d3d3d3;
+	padding: 15px;
+	border-radius:15px;
+	height: 400px;
+}
+#section_header {
+	font-size: 25;
+	font-weight: 100;
+	color: white;
+	margin-left: 0.5%;
+}
+
+.section-header{
+	font-size: 25;
+	font-weight: 100;
+	color: white;
+	margin-left: 0.5%;
+}
+
+
+
+/*MyTasks content*/
+.addtaskbtn {
+  background-color: #efbf1a;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 25px;
+  width: 90px;
+  height: 30px;
+  float: right;
+  font-size: 14;
+}
+.popup-background {
+	display: none; 
+	position: fixed; 
+	z-index: 1; 
+	left: 0;
+	top: 0;
+	width: 100%; 
+	height: 100%; 
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgba(0,0,0,0.4);
+}
+.addtask-form {
+	background-color: #fefefe;
+	margin: 5% auto;
+	padding-left: 10px;
+	padding-right: 20px;
+	padding-bottom: 20px;
+	padding-top: 10px;
+	border: 2px solid #efbf1a;
+	width: 40%;
+	height: auto;
+	border-radius: 20px;
+}
+.form-title {
+	border-bottom: 1px solid grey;
+	padding-bottom: 5px;
+}
+#formheader {
+	color: #efbf1a;
+	font-size: 26;
+	font-weight: bold;
+	margin-left: 20%;
+}
+#formcontent {
+	padding-left: 10px;
+	padding-top: 10px;
+}
+#cancel-formbtn {
+	background-color: white;
+	border-radius: 15px;
+	border: none;
+	width: 75px;
+	height: 30px;
+	float: left;
+	text-align: center;
+	transition-duration: 0.3s;
+	cursor: pointer;
+}
+#cancel-formbtn:hover {
+	background-color:#efbf1a;
+	color: white;
+}	
+
+.addtaskform_labels {
+	color: grey;
+	font-size: 12;
+	padding-left: 10px;
+}
+#new_taskID{
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid grey;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+#new_taskname{
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid grey;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+#new_statusselect {
+	width: 100%;
+	padding: 16px 20px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	color: grey;
+}
+
+#new_deadline {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+#new_hrs{
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	margin-bottom: 20px;
+}
+
+
+#new_choosestaff_select {
+	width: 100%;
+	height: 150px;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	color: grey;
+}
+
+#addtask-formbtn {
+	width: 100%;
+	background-color: #efbf1a;
+	border-radius: 15px;
+	border: none;
+	color: white;
+	padding: 16px 32px;
+	text-decoration: none;
+	margin: 4px 2px;
+	cursor: pointer;
+	margin-top: 5px;
+}
+
+.Sortbybtn {
+  background-color: white;
+  color: black;
+  font-size: 16;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  width: 100px;
+  height: 30px;
+  border-radius: 25px;
+}
+
+.Sortbybtn:hover, .Sortbybtn:focus {
+  background-color: #2980B9;
+}
+
+.SortByDropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  font-size: 14;
+  min-width: 130px;
+  border-radius: 10px;
+  z-index: 1;
+  right: 0;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.SortByDropdown a:hover {
+	background-color: #ddd;
+}
+
+.show {
+	display: block;
+}
+
+.tablediv {
+	margin-top: 20px;
+	border-radius:20px;
+	height: 300px;
+	overflow-y: scroll;
+}
+table {
+	border-collapse: collapse;
+	width: 100%;
+	text-align: left;
+	background-color: white;
+	font-weight: bold;
+}
+
+th {
+	font-size: 16;
+	color: white;
+	background-color: #efbf1a;
+	padding: 20px;
+	position: sticky;
+	top: 0px;
+}
+
+td {
+	font-size: 14;
+	padding: 20px;
+	border-bottom: 1px solid #ddd;
+}
+
+.notesbtn {
+	background-color: #bbb;
+	color: white;
+	border: none;
+	cursor: pointer;
+	border-radius: 25px;
+	width: 90px;
+	height: 30px;
+	font-size: 14;
+}
+.editbtn {
+	background-color: #bbb;
+	color: white;
+	border: none;
+	cursor: pointer;
+	border-radius: 25px;
+	width: 50px;
+	height: 30px;
+	font-size: 14;
+	margin-left: 20px;
+	vertical-align: bottom;
+}
+#editsymbol {
+  font-size: 20;
+}
+
+.tasknotes-form {
+	background-color: #fefefe;
+	margin: 5% auto;
+	padding-left: 10px;
+	padding-right: 20px;
+	padding-bottom: 20px;
+	padding-top: 10px;
+	border: 2px solid #efbf1a;
+	width: 40%;
+	height: auto;
+	border-radius: 20px;
+}
+#tasknotescontent {
+	width: 100%;
+	height: auto;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	color: grey;
+}
+#savenoteschanges-formbtn {
+	width: 100%;
+	background-color: #efbf1a;
+	border-radius: 15px;
+	border: none;
+	color: white;
+	padding: 16px 32px;
+	text-decoration: none;
+	margin: 4px 2px;
+	cursor: pointer;
+	margin-top: 5px;
+}
+#closenotesbtn {
+	width: 100%;
+	background-color: #bbb;
+	border-radius: 15px;
+	border: none;
+	color: white;
+	padding: 16px 32px;
+	text-decoration: none;
+	margin: 4px 2px;
+	cursor: pointer;
+	margin-top: 5px;
+}
+
+.edittask-form {
+	background-color: #fefefe;
+	margin: 5% auto;
+	padding-left: 10px;
+	padding-right: 20px;
+	padding-bottom: 20px;
+	padding-top: 10px;
+	border: 2px solid #efbf1a;
+	width: 40%;
+	height: auto;
+	border-radius: 20px;
+}
+
+#saveedittask_formbtn{
+	width: 100%;
+	background-color: #efbf1a;
+	border-radius: 15px;
+	border: none;
+	color: white;
+	padding: 16px 32px;
+	text-decoration: none;
+	margin: 4px 2px;
+	cursor: pointer;
+	margin-top: 5px;
+}
+
+#deletetaskbtn{
+	width: 100%;
+	background-color: red;
+	border-radius: 15px;
+	border: none;
+	color: white;
+	padding: 16px 32px;
+	text-decoration: none;
+	margin: 4px 2px;
+	cursor: pointer;
+	margin-top: 5px;
+}
+
+#closeedittaskbtn{
+	width: 100%;
+	background-color: #bbb;
+	border-radius: 15px;
+	border: none;
+	color: white;
+	padding: 16px 32px;
+	text-decoration: none;
+	margin: 4px 2px;
+	cursor: pointer;
+	margin-top: 5px;
+}
+#edit_taskID{
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid grey;
+	border-radius: 4px;
+	box-sizing: border-box;
+  }
+
+#edit_taskname{
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid grey;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+#edit_hrs{
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid grey;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+  
+#edit_statusselect {
+	  width: 100%;
+	  padding: 16px 20px;
+	  border: 1px solid #ccc;
+	  border-radius: 4px;
+	  color: grey;
+}
+  
+#edit_deadline {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	margin-bottom: 20px;
+}  
+#edit_choosestaff {
+	  width: 100%;
+	  height: 150px;
+	  padding: 12px 20px;
+	  margin: 8px 0;
+	  display: inline-block;
+	  border: 1px solid #ccc;
+	  border-radius: 4px;
+	  box-sizing: border-box;
+	  color: grey;
+}
+
+
+/*Project Status Content*/
+.flex-item-projectstatussection .section-header {
+	padding: 5px;
+}
+.keys-div {
+	margin-left: 5px;
+	margin-right: 5px;
+	text-align: center;
+	font-size: 16;
+	font-weight: bold;
+}
+.single-key {
+	display: inline-block;
+	padding-left: 10px;
+}
+.dot {
+	height: 15px;
+	width: 15px;
+	border-radius: 50%;
+	display: inline-block;
+}
+#piechart-div {
+	padding-top: 15px;
+	  max-width: 100%;
+	  height: 100%;
+}
+canvas {
+	position: relative;
+	width: 100%;
+	max-width: 100%;
+	height:auto;
+	margin: auto;
+	color: white;
+}
+
+
+/*My Team Content*/
+#removememberbtn {
+	background-color:#efbf1a;
+	color: white;
+	border: none;
+	cursor: pointer;
+	border-radius: 25px;
+	width: 130px;
+	height: 30px;
+	float: right;
+	margin-left: 5px;
+	font-size: 14;
+}
+#addmemberbtn {
+	background-color: #efbf1a;
+	color: white;
+	border: none;
+	cursor: pointer;
+	border-radius: 25px;
+	width: 100px;
+	height: 30px;
+	float: right;
+	font-size: 14;
+	margin-left: 5px;
+}
+#changeteamrolesbtn{
+	background-color:#efbf1a;
+	color: white;
+	border: none;
+	cursor: pointer;
+	border-radius: 25px;
+	width: 110px;
+	height: 30px;
+	float: right;
+	font-size: 14;
+}
+.changerole-form {
+	background-color: #fefefe;
+	margin: 5% auto;
+	padding-left: 10px;
+	padding-right: 20px;
+	padding-bottom: 20px;
+	padding-top: 10px;
+	border: 2px solid #efbf1a;
+	width: 40%;
+	height: auto;
+	border-radius: 20px;
+}
+#select_changerole {
+	width: 100%;
+	height: auto;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	color: grey;
+}
+#changerole-formbtn {
+	width: 100%;
+	background-color:#efbf1a;
+	border-radius: 15px;
+	border: none;
+	color: white;
+	padding: 16px 32px;
+	text-decoration: none;
+	margin: 4px 2px;
+	cursor: pointer;
+	margin-top: 5px;
+}
+
+.addstaff-form {
+	background-color: #fefefe;
+	margin: 5% auto;
+	padding-left: 10px;
+	padding-right: 20px;
+	padding-bottom: 20px;
+	padding-top: 10px;
+	border: 2px solid #efbf1a;
+	width: 40%;
+	height: auto;
+	border-radius: 20px;
+}
+#addstafflabel {
+	color: grey; 
+	font-size: 18;
+	padding-left: 10px;
+}
+
+#select_addstaff {
+	width: 100%;
+	height: auto;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	color: grey;
+}
+
+#addstaff_formbtn {
+	width: 100%;
+	background-color: #efbf1a;
+	border-radius: 15px;
+	border: none;
+	color: white;
+	padding: 16px 32px;
+	text-decoration: none;
+
+	margin: 4px 2px;
+	cursor: pointer;
+	margin-top: 5px;
+}
+
+.removestaff-form {
+	background-color: #fefefe;
+	margin: 5% auto;
+	padding-left: 10px;
+	padding-right: 20px;
+	padding-bottom: 20px;
+	padding-top: 10px;
+	border: 2px solid #efbf1a;
+	width: 40%;
+	height: auto;
+	border-radius: 20px;
+}
+#select_removestaff {
+	width: 100%;
+	height: auto;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	color: grey;
+}
+#removestaff-formbtn {
+	width: 100%;
+	background-color: #efbf1a;
+	border-radius: 15px;
+	border: none;
+	color: white;
+	padding: 16px 32px;
+	text-decoration: none;
+	margin: 4px 2px;
+	cursor: pointer;
+	margin-top: 5px;
+}
+
+/*Alert Box*/
+#allalerts {
+	padding-top: 5px;
+}
+.alert {
+  padding: 10px;
+  background-color: #2980B9;
+  color: white;
+  opacity: 1;
+  transition: opacity 0.6s;
+  margin-bottom: 15px;
+}
+.closealertbtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.closebtn:hover {
+  color: black;
+}
+
+
+/*Footer Content*/
+.footer {
+    background: #303036;
+    color: #d3d3d3;
+    height: 140px;
+    position: relative;
+}
+.footer .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    margin-left: 2vw;
+}
+.footer-title {
+    font-family: 'Churchward Design Bold'; 
+    font-size: 3vh;  
+    margin-bottom: 0.5vh; 
+}
+.footer .footer-content .footer-section {
+    flex: 1;
+    padding: 2px;
+}
+.footer .footer-content .about .contact-details span {
+    display: block;
+    font-size: 1.1em;
+}
+
+
+
+
+@media (max-width: 991px) {
+.navbar-collapse {
+	background-color: #efbf1a; 
+	padding: 10px; 
+}
+.navbar-dark .navbar-nav .nav-link {
+	color: white;
+	font-size: 1.2em;
+	text-decoration: none;
+	padding: 25px 30px; 
+	padding-top: 20px;
+}
+.navbar-dark .navbar-nav .nav-item {
+	background-color: transparent; 
+	padding: 10px 0; 
+}
+.navbar-dark .navbar-nav .nav-item .nav-link {
+	color: white; 
+}
+.navbar-dark .navbar-nav .nav-item .nav-link:hover {
+	background-color: #efbf1a; 
+	color: black; 
+}
+}
+
+@media (max-width: 1200px) {
+	.flex-item-alertssection {
+	  flex: 100%;
+	}
+}
+
+@media (max-width: 1084px) {
+  .flex-item-myproject, .flex-item-projectstatussection {
+    flex: 100%;
+  }
+  canvas {
+	  max-height: 100%;
+	  max-width: 800px;
+	  padding-bottom: 10px;
+  }
+}
+
+@media (max-width: 926px) {
+  .flex-item-myproject, .flex-item-projectstatussection, .flex-item-myteamsection, .flex-item-workloadsection, .flex-item-alertssection {
+    flex: 100%;
+  }
+  canvas {
+	  max-width: auto;
+	  max-height: 300px;
+  }
+}
+@media (max-width: 858px) {
+	.SwitchProject {
+	float: none;
+	position: relative;
+	display: inline-block;
+	}
+}
+
+@media (max-width: 624px) {
+	.addnewproj-form, .addtask-form, .tasknotes-form, .edittask-form, .changerole-form, .addstaff-form, .removestaff-form, .ToDoList-form {
+		width: 80%;
+	}
+	th, td {
+		padding: 5px;
+	}
+	.removemember, #addmemberbtn, .changeteamroles {
+		float: none;
+	}
+}
+
+@media (max-width: 500px) {
+	th{
+		display: none;
+	}
+	td {
+		display: block;
+		width: 100%;
+		box-sizing: border-box;
+	}
+	.flex-item-myteamsection{
+		height: 420px;
+	}
+}

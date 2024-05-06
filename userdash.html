@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Project Management Dashboard</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" /> 
+    <link href="https://db.onlinewebfonts.com/c/77009ab521bc15b6e38fcc22dd5270f4?family=Churchward+Design+Bold" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+     <!-- Include FontAwesome CSS -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+     <!-- Include Bootstrap CSS -->
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>
+     <!-- font for header -->
+     <link href="https://db.onlinewebfonts.com/c/77009ab521bc15b6e38fcc22dd5270f4?family=Churchward+Design+Bold" rel="stylesheet">
+     <!-- Include jQuery -->
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <!-- css styling -->
+     <link rel="stylesheet" href="userdash.css"> 
+
+
+	<!--Link for account icon-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
+  </head>
+
+    <body onload="checkLogin()">
+
+        <main class="grid-container">
+		
+		
+		<!--Beginning of html for navbar-->
+		
+		
+        <nav class="myNav">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">
+                    <img src="logo.PNG" id="logo" />
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" id="dashboard" href="#">Dashboard</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Posts
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="all-posts.html">All Posts</a>
+                                <a class="dropdown-item" href="create-post.html">Create Post</a>
+                            </div>
+                        </li>
+						<li class="nav-item">
+                            <a class="nav-link" id="btnInviteUser" onclick="openForm()" href="#">Invite User</a>
+                        </li>
+                        <li class="nav-item dropdown" id="accountBox">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span id="profileIcon" class="material-symbols-outlined">account_circle</span>Account</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="profile.html">My Profile</a>
+                                <a class="dropdown-item logout" href="login.html">Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+        </nav>
+		<div class="popup-background" id="inviteuseropaquebg">
+            <form class="inviteuser-form" action="javascript:getData()" method="get">
+                <h1>Invite User</h1>
+    
+                <label for="email"><b>Email</b></label>
+                <input type="text" placeholder="Enter Email" id="email" name="email">
+                <label id="emailError" style="color: red; display: none">Email address is not valid</label>
+    
+                <button type="submit" class="btn" onclick="sendInvite()">Send Invite Link</button>
+                <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+            </form>
+        </div>
+
+		
+		<!--End of html for nav bar-->
+        
+
+        <aside class="myTasks">
+            
+            <h2 id = ><div class="tasksDropdown" style="float:left;">My Tasks</h2>
+                
+  <table id="taskTable">
+                <br><br><h5 id="placeholder" style="float:left">There are currently no tasks assigned to you!</h5>
+                <!--<tr>
+                    <th>Description</th>
+                    <th>Status</th>
+                </tr>
+
+                <tr>
+                    <form class="taskStatus1" action=""></form>
+                        <td>
+                            <h4>Complete Login/Register Pages</h4>
+                            <h5>Deadline: 12/11/2023</h5>
+                            <h5>Manager: John Smith</h5>
+                            <h5>Team Lead: Dave Jones</h5>
+                            <h5>Project: Reward System</h5>
+                        </td>
+                        <td>
+                            <label class="container">Not Started
+								<input type="radio" id="notStarted1" name="status1" checked="true">
+								<span class="radio"></span>
+							</label>
+							<label class="container">In Progress
+								<input type="radio" id="inProgress1" name="status1">
+								<span class="radio"></span>
+							</label>
+							<label class="container">Complete
+								<input type="radio" id="complete1" name="status1">
+								<span class="radio"></span>
+							</label>
+                            <br>
+                            <input type="submit" class="submitButton" value="Save" onclick="saved(1)">
+							<h5 id="submitted1" style="color: #2fe617; display: none">Status updated</h5> 
+							<br>
+							<h5 style="margin-top: 13px">Report Problem</h5>
+							<input name="problem" type="text" id="problem1"><br>
+							<input type="submit" class="submitButton" value="Report" onclick="reportTaskProblem(1)">
+							<h5 id="reported1" style="color: #2fe617; display: none">Problem reported</h5>
+							<br><br>
+							<h5>Request Training</h5>
+							<input name="training" type="text" id="training1"><br>
+							<input type="submit" class="submitButton" value="Request" onclick="suggestTraining(1)">
+							<h5 id="requested1" style="color: #2fe617; display: none">Training requested</h5>
+							<br>
+                        </td>
+                    </form>
+                    </td>
+                </tr>
+                <tr>
+                    <form class="taskStatus2" action=""></form>
+                        <td>
+                            <h4>Fix Errors</h4>
+                            <h5>Deadline: 25/12/2023</h5>
+                            <h5>Manager: Paul Robinson</h5>
+                            <h5>Team Lead: Wayne Bridge</h5>
+                            <h5>Project: Social Media System</h5>
+                        </td>
+                        <td>
+                            <label class="container">Not Started
+								<input type="radio" id="notStarted2" name="status2" checked="true">
+								<span class="radio"></span>
+							</label>
+							<label class="container">In Progress
+								<input type="radio" id="inProgress2" name="status2">
+								<span class="radio"></span>
+							</label>
+							<label class="container">Complete
+								<input type="radio" id="complete2" name="status2">
+								<span class="radio"></span>
+							</label>
+                            <br>
+                            <input type="submit" class="submitButton" value="Save" onclick="saved(2)">
+							<h5 id="submitted2" style="color: #2fe617; display: none">Status updated</h5> 
+							<br>
+							<h5 style="margin-top: 13px">Report Problem</h5>
+							<input name="problem" type="text" id="problem2"><br>
+							<input type="submit" class="submitButton" value="Report" onclick="reportTaskProblem(2)">
+							<h5 id="reported2" style="color: #2fe617; display: none">Problem reported</h5>
+							<br><br>
+							<h5>Request Training</h5>
+							<input name="training" type="text" id="training2"><br>
+							<input type="submit" class="submitButton" value="Request" onclick="suggestTraining(2)">
+							<h5 id="requested2" style="color: #2fe617; display: none">Training requested</h5>
+							<br>
+                        </td>
+                    </form>
+                    </td>
+                </tr>
+                <tr>
+                    <form class="taskStatus3" action=""></form>
+                        <td>
+                            <h4>Create Logo</h4>
+                            <h5>Deadline: 31/12/2023</h5>
+                            <h5>Manager: Gareth Barry</h5>
+                            <h5>Team Lead: James Milner</h5>
+                            <h5>Project: Puzzle Game</h5>
+                        </td>
+                        <td>
+                            <label class="container">Not Started
+								<input type="radio" id="notStarted3" name="status3" checked="true">
+								<span class="radio"></span>
+							</label>
+							<label class="container">In Progress
+								<input type="radio" id="inProgress3" name="status3">
+								<span class="radio"></span>
+							</label>
+							<label class="container">Complete
+								<input type="radio" id="complete3" name="status3">
+								<span class="radio"></span>
+							</label>
+                            <br>
+                            <input type="submit" class="submitButton" value="Save" onclick="saved(3)">
+							<h5 id="submitted3" style="color: #2fe617; display: none">Status updated</h5> 
+							<br>
+							<h5 style="margin-top: 13px">Report Problem</h5>
+							<input name="problem" type="text" id="problem3"><br>
+							<input type="submit" class="submitButton" value="Report" onclick="reportTaskProblem(3)">
+							<h5 id="reported3" style="color: #2fe617; display: none">Problem reported</h5>
+							<br><br>
+							<h5>Request Training</h5>
+							<input name="training" type="text" id="training3"><br>
+							<input type="submit" class="submitButton" value="Request" onclick="suggestTraining(3)">
+							<h5 id="requested3" style="color: #2fe617; display: none">Training requested</h5>
+							<br>
+                        </td>
+                    </form>
+                    </td>
+                </tr>-->
+            </table>
+        </aside>
+        <div id="toDoList">
+            <div id="toDoHeader">
+              <h2>To Do List</h2>
+              <input type="text" id="toDoInput" placeholder="New item..."></textarea>
+              <span onclick="newElement()" id="toDoAddBtn">Add</span>
+            </div>
+            
+            <ul id="toDoUL">
+              <li><p>Send out meeting notes</p></li>
+              <li class="checked"><p>Book time off</p></li>
+              <li><p>Organize mentor meeting</p></li>
+              <li><p>Order printing ink</p></li>
+              <li><p>Set up meeting with client</p></li>
+              <li><p>Book team dinner</p></li>
+            </ul>
+            </div>
+
+
+        <footer class="myFooter">
+                <!-- footer -->
+	
+	<div class = "footer">
+		<div class = "footer-content">
+			<div class = "footer-section about">
+			
+				<h1 class ="footer-title"> Make-It-All</h1>
+
+				<div class="contact-details">
+					<span><i class="fas fa-phone"></i> &nbsp; 01509 888999</span>
+					<span><i class="fas fa-envelope"></i> &nbsp; king@make‐it‐all.co.uk</span>
+			
+			
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+        </footer>
+    
+
+
+
+    
+        <script src="userdash.js"></script>
+</body>
+</html>

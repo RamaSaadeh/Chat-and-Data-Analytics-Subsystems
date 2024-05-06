@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="" />
+
+  <!-- Include FontAwesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
+  
+  <!-- Include Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
+  <!-- font for header -->
+  <link href="https://db.onlinewebfonts.com/c/77009ab521bc15b6e38fcc22dd5270f4?family=Churchward+Design+Bold" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  
+  <link rel="stylesheet" href="Admin Dashboard.css" />
+</head> 
+
+  
+
+<body onload="checkLogin()">
+    <div id="allContent">
+		<!--Beginning of html for navbar-->
+        <nav class="myNav">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">
+                    <img src="logo.PNG" id="logo" />
+                </a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" id="dashboard" href="#">Dashboard</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Posts
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="all-posts.html">All Posts</a>
+							<a class="dropdown-item" href="create-post.html">Create Post</a>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="btnInviteUser" onclick="openForm()" href="#">Invite User</a>
+					</li>
+					<li class="nav-item dropdown" id="accountBox">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span id="profileIcon" class="material-symbols-outlined">
+							account_circle
+						</span>    Account</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="profile.html">My Profile</a>
+							<a class="dropdown-item logout" href="login.html">Logout</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</nav>
+
+	<div class="popup-background" id="inviteuseropaquebg">
+		<form class="inviteuser-form" action="javascript:getData()" method="get">
+			<h1>Invite User</h1>
+
+			<label for="email"><b>Email</b></label>
+			<input type="text" placeholder="Enter Email" id="email" name="email">
+			<label id="emailError" style="color: red; display: none">Email address is not valid</label>
+
+			<button type="submit" class="btn" onclick="sendInvite()">Send Invite Link</button>
+			<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+		</form>
+	</div>
+        <!--end of header -->
+
+        <!--main content -->
+        <div class="mainContent">
+            <!-- Total height 76vh -->
+            <div id="adminButtons">
+                <span id="staffBttn" onclick="staffClicked()">Staff</span>
+                
+                <span id="toDoBttn" onclick="toDoClicked()">To-Do</span>
+            </div>
+
+            <div id="adminInfoContainer">
+
+                <div id="staffToDoContainer" style="display: none;">
+                    <div id="toDoList" >
+                        <div id="toDoHeader">
+                        <h2>To Do List</h2>
+                        <input type="text" id="toDoInput" placeholder="New item..."></textarea>
+                        <span onclick="newElement()" id="toDoAddBtn">Add</span>
+                        </div>
+                        
+                        <ul id="toDoUL">
+                        <li><p>Send out meeting notes</p></li>
+                        <li class="checked"><p>Book time off</p></li>
+                        <li><p>Organize mentor meeting</p></li>
+                        <li><p>Order printing ink</p></li>
+                        <li><p>Set up meeting with client</p></li>
+                        <li><p>Book team dinner</p></li>
+                        </ul>
+                        </div>
+                </div>
+
+<!-- staff information tab -->
+                <div id="staffInfoContainer" style="display: none">
+                    <div class="staffHeader">
+                        <h2>Staff List
+                            <input type="text" id="staffSearch" onkeyup="staffSearch()" placeholder="Search for staff" title="Type in a staff name">
+                           </h2>
+                    </div>
+
+                    <div class="staffTableContainer">
+                        <div class="staffContainer table-responsive">
+                            <table id="staffInfo" class="table table-hover">
+                                <caption>Staff Information Table</caption>
+                                <thead>
+                                <tr scope ="col" class="staffMember">
+                                    <th scope ="col" class="fullName">Full Name</th>
+                                    <th scope ="col" class="staffId">ID Number</th>
+                                    <th scope ="col" class="userLevel">Role</th>
+                                    <th scope ="col" class="email">Email</th>
+                                    <th scope ="col" class="teamLeading">Projects Leading</th>
+                                  
+                                    <th scope ="col" class="editUser">Edit</th>
+                                    <th scope ="col" class="deleteUser">Remove</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                        
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Full Name</th>
+                                    <th>ID Number</th>
+                                    <th>Role</th>
+                                    <th>Email</th>
+                                    <th>Projects Leading</th>
+                                  
+                                    <th>Edit</th>
+                                    <th>Remove</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                
+
+ 
+
+            </div>
+
+            <div class="popup-background" id="editprojopaquebg">
+                <form class="editproj-form" onsubmit="update_userdetails()" method="get">
+                    <div class="form-title">
+                        <button type="button" id="cancel-formbtn" onclick="close_editUser()">Cancel</button>
+                        <div id="formheader">Edit Project Details</div>
+                    </div>
+                    <div id="formcontent">
+            
+                        <label class="addtaskform_labels">Full Name</label>
+                        <input type="text" value="" id="edit_name" required>
+
+                        <label class="addtaskform_labels">ID</label>
+                        <input type="text" value="" id="edit_ID" readonly>
+            
+                        <label class="addtaskform_labels">Role</label>
+                        <input type="text" value= "" id="edit_role" required>
+
+                        <label class="addtaskform_labels">Email</label>
+                        <input type="text" value="" id="edit_email" readonly>
+                        
+            
+                        <button type="submit" id="saveedittask_formbtn">Save Changes</button>
+                        <button type="button" id="closeedittaskbtn" onclick="close_editUser()">Close without saving changes</button>
+                    </div>
+                </form>  
+            </div>
+
+    <!-- end of main content -->
+    </div>
+
+        <footer class="myFooter">
+            <!-- footer -->
+
+        <div class = "footer">
+            <div class = "footer-content">
+                <div class = "footer-section about">
+                
+                    <h1 class ="footer-title"> Make-It-All</h1>
+
+                    <div class="contact-details">
+                        <span><i class="fas fa-phone"></i> &nbsp; 01509 888999</span>
+                        <span><i class="fas fa-envelope"></i> &nbsp; king@make‐it‐all.co.uk</span>
+                
+                
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </footer>
+    </div>
+
+<script src="Admin Dashboard.js"></script>
+
+
+
+</body>
+</html>

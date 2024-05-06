@@ -1,0 +1,387 @@
+<html lang="en">
+<head>
+  <title>ManagerDashboard</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" /> 
+  <link href="https://db.onlinewebfonts.com/c/77009ab521bc15b6e38fcc22dd5270f4?family=Churchward+Design+Bold" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
+  <link href="managerdash.css" rel="stylesheet"></script>
+</head>
+
+<body onload="checkLogin()">
+		<!--Beginning of html for navbar-->
+        <nav class="myNav">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">
+                    <img src="logo.PNG" id="logo" />
+                </a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" id="dashboard" href="">Dashboard</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Posts
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="all-posts.html">All Posts</a>
+							<a class="dropdown-item" href="create-post.html">Create Post</a>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="btnInviteUser" onclick="openForm()" href="#">Invite User</a>
+					</li>
+					<li class="nav-item dropdown" id="accountBox">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span id="profileIcon" class="material-symbols-outlined">account_circle</span>Account</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="profile.html">My Profile</a>
+							<a class="dropdown-item logout" href="login.html">Logout</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</nav>
+
+	<div class="popup-background" id="inviteuseropaquebg">
+		<form class="inviteuser-form" action="javascript:getData()" method="get">
+			<h1>Invite User</h1>
+
+			<label for="email"><b>Email</b></label>
+			<input type="text" placeholder="Enter Email" id="email" name="email">
+			<label id="emailError" style="color: red; display: none">Email address is not valid</label>
+
+			<button type="submit" class="btn" onclick="sendInvite()">Send Invite Link</button>
+			<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+		</form>
+	</div>
+	
+
+
+<div id="pageheader">
+	Management Dashboard
+	<div class="SwitchProject">
+		<a href="accessproject.php"><button class="switchprojbtn" onclick="toggleSwitchProjDropdown()">Switch Project <span id="switchsymbol" class="material-symbols-outlined">sync_alt</span></button></a>
+	</div>
+</div>
+
+<div class="popup-background" id="addnewprojopaquebg">
+	<form class="addnewproj-form" action="javascript:getData()" method="get">
+		<div class="form-title">
+			<button type="button" id="cancel-formbtn" onclick="closeaddnewprojForm()">Cancel</button>
+			<div id="formheader">Create New Project</div>
+		</div>
+		<div id="formcontent">
+			<label>Enter the name that your project will be known as</label>
+			<input type="text" placeholder="Enter Name" id="newprojname" required>
+			<button type="submit" id="createnewproj-formbtn" onclick="closeaddnewprojForm()">Create</button>
+		</div>
+	</form>
+</div>
+
+
+<div class="flex-container">
+	<! -----------Tasks Box----------- >
+	<div class="flex-item-myproject">
+		
+		<div id="section_header"></div>	
+
+		<div class="tablediv">
+			<table id="taskstable">
+				  <tr>
+					<th style="width: 5%;">ID</th>
+					<th style="width: 25%;">Task</th>
+					<th style="width: 5%;">Hrs Remaining</th>
+					<th style="width: 10%;">Status</th>
+					<th style="width: 10%;">Deadline</th>
+					<th style="width: 25%;">Assigned</th>
+					<th style="width: 20%">
+						<div class="SortByDropdown">
+							<button onclick="toggleTaskSortbyDropdown()" class="Sortbybtn">Sort By<i class="fa fa-caret-down"></i></button>
+							<div id="tasksortbydropdown" class="dropdown-content">
+								<a onclick="sorttasks_byAlphabetical()">Alphebetical</a>
+								<a onclick="sorttasks_byCompletion()">Completion</a>
+								<a onclick="sorttasks_byDeadline()">Deadline</a>
+							</div>
+						</div>
+					</th>
+				  </tr>	  
+			</table>
+            
+		</div>
+	</div>
+	
+	<! -----------Tasks Status Box----------- >
+	<div class="flex-item-projectstatussection">
+		<div class="section-header">Project Status</div>
+		<div class="keys-div">
+			<div class="single-key"><span class="dot" style="background-color: #52ab0c"></span> Completed</div>
+			<div class="single-key"><span class="dot" style="background-color: #efbf1a"></span> On Track</div>
+			<div class="single-key"><span class="dot" style="background-color: #ab450c"></span> Overdue</div>
+			<div class="single-key"><span class="dot" style="background-color: #646c6c"></span> Not Started</div>
+		</div>
+		<div id="piechart-div">
+		<canvas id="piechart"></canvas>
+		</div>
+	</div>
+	
+</div>
+
+<div class="popup-background" id="addtaskopaquebg">
+	<form class="addtask-form" onsubmit="addnewtask()" method="get">
+		<div class="form-title">
+			<button type="button" id="cancel-formbtn" onclick="closeaddtaskForm()">Cancel</button>
+			<div id="formheader">New Task</div>
+		</div>
+		
+		<div id="formcontent">
+			<label class="addtaskform_labels">Task ID</label>
+			<input type="text" value="" id="new_taskID" readonly>
+
+			<label class="addtaskform_labels">Task Name</label>
+			<input type="text" placeholder="Enter Task Name" id="new_taskname" required>
+			
+			<label class="addtaskform_labels">Hours task will take</label>
+			<input type="text" placeholder="Hours: e.g. 5" id="new_hrs" required>
+
+			<label class="addtaskform_labels">Task Status</label>
+			<select required id="new_statusselect">
+				<option value="" disabled selected hidden>Choose Status...</option>
+				<option value="Not Started">Not Started</option>
+				<option value="On Track">On Track</option>
+				<option value="Overdue">Overdue</option>
+				<option value="Completed">Completed</option>
+			</select>
+
+			<label class="addtaskform_labels">Task Deadline</label>
+			<input type="text" placeholder="Deadline: yyyy-mm-dd" id="new_deadline" required>
+
+			<label class="addtaskform_labels">Hold ctrl to select multiple staff</label>
+			<select multiple required id="new_choosestaff_select">
+			</select>	
+
+			<button type="submit" id="addtask-formbtn">Add new task</button>
+		</div>
+	</form>
+</div>
+
+<div class="popup-background" id="tasknotesopaquebg">
+	<form class="tasknotes-form" onsubmit="updatetasknotes()" method="get">
+		<div class="form-title">
+			<button type="button" id="cancel-formbtn" onclick="closetasknotesForm()">Cancel</button>
+			<div id="formheader">Task Notes</div>
+		</div>
+		<div id="formcontent">
+			<label id="tasknoteslabel">Below are the Notes for this Task</label>
+			<textarea id="tasknotescontent"></textarea>
+			<button type="submit" id="savenoteschanges-formbtn">Save Changes</button>
+			<button type="button" id="closenotesbtn" onclick="closetasknotesForm()">Close without saving changes</button>
+		</div>
+	</form>
+</div>
+
+<div class="popup-background" id="edittaskopaquebg">
+	<form class="edittask-form" onsubmit="save_changesto_task()" method="get">
+		<div class="form-title">
+			<button type="button" id="cancel-formbtn" onclick="closeedittaskForm()">Cancel</button>
+			<div id="formheader">Edit Task</div>
+		</div>
+		<div id="formcontent">
+
+			<label class="addtaskform_labels">Task ID</label>
+			<input type="text" value="" id="edit_taskID" readonly>
+
+			<label class="addtaskform_labels">Task Name</label>
+			<input type="text" placeholder="Enter Task Name" id="edit_taskname" required>
+
+			<label class="addtaskform_labels">Hours task will take</label>
+			<input type="text" placeholder="Hours: e.g. 5" id="edit_hrs" required>
+
+			<label class="addtaskform_labels">Status</label>
+			<select required id="edit_statusselect">
+				<option value="" disabled selected hidden>Choose Status...</option>
+				<option value="Not Started">Not Started</option>
+				<option value="On Track">On Track</option>
+				<option value="Overdue">Overdue</option>
+				<option value="Completed">Completed</option>
+			</select>
+
+			<label class="addtaskform_labels">Deadline</label>
+			<input type="text" value="" id="edit_deadline" required>
+
+			<label class="addtaskform_labels">Hold ctrl to deselect or select as needed- this will overwrite currently assigned staff!</label>
+			<select multiple required id="edit_choosestaff">
+			</select>
+
+			<button type="submit" id="saveedittask_formbtn">Save Changes</button>
+			<button type="button" id="closeedittaskbtn" onclick="closeedittaskForm()">Close without saving changes</button>
+			<button type="button" id="deletetaskbtn" onclick="delete_task()">Delete this Task</button>
+		</div>
+	</form>  
+</div>
+
+
+<div class="flex-container">
+    <! -----------My Team Box----------- >
+	<div class="flex-item-myteamsection"> 
+		<div class="section-header">Team
+			<button id="removememberbtn" onclick="openremovestaffForm()">Remove member</button>
+			<button id="addmemberbtn" onclick="openaddstaffForm()">Add member</button>
+			<button id="changeteamrolesbtn" onclick="openchangeroleForm()">Change Roles</button>
+		</div>
+		
+		<div class="tablediv">
+			<table id="StaffTable">
+				  <tr>
+					<th style="width: 10%;">ID</th>
+					<th style="width: 30%;">Member</th>
+					<th style="width: 20%;">Role</th>
+					<th style="width: 40%;">Email</th>
+				  </tr>			  
+			</table>
+		</div>
+	</div>
+	
+	<div class="popup-background" id="addstaffopaquebg">
+		<form class="addstaff-form" onsubmit="addstaff_toteam()" method="get">
+			<div class="form-title">
+				<button type="button" id="cancel-formbtn" onclick="closeaddstaffForm()">Cancel</button>
+				<div id="formheader">Add Member</div>
+			</div>
+			<div id="formcontent">
+				<label id="addstafflabel">Below are all staff not in your team</label>
+	
+				<select required id="select_addstaff" name="selected_addstaff">
+					<option value="" disabled selected>Select staff member to add to project</option>
+				</select>		
+	
+				<button type="submit" id="addstaff_formbtn">Add</button>
+			</div>
+		</form>
+		</div>
+
+	<div class="popup-background" id="removestaffopaquebg">
+	<form class="removestaff-form" onsubmit="remove_fromteam()" method="get">
+		<div class="form-title">
+			<button type="button" id="cancel-formbtn" onclick="closeremovestaffForm()">Cancel</button>
+			<div id="formheader">Remove Member</div>
+		</div>	
+		<div id="formcontent">
+			<label>Select member below to remove them from the Team</label>
+
+			<select required id="select_removestaff">
+				<option value="" disabled selected>Select Member</option>
+			</select>			
+
+			<button type="submit" id="removestaff-formbtn">Remove</button>
+		</div>
+	</form>
+	</div>
+
+	<div class="popup-background" id="changeroleopaquebg">
+	<form class="changerole-form" onsubmit="maketeamleader()" method="get">
+		<div class="form-title">
+			<button type="button" id="cancel-formbtn" onclick="closechangeroleForm()">Cancel</button>
+			<div id="formheader">Change Role</div>
+		</div>	
+		<div id="formcontent">
+			<label>Select member below to make them the project Team Leader</label>
+
+			<select required id="select_changerole">
+				<option value="" disabled selected>Select Member</option>
+			</select>		
+
+			<button type="submit" id="changerole-formbtn">Make Team Leader</button>
+		</div>
+	</form>
+	</div>
+	
+	<! -----------Workload Box----------- >
+	<div class="flex-item-workloadsection"> 
+		<div class="section-header">Workload</div>
+		<div>
+			<canvas id="workload-chart"></canvas>
+		</div>
+		
+	</div>
+	
+
+
+	<div class="popup-background" id="editprojopaquebg">
+		<form class="editproj-form" onsubmit="edit_projectname()" method="get">
+			<div class="form-title">
+				<button type="button" id="cancel-formbtn" onclick="closeeditprojectForm()">Cancel</button>
+				<div id="formheader">Edit Project Details</div>
+			</div>
+			<div id="formcontent">
+	
+				<label class="addtaskform_labels">Project ID</label>
+				<input type="text" value="" id="edit_projID" readonly>
+	
+				<label class="addtaskform_labels">Project Name</label>
+				<input type="text" id="edit_projname" required>
+	
+				<button type="submit" id="saveedittask_formbtn">Save Changes</button>
+				<button type="button" id="closeedittaskbtn" onclick="closeeditprojectForm()">Close without saving changes</button>
+			</div>
+		</form>  
+	</div>
+
+	<! -----------Alerts Box----------- >
+	<div class="flex-item-alertssection"> 
+		<div class="section-header">Project Details</div>
+			<div id="projectdetails">
+				<div id="projID_text"></div>
+				<div id="projname_text"></div>
+				<button id="editprojbtn" onclick="openeditprojectForm()">Edit Details</button>
+				<button id="deleteprojbtn" onclick="deleteProject()">Delete Project</button>		
+			</div>
+		</div>
+	</div>
+
+
+
+<footer class="myFooter">
+	<div class = "footer">
+	<div class = "footer-content">
+	<div class = "footer-section about">
+
+		<h1 class ="footer-title"> Make-It-All</h1>
+
+		<div class="contact-details">
+			<span><i class="fas fa-phone"></i> &nbsp; 01509 888999</span>
+			<span><i class="fas fa-envelope"></i> &nbsp; king@make-it-all.co.uk</span>
+		</div>
+	</div>
+
+	</div>
+	</div>
+</footer>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+
+</script>
+<script src="managerdash.js"></script>
+
+</body>
+</html>

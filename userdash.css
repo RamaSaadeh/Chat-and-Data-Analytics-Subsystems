@@ -1,0 +1,794 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Quicksand', sans-serif;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	box-sizing: border-box;
+}
+
+.myTasks{
+  grid-area: myTasks;
+  width: 48vw;
+  height: 69vh;
+  margin-left: 1vw;
+  margin-top: 1vh;
+  margin-right: auto;
+  overflow-y: auto;
+}
+
+.toDo{
+  grid-area: toDo;
+  
+}
+
+
+.myFooter{
+  grid-area: myFooter;
+  background-color: rgb(255, 149, 35);
+  text-align: left;
+  height: 20vh;
+  margin-top: 2vh;
+}
+
+/* The container */
+.container {
+display: block;
+position: relative;
+padding-left: 35px;
+margin-bottom: 5px;
+cursor: pointer;
+font-size: 16px;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container input {
+position: absolute;
+opacity: 0;
+cursor: pointer;
+}
+
+/* Create a custom radio button */
+.radio {
+position: absolute;
+top: 0;
+left: 0;
+height: 20px;
+width: 20px;
+background-color: #eee;
+border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .radio {
+background-color: #ccc;
+}
+
+.container input:checked ~ .radio {
+background-color: #2980B9;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.radio:after {
+content: "";
+position: absolute;
+display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container input:checked ~ .radio:after {
+display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container .radio:after {
+ top: 6.5px;
+left: 6.5px;
+width: 7px;
+height: 7px;
+border-radius: 50%;
+background: white;
+}
+
+.submitButton {
+background-color: #D2D2D2;
+color: black;
+text-align: center;
+font-size: 16px;
+border: 1px solid #777;
+padding: 2% 4%;
+}
+
+@media (pointer:fine) {
+.submitButton {
+  transition-duration: 0.5s;
+}
+
+.submitButton:hover {
+  background-color: #bbb;
+}
+}
+
+@media (pointer:none), (pointer:coarse) {
+.submitButton {
+  width: 40%;
+}	
+}
+
+
+section.toDo{
+  max-width: 100%;
+}
+.grid-container{
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  grid-template-areas:"myNav myNav"
+  "toDo myTasks"
+  "toDo myTasks"
+  "toDo myTasks"
+  "toDo myTasks"
+  "toDo myTasks"
+  "myFooter myFooter";
+}
+
+@media only screen and (max-width: 660px) {
+  #toDoList {
+      width: 100vw;
+  }
+  .grid-container {
+      height: fit-content;
+      width: 100vw;
+      grid-template-areas: "myNav myNav myNav"
+      "myTasks myTasks myTasks"
+      "toDo toDo toDo"
+      "myFooter myFooter myFooter";
+  }
+  .grid-container aside{
+      width: 96vw;
+  }
+  .grid-container #toDoList{
+      width: 100vw;
+      height: fit-content;
+      padding-bottom: 4vw;
+  }
+  .myTasks{
+      height: fit-content;
+      margin-bottom: 3vw;
+      margin-left: 2vw;
+      margin-right: 2vw;
+  }
+
+}
+
+
+/*Beginning of css for navbar*/
+
+
+.myNav{
+  grid-area: myNav;
+  background-color: #faf9f9;
+  width: 100%;
+  background-color: #efbf1a;
+  overflow: visible
+  
+}
+
+/* The popup form - hidden by default */
+.popup-background {
+display: none; 
+position: fixed; 
+z-index: 1; 
+left: 0;
+top: 0;
+width: 100%; 
+height: 100%; 
+overflow: auto;
+background-color: rgba(0,0,0,0.4);
+}
+.inviteuser-form{
+width: 25%;
+padding: 10px;
+background-color: white;
+margin: auto;
+margin-top: 90px;
+}
+.inviteuser-form input[type=text], .form-container input[type=password] {
+width: 100%;
+padding: 15px;
+margin: 5px 0 22px 0;
+border: none;
+background: #f1f1f1;
+}
+.inviteuser-form input[type=text]:focus, .form-container input[type=password]:focus {
+background-color: #ddd;
+outline: none;
+}
+.inviteuser-form .btn {
+background-color: #efbf1a;
+color: white;
+padding: 16px 20px;
+border: none;
+cursor: pointer;
+width: 100%;
+margin-bottom:10px;
+opacity: 0.8;
+}
+.inviteuser-form .cancel {
+background-color: #bbb;
+transition: 0.4s;
+}
+.inviteuser-form .cancel:hover {
+background-color: red;
+opacity: 1;
+}
+
+.nav{
+  max-width: fit-content;
+  max-height: 90px;
+}
+
+.navbar{
+height: 90px;
+border: none;
+
+}
+
+.navbar-brand {
+  margin-left: 1px; /* or whatever size you want */
+  padding-top: 7px; /* this will push it down */
+  padding-bottom: 7px; /* this can give more space at the bottom */
+  
+}
+
+#logo {
+max-width: 1000px; /* Set a maximum width for the logo */
+height: auto; /* Maintain the aspect ratio */
+margin-right: -1000px; /* Add some margin to separate the logo from text */
+}
+
+.navbar-collapse {
+  position: relative;  /* Ensure it's positioned */
+  z-index: 1000;       /* Any high number to ensure it's on top of other page elements */
+}
+
+.navbar.navbar-expand-lg.navbar-dark.bg-dark {
+  background-color: #efbf1a !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: white;
+  font-size: 1.2em;
+  text-decoration: none;
+  padding: 23px 30px; /* Keep padding between elements on the nav bar horizontally and vertically*/
+  height: 90px;
+  padding-top: 30px;
+  background-color: #efbf1a;
+
+
+}
+
+
+
+
+.navbar-dark .navbar-nav .nav-link:hover {
+  background-color: #f6dc80; /* Background color on hover */
+  color: black; /* Text color on hover */
+}
+
+
+
+
+/* Style the dropdown menu */
+.navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+  position: absolute;
+  top: 90px;
+  width: 170px;
+  background: white;
+  box-shadow: none;
+  border: 0; /* Remove any border that might create a gap */
+  padding: 0; /* Remove any padding to ensure full highlighting */
+  margin: 0; /* Remove any margin that might create a gap */
+  
+}
+
+/* Style the dropdown menu links */
+.navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu .dropdown-item {
+  padding: 10px;
+  color: black;
+  font-size: 1.2em;
+  text-decoration: none;
+  border: 0; /* Remove any border on the dropdown items */
+  margin: 0; /* Remove any margin on the dropdown items */
+}
+
+
+
+/* Style the dropdown menu links on hover */
+.navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu .dropdown-item:hover {
+  background-color: #f6dc80;; /* Background color on hover */
+  color: black; /* Text color on hover */
+}
+
+/* Style the logo */
+.navbar .navbar-brand {
+  float: left;
+  height: inherit;
+  margin-left: 1em;
+  color: white;
+  display: flex;
+  
+  
+}
+
+.material-symbols-outlined {
+font-variation-settings:
+'FILL' 0,
+'wght' 400,
+'GRAD' 0,
+'opsz' 24;
+}
+
+#profileIcon {
+font-size: 38px;
+vertical-align: middle;
+}
+
+.logo{
+  /* want the image to stretch to larger than original size */
+  max-width: 100%; 
+  height: auto;
+  max-height: fit-content;
+  background-size: cover;
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*End of css for navbar*/
+
+/*current page button is orange */
+#homeBttn{
+  background-color:rgb(255, 221, 168);
+}
+
+
+
+/* tasks styling */
+
+
+
+#taskTitle{
+  position: sticky;
+}
+
+#taskTable{
+  overflow-y: auto;
+
+}
+
+.hidden{
+display: none;
+}
+
+
+.addtaskbtn {
+  background-color: rgb(255, 149, 35);
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 25px;
+  width: 90px;
+  height: 30px;
+  float: right;
+  font-size: 14;
+}
+
+/*MyTasks content*/
+.addtaskbtn {
+  background-color: rgb(255, 149, 35);
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 25px;
+  width: 90px;
+  height: 30px;
+  float: right;
+  font-size: 14;
+}
+
+.popup-background {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4);
+}
+
+.addtask-form {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding-left: 10px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-top: 10px;
+    border: 2px solid rgb(255, 149, 35);
+    width: 40%;
+    height: auto;
+    border-radius: 20px;
+    margin-top: 10%;
+}
+
+.form-title {
+    border-bottom: 1px solid grey;
+    padding-bottom: 5px;
+}
+#formheader {
+    color: orange;
+    font-size: 26;
+    font-weight: bold;
+    margin-left: 20%;
+}
+#formcontent {
+    padding-left: 10px;
+    padding-top: 10px;
+}
+#cancel-formbtn {
+    background-color: white;
+    border-radius: 15px;
+    border: none;
+    width: 75px;
+    height: 30px;
+    float: left;
+    text-align: center;
+    transition-duration: 0.3s;
+    cursor: pointer;
+}
+#cancel-formbtn:hover {
+    background-color: rgb(255, 149, 35);
+    color: white;
+}	
+#taskname{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid grey;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+#statusselect {
+    width: 100%;
+    padding: 16px 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: grey;
+}
+
+#deadline {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+#choosestafflabel {
+    color: grey;
+    font-size: 12;
+    padding-left: 10px;
+}
+
+#choosestaff {
+    width: 100%;
+    height: 150px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: grey;
+}
+
+#addtask-formbtn {
+    width: 100%;
+    background-color: rgb(255, 149, 35);
+    border-radius: 15px;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+@media (max-width: 624px) {
+.addnewproj-form, .addtask-form, .tasknotes-form, .edittask-form, .changerole-form, .addstaff-form, .removestaff-form, .ToDoList-form {
+  width: 80%;
+}
+th, td {
+  padding: 5px;
+}
+}
+
+
+
+
+
+
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  height: 20px;
+
+
+
+}
+
+th, td {
+  text-align: left;
+  padding: 1%;
+vertical-align: top;
+}
+
+tr:nth-child(odd){
+  background-color: #fff9ee;
+}
+
+th{
+  background-color: #f6dc80;
+  font-size: 90%;
+}
+
+/*for dropdown*/
+
+.tasksDropbtn {
+  background-color: inherit;
+  color: black;
+  font-weight: bold;
+  padding: 1%;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 12vw;
+  text-align: left;
+  padding-left: 1vw;
+  margin-bottom: 2vw;
+  font-size: 80%;
+}
+
+.tasksDropdown {
+  position: relative;
+  display: inline-block;
+  width: 20%;
+  
+}
+
+.tasksDropdown-content {
+  display: none;
+  position: absolute;
+  left: 0;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  width: 12vw;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.tasksDropdown-content a {
+  color: black;
+  padding: 2vw 2vw;
+  text-decoration: none;
+  display: block;
+  font-size: 60%;
+  width: 100%;
+}
+
+.tasksDropdown-content a:hover {background-color: #f1f1f1;}
+
+.tasksDropdown:hover .tasksDropdown-content {display: block;}
+
+
+/* styling the to do list */
+#toDoList{
+  width: 49vw;
+  height: 70vh;
+  padding-left: 5%;
+  padding-top: 5%;
+  padding-right: 3%;
+  background-color: #f0efef;
+  overflow-y: auto;
+}
+
+
+/* Remove margins and padding from the list */
+#toDoUL {
+margin: 0;
+padding: 0;
+max-width: 100%;
+}
+
+#toDoUL li p{
+overflow: hidden; /* Hide overflowing text */
+text-overflow: ellipsis; /* Display "..." for long words */
+display: inline-block; /* Allow text to adjust font size */
+font-size: calc(1vw + 10px); /* Define font size using a combination of vw units and px */
+max-width: 100%; /* Ensure that text does not exceed the width of the <ul> */
+vertical-align: top; /* Align text to the top of the <li> element */
+
+}
+
+/* Style the list items */
+#toDoUL li {
+cursor: pointer;
+position: relative;
+padding: 12px 8px 12px 40px;
+list-style-type: none;
+background: #faf9f9;
+font-size: 18px;
+transition: 0.2s;
+
+/* make the list items unselectable */
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+
+/* Set all odd list items to a different color (zebra-stripes) */
+#toDoUL li:nth-child(odd) {
+  background: #f2ececf9;
+}
+
+/* Darker background-color on hover */
+#toDoUL li:hover {
+  background: #f6dc80;
+}
+
+#toDoUL li {
+  display: block;
+}
+
+
+
+/* When clicked on, add a background color and strike out text */
+#toDoUL li.checked {
+background: #888;
+color: #fff;
+text-decoration: line-through;
+}
+
+#toDoUL li.checked p {
+text-decoration: line-through;
+background: #888;
+}
+
+
+/* Style the close button */
+.close {
+position: absolute;
+right: 0;
+top: 0;
+padding: 12px 16px 12px 16px;
+}
+
+.close:hover {
+  background-color: #f2372a;
+  color: white;
+}
+
+/* Style the header */
+#toDoHeader {
+text-align: left;
+margin-bottom: 3%;
+color: #2c2b2a;
+text-align: left;
+}
+
+/* Clear floats after the header */
+#toDoHeader:after {
+content: "";
+display: table;
+clear: both;
+}
+
+/* Style the input */
+textarea {
+margin: 0;
+border: none;
+border-radius: 0;
+width: 60%;
+padding: 10px;
+float: left;
+font-size: 16px;
+}
+
+/* Style the "Add" button */
+#toDoAddBtn {
+  padding: 3.3%;
+  width: 25%;
+  background: #d9d9d9;
+  color: #555;
+  float: left;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+  border-radius: 0;
+}
+
+#toDoAddBtn:hover {
+background-color: #bbb;
+}
+
+
+#toDoInput{
+  margin-left: 5%;
+  height: 100%;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  width: 75%;
+  padding: 4%;
+  float: left;
+  font-size: 16px;
+}
+
+
+
+/*Footer Content*/
+.myFooter {
+	grid-area: myFooter;
+	text-align: left;
+	height: 13.5vh;
+}
+
+.footer {
+	background: #303036;
+	color: #d3d3d3;
+	height: 140px;
+	position: relative;
+}
+
+.footer .footer-content {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	float: left;
+	height: 100%;
+	margin-left: 2vw;
+}
+
+.footer-title {
+	font-family: 'Churchward Design Bold';
+	font-size: 3vh;
+	margin-bottom: 0.5vh;
+}
+
+.footer .footer-content .footer-section {
+	flex: 1;
+	padding: 2px;
+}
+
+.footer .footer-content .about .contact-details span {
+	display: block;
+	font-size: 1.1em;
+}
+

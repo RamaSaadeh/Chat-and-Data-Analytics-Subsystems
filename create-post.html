@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+
+	
+    <!-- Include FontAwesome CSS -->
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	
+	    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
+	
+	<!-- font for header -->
+	<link href="https://db.onlinewebfonts.com/c/77009ab521bc15b6e38fcc22dd5270f4?family=Churchward+Design+Bold" rel="stylesheet">
+	
+	<!-- css file for styling -->
+	<link rel="stylesheet" href="create-post.css">
+	
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+	<title>Create Post Page</title>
+	
+	
+</head>
+		<!-- nav bar -->
+
+<body onload="checkLogin()">
+		<!--Beginning of html for navbar-->
+        <nav class="myNav">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">
+                    <img src="logo.PNG" id="logo" />
+                </a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" id="dashboard" href="#">Dashboard</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Posts
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="all-posts.html">All Posts</a>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="btnInviteUser" onclick="openForm()" href="#">Invite User</a>
+					</li>
+					<li class="nav-item dropdown" id="accountBox">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span id="profileIcon" class="material-symbols-outlined">account_circle</span>Account</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="profile.html">My Profile</a>
+							<a class="dropdown-item logout" href="login.html">Logout</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</nav>
+
+	<div class="popup-background" id="inviteuseropaquebg">
+		<form class="inviteuser-form" action="javascript:getData()" method="get">
+			<h1>Invite User</h1>
+
+			<label for="email"><b>Email</b></label>
+			<input type="text" placeholder="Enter Email" id="email" name="email">
+			<label id="emailError" style="color: red; display: none">Email address is not valid</label>
+
+			<button type="submit" class="btn" onclick="sendInvite()">Send Invite Link</button>
+			<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+		</form>
+	</div>
+	
+		
+	
+
+	<!-- main content -->
+	<div class="container-fluid">
+
+	
+		<div id="notification-popup" class="notification-popup" style="display: none;">
+			<p id="notification-message"></p>
+		</div>
+		
+				<!-- confirmation Modal -->
+		<div id="confirmationModal" class="modal">
+		  <div class="modal-content">
+			<span class="close">&times;</span>
+			<p>Are you sure you want to post this draft?</p>
+			<button id="confirmPost">Yes</button>
+			<button id="cancelPost">No</button>
+		  </div>
+		</div>
+
+
+
+		<div class="row"> <!-- This is a new row -->
+
+			<!-- main content -->
+			<div class="col-lg-8 col-md-12">
+				<div class="content-wrapper">
+				  
+				  <h1 class="all-posts-title">Create Post</h1>
+				  
+				  <form id="post-form" action="create-post.php" method="post">
+					
+					<label id="posttopiclabel" for="post-topic">Topic</label>
+					<input type="text" id="post-topic" name="topic" placeholder="Enter topic" class="text-input" maxlength="80">
+
+					<label id="posttitlelabel" for="post-title">Title</label>
+					<input type="text" id="post-title" name="title" placeholder="Enter title" class="text-input" maxlength="80">
+
+					<label id="postbodylabel" for="post-body">
+					  Body <span class="character-limit">(Max 1500 characters)</span>
+					</label>
+					<textarea id="post-body" name="body" placeholder="Enter text" maxlength="1500"></textarea>
+
+					<div class="controls-container"> <!-- This is the new container -->
+					  <span class="character-limit-message">Characters remaining: <span id="character-count">1500</span></span>
+					  <div class="button-and-message-container"> <!-- Modified container -->
+						<div class="button-container">
+						  <button id="postButton" type="submit">Post</button>
+						  <button id="draftButton" type="button">Save as Draft</button>
+						</div>
+						<div id="message-container" class="message-container"> <!-- New container for messages -->
+						  <div id="error-message" class="message">
+							<i class="fas fa-exclamation-circle error-icon"></i>
+							Something went wrong! Please try again.
+						  </div>
+						  <div id="success-message" class="message">
+							<i class="fas fa-check-circle success-icon"></i>
+							Your post has been successfully submitted!
+						  </div>
+						</div>
+					  </div>
+					</div>
+					
+				  </form>
+				  
+				</div>
+
+			</div>
+
+			<!-- Sidebar -->
+			<div class="col-lg-4 col-md-12"> 
+		
+				<div class="sidebar">
+					<h2>Saved Drafts</h2>
+					<div class="drafts-container">
+						
+						<div class="media draft">
+						  <div class="media-body draft-content">
+							<label for="post-topic" class="label">Topic</label>
+							<input type="text" class="draft-topic" value="Topic Here" maxlength="80">
+							<label for="post-title" class="label">Title</label>
+							<input type="text" class="draft-title" value="Title Here" maxlength="80">
+							<label for="post-body" class="label">Body</label>
+							<textarea class="draft-body" maxlength="1500">Body content here...</textarea>
+						  </div>
+						  <div class="draft-footer">
+							<div class="draft-actions">
+							  <button class="post-draft">Post</button>
+							  <button class="save-draft">Save</button>
+							  <button class="delete-draft">Delete</button>
+							</div>
+							<!-- Date container aligned to the right -->
+							<div class="draft-date">
+								Last Modified: <span class="draft-last-modified">Not saved yet</span>
+							</div>
+						  </div>
+						</div>
+
+
+
+					</div>
+				</div>
+	
+			</div>
+
+		</div>
+
+	</div>
+
+	
+	
+	<!-- content -->
+	
+	<!-- footer -->
+		
+	<div class = "footer">
+		<div class = "footer-content">
+			<div class = "footer-section about">
+			
+				<h1 class ="footer-title"> Make-It-All</h1>
+
+				<div class="contact-details">
+					<span><i class="fas fa-phone"></i> &nbsp; 01509 888999</span>
+					<span><i class="fas fa-envelope"></i> &nbsp; king@make‐it‐all.co.uk</span>
+			
+			
+				</div>
+			</div>
+
+		</div>
+	</div>
+	
+	
+	<!-- footer end -->
+	
+	
+
+	<!-- Include jQuery -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+	
+	
+	<script src="create-post.js"></script>
+	
+	
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>
+	
+	
+	
+
+	</body>
+
+</html>

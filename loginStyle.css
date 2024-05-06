@@ -1,0 +1,117 @@
+* {
+	font-family: 'Quicksand', sans-serif;
+}
+
+body {
+	background-color: #efbf1a;
+	font-family: Arial, Helvetica, sans-serif;
+	text-align: center;
+}
+
+#content {
+	position: relative;
+	background-color: white;
+	border: 2px solid black;
+	border-radius: 12px;
+	max-width: 76%;
+	margin: auto;
+	overflow: hidden;
+	text-align: left;
+}
+
+#top {
+	height: 125px;
+	border-bottom: 5px solid black;
+	padding: 1%;
+}
+
+#logo {
+	height: auto;
+	width: 315px;
+	margin-bottom: -10px;
+}
+
+#main {
+	display: table;
+	width: 100%;
+}
+
+label {
+	padding: 1%;
+	padding-left: 3%;
+	text-align: left;
+	font-size: 14px;
+	display: table-cell;
+}
+
+#lblRegister {
+	padding: 1%;
+	padding-left: 3%;
+	text-align: left;
+	float: left;
+}
+
+.details {
+	margin-left: -15%;
+	display: table-cell;
+	box-sizing: border-box;
+	border: 3px solid #D2D2D2;
+	-webkit-transition: 0.5s;
+	transition: 0.5s;
+	outline: none;
+	width: 195px;
+	font-size: 13px;
+}
+
+.details:focus {	
+	border: 3px solid #555;
+}
+
+p {
+	display: table-row;
+}
+
+#submit, #register {
+	background-color: white;
+	color: black;
+	text-align: center;
+	font-size: 18px;
+	border: 2px solid black;
+	margin: 8px 4px;
+	display: table-row;
+	padding: 2% 4%;
+}
+
+@media (min-width: 892px) {
+	#content {
+		max-width: 40%;
+	}
+}
+
+@media (pointer:fine) {
+	#submit, #register {
+		transition-duration: 0.5s;
+	}
+
+	#submit:hover, #register:hover {
+		background-color: darkgrey;
+	}
+}
+
+@media (pointer:none), (pointer:coarse) {
+	#submit{
+		width: 30%;
+	}	
+	#register {
+		width: 40%;
+	}
+	#logo {
+		width: 90%;
+	}
+	#top {
+		height: 160px;
+	}
+	.details {
+		width: 60%;
+	}
+}

@@ -1,0 +1,763 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Quicksand', sans-serif;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+#allContent{
+    width: 100vw;
+    height: 100vh;
+
+    display: grid;
+
+    grid-template-areas:"myNav myNav"
+    "myMain myMain"
+    "myFooter myFooter";
+    grid-template-columns: 22% 78%;
+    
+}
+
+.clearfix::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+
+/*Beginning of css for navbar*/
+
+
+.myNav{
+  grid-area: myNav;
+  background-color: #faf9f9;
+  width: 100%;
+  background-color: #efbf1a;
+  overflow: visible;
+  max-height: 90px;
+}
+
+/* The popup form - hidden by default */
+.popup-background {
+display: none; 
+position: fixed; 
+z-index: 1; 
+left: 0;
+top: 0;
+width: 100%; 
+height: 100%; 
+overflow: auto;
+background-color: rgba(0,0,0,0.4);
+}
+.inviteuser-form{
+width: 25%;
+padding: 10px;
+background-color: white;
+margin: auto;
+margin-top: 90px;
+}
+.inviteuser-form input[type=text], .form-container input[type=password] {
+width: 100%;
+padding: 15px;
+margin: 5px 0 22px 0;
+border: none;
+background: #f1f1f1;
+}
+.inviteuser-form input[type=text]:focus, .form-container input[type=password]:focus {
+background-color: #ddd;
+outline: none;
+}
+.inviteuser-form .btn {
+  background-color: #efbf1a;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+.inviteuser-form .cancel {
+background-color: #bbb;
+transition: 0.4s;
+}
+.inviteuser-form .cancel:hover {
+background-color: red;
+opacity: 1;
+}
+
+.nav{
+  max-width: fit-content;
+  max-height: 90px;
+}
+
+.navbar{
+height: 90px;
+border: none;
+
+}
+
+.navbar-brand {
+  margin-left: 1px; /* or whatever size you want */
+  padding-top: 7px; /* this will push it down */
+  padding-bottom: 7px; /* this can give more space at the bottom */
+  
+}
+
+#logo {
+max-width: 1000px; /* Set a maximum width for the logo */
+height: auto; /* Maintain the aspect ratio */
+margin-right: -1000px; /* Add some margin to separate the logo from text */
+}
+
+.navbar-collapse {
+  position: relative;  /* Ensure it's positioned */
+  z-index: 1000;       /* Any high number to ensure it's on top of other page elements */
+}
+
+.navbar.navbar-expand-lg.navbar-dark.bg-dark {
+  background-color: #efbf1a !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: white;
+  font-size: 1.2em;
+  text-decoration: none;
+  padding: 23px 30px; /* Keep padding between elements on the nav bar horizontally and vertically*/
+  height: 90px;
+  padding-top: 30px;
+  background-color: #efbf1a;
+
+
+}
+
+
+.navbar-dark .navbar-nav .nav-link:hover {
+  background-color: #f6dc80; /* Background color on hover */
+  color: black; /* Text color on hover */
+}
+
+
+
+
+/* Style the dropdown menu */
+.navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+  position: absolute;
+  top: 90px;
+  width: 170px;
+  background: white;
+  box-shadow: none;
+  border: 0; /* Remove any border that might create a gap */
+  padding: 0; /* Remove any padding to ensure full highlighting */
+  margin: 0; /* Remove any margin that might create a gap */
+  
+}
+
+/* Style the dropdown menu links */
+.navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu .dropdown-item {
+  padding: 10px;
+  color: black;
+  font-size: 1.2em;
+  text-decoration: none;
+  border: 0; /* Remove any border on the dropdown items */
+  margin: 0; /* Remove any margin on the dropdown items */
+}
+
+
+
+/* Style the dropdown menu links on hover */
+.navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu .dropdown-item:hover {
+  background-color: #f6dc80;; /* Background color on hover */
+  color: black; /* Text color on hover */
+}
+
+/* Style the logo */
+.navbar .navbar-brand {
+  float: left;
+  height: inherit;
+  margin-left: 1em;
+  color: white;
+  display: flex;
+  
+  
+}
+
+.material-symbols-outlined {
+font-variation-settings:
+'FILL' 0,
+'wght' 400,
+'GRAD' 0,
+'opsz' 24;
+}
+
+#profileIcon {
+font-size: 38px;
+vertical-align: middle;
+}
+
+.logo{
+  /* want the image to stretch to larger than original size */
+  max-width: 100%; 
+  height: auto;
+  max-height: fit-content;
+  background-size: cover;
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*End of css for navbar*/
+
+.mainContent{
+    text-align: center;
+    color: black;
+    grid-area: myMain;
+    height: 84vh;
+}
+
+
+#adminButtons {
+ 
+    height: 10vh;
+    display: flex;
+    justify-content: space-between; /* Distribute buttons evenly */
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+#adminButtons span {
+    background-color: #d3d3d3;
+    padding: 1vh 3vh; /* Adjust padding as needed */
+    border-radius: 3% 3%;
+    height: 84%; /* You can set a specific height here */
+    display: flex;
+    align-items: center; /* Vertically center text */
+    justify-content: center; /* Horizontally center text */
+    flex: 1; /* Distribute available space equally among buttons */
+    margin-left: 1%;
+    margin-right: 1%;
+    color: black;
+}
+
+
+
+#adminButtons span:hover{
+    font-weight: bold;
+    background-color: #f6dc80;
+} 
+
+
+#bttnInfo{
+    height: 60vh;
+    width: 100vw;
+}
+
+
+#adminInfoContainer{
+    height: 62vh;
+    width: 100vw;
+    max-height: 66vh;
+}
+
+
+
+
+
+/*staff content*/
+
+#staffSearch {
+  background-position: 2% 3%;
+  background-repeat: no-repeat;
+  width: 40vw;
+  font-size: 100%;
+  border: 1% solid #ddd;
+  margin-left: 5vw;
+  height: 5vh;
+}
+
+
+
+#staffToDoContainer{
+    height: 66vh;
+    width: 100vw;
+}
+
+
+
+#staffInfo td{
+    text-align: left;
+    font-size: 1.5vw;;
+    padding-right: 2%;
+    
+}
+
+#staffInfoContainer{
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
+  min-width: 100%;
+}
+
+#staffInfo{
+ 
+  padding-left: 4%;
+  padding-right: 10%;
+  margin-right: 3%;
+  padding-right: 2%;
+}
+
+#staffInfo th {
+  text-align: left;
+  font-size: 100%;
+    
+}
+
+.staffHeader{
+    height: 10vh;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    background-color: #efbf1a;
+}
+
+
+
+.staffHeader h2{
+    margin-left: 6vw;
+    font-size: 2vh;
+
+    height: 100%;
+}
+
+#staffBttn:hover {
+  font-size: 110%; /* Increase the font size by 10% on hover */
+}
+
+#toDoBttn:hover{
+  font-size: 110%;
+}
+.staffHeader {
+    text-align: left;
+}
+
+
+
+
+/*end of staff content*/
+
+
+/* styling the projects list*/
+/*staff content*/
+
+/* for projects pop up*/
+/* proj pop up*/
+
+
+.projectsWindow {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+                  
+.projectsWindowContent {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 400px;
+}
+
+.closeProj {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+/* end of pop up */
+#projectsSearch {
+  background-position: 2% 3%;
+  background-repeat: no-repeat;
+  width: 40vw;
+  font-size: 100%;
+  border: 1% solid #ddd;
+  margin-left: 5vw;
+  height: 5vh;
+  margin-right: 5vw;
+
+}
+
+
+/* bootstrap css for projects table sort */
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:before {
+bottom: .5em;
+}
+
+
+#staffProjectsContainer{
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
+  min-width: 100%;
+}
+
+.staffTableContainer{
+    background-color: white;
+    height: 54vh;
+    
+    
+}
+
+
+
+
+.staffContainer{
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+    min-width: 100%;
+}
+
+.staffContainer tr{
+    th:nth-child(even),td:nth-child(even) {
+    background-color: #d3d3d3;
+}
+}
+
+
+#projectsInfo{
+   
+    padding-left: 4%;
+    padding-right: 10%;
+    margin-right: 3%;
+    padding-right: 2%;
+    
+}
+
+
+#projectsInfo td{
+  
+    text-align: left;
+    font-size: 1.5vw;;
+    padding-right: 2%;
+    
+}
+
+#projectsInfo th {
+    text-align: left;
+    font-size: 100%;
+    
+}
+
+
+/*styling thr to-do list*/
+/* styling the to do list */
+#toDoList{
+    width: 75.5%;
+    height: 100%; 
+    padding-top: 5%;
+    padding-left: 2vw;
+    padding-right: 2.5vw;
+    margin-right: 10vw;
+    margin-left: 10vw;
+    background-color: #f0efef;
+    overflow-y: auto;
+    text-align: left;
+    margin-bottom: 5%;
+    padding-bottom: 10%;                     
+}
+
+
+/* Remove margins and padding from the list */
+#toDoUL {
+  margin: 0;
+  padding-left: 2vw;
+  max-width: 100%;
+
+}
+
+#toDoUL li p{
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Display "..." for long words */
+  display: inline-block; /* Allow text to adjust font size */
+  font-size: calc(1vw + 10px); /* Define font size using a combination of vw units and px */
+  max-width: 100%; /* Ensure that text does not exceed the width of the <ul> */
+  vertical-align: top; /* Align text to the top of the <li> element */
+
+}
+
+/* Style the list items */
+#toDoUL li {
+  cursor: pointer;
+  position: relative;
+  padding: 12px 8px 12px 40px;
+  list-style-type: none;
+  background: #faf9f9;
+  font-size: 18px;
+  transition: 0.2s;
+  
+  /* make the list items unselectable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Set all odd list items to a different color (zebra-stripes) */
+#toDoUL li:nth-child(odd) {
+    background: #f2ececf9;
+}
+
+/* Darker background-color on hover */
+#toDoUL li:hover {
+    background: #f6dc80;
+}
+
+#toDoUL li {
+    display: block;
+}
+
+
+
+/* When clicked on, add a background color and strike out text */
+#toDoUL li.checked {
+  background: #888;
+  color: #fff;
+  text-decoration: line-through;
+}
+
+#toDoUL li.checked p {
+  text-decoration: line-through;
+  background: #888;
+}
+
+
+/* Style the close button */
+.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 12px 16px 12px 16px;
+}
+
+.close:hover {
+    background-color: #f2372a;
+    color: white;
+}
+
+/* Style the header */
+#toDoHeader {
+  text-align: left;
+  margin-bottom: 3%;
+  color: #2c2b2a;
+  text-align: left;
+}
+
+/* Clear floats after the header */
+#toDoHeader:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+/* Style the "Add" button */
+#toDoAddBtn {
+    padding: 4%;
+    width: 25%;
+    background: #d9d9d9;
+    color: #555;
+    float: left;
+    text-align: center;
+    font-size: 80%;
+    cursor: pointer;
+    transition: 0.2s;
+    border-radius: 0;
+    height: 100%;
+}
+
+#toDoAddBtn:hover {
+  background-color: #bbb;
+}
+
+
+#toDoInput{
+    margin-left: 5%;
+    height: 100%;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    width: 75%;
+    padding: 4%;
+    float: left;
+    font-size: 100%;
+}
+
+.editproj-form {
+	background-color: #fefefe;
+	margin: 5% auto;
+	padding-left: 10px;
+	padding-right: 20px;
+	padding-bottom: 20px;
+	padding-top: 10px;
+	border: 2px solid #efbf1a;
+	width: 40%;
+	height: auto;
+	border-radius: 20px;
+}
+
+.form-title {
+    border-bottom: 1px solid grey;
+    padding-bottom: 5px;
+}
+#cancel-formbtn {
+    background-color: white;
+    border-radius: 15px;
+    border: none;
+    width: 75px;
+    height: 30px;
+    float: left;
+    text-align: center;
+    transition-duration: 0.3s;
+    cursor: pointer;
+}
+#cancel-formbtn:hover {
+    background-color:#efbf1a;
+    color: white;
+}	
+#formheader {
+    color: #efbf1a;
+    font-size: 26;
+    font-weight: bold;
+    margin-left: 20%;
+}
+
+#formcontent {
+    padding-left: 10px;
+    padding-top: 10px;
+}
+.addtaskform_labels {
+    color: grey;
+    font-size: 12;
+    padding-left: 10px;
+}
+#edit_name{
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid grey;
+	border-radius: 4px;
+	box-sizing: border-box;
+  }
+  #edit_ID{
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid grey;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+#edit_role{
+    width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid grey;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+#saveedittask_formbtn{
+    width: 100%;
+    background-color: #efbf1a;
+    border-radius: 15px;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+#closeedittaskbtn{
+    width: 100%;
+    background-color: #bbb;
+    border-radius: 15px;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+
+/*styling the footer*/
+.myFooter{
+    grid-area: myFooter;
+    text-align: left;
+    height: 13.5vh;
+}
+    
+    
+
+/*Footer Content*/
+.footer {
+  background: #303036;
+  color: #d3d3d3;
+  height: 140px;
+  position: relative;
+}
+.footer .footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  margin-left: 2vw;
+}
+.footer-title {
+  font-family: 'Churchward Design Bold'; 
+  font-size: 3vh;  
+  margin-bottom: 0.5vh; 
+}
+.footer .footer-content .footer-section {
+  flex: 1;
+  padding: 2px;
+}
+.footer .footer-content .about .contact-details span {
+  display: block;
+  font-size: 1.1em;
+}
