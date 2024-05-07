@@ -129,20 +129,39 @@
             align-self: flex-start;
         }
 
+        #new-group-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #new-group-button:hover {
+            background-color: #0056b3;
+        }
+
+
 
     </style>
 </head>
 
 <body>
-<div id="contacts" class="header">
-    <div id="search-select-container">
-        <input type="text" id="search-input" placeholder="Search Contact...">
-        <select id="contact-select" th:onchange="'window.location.href=\'/messages/chat?receiverId=\'+this.value'">
-            <option>Select Contact</option>
-            <option th:each="contact : ${contacts}" th:value="${contact.getId()}" th:text="${contact.getFname()}">Select Contact</option>
-        </select>
+    <div id="contacts" class="header">
+        <div id="search-select-container">
+            <!-- Search input and contact select dropdown -->
+            <input type="text" id="search-input" placeholder="Search Contact...">
+            <select id="contact-select" th:onchange="'window.location.href=\'/messages/chat?receiverId=\'+this.value'">
+                <option>Select Contact</option>
+                <option th:each="contact : ${contacts}" th:value="${contact.getId()}" th:text="${contact.getFname()}">Select Contact</option>
+            </select>
+        </div>
+        <!-- New Group button -->
+        <button id="new-group-button" onclick="createNewGroup()">New Group</button>
     </div>
-</div>
+    
 
 <div id="chat-container">
     <div id="messages-container">
@@ -275,6 +294,19 @@
         messageElement.id = 'message-'+ message.id;
         messageElement.classList.add("message");
 
+
+
+        if(message.senderId === [[${session.userId}]]){
+            messageElement.classList.add("sender");
+        }
+
+        else {
+            messageElement.classList.add("receiver");
+        }
+
+        // th:classappend="${#strings.toString(message.senderId) == session.userId} ? 'sender' : 'receiver'"
+
+
         messageElement.innerHTML = `
                                 <span>${message.content}</span>
                                 <label>
@@ -284,27 +316,9 @@
                                         <option value="delete">Delete</option>
                                     </select>
                                 </label>`;
-
-        var labelTag = messageElement.querySelector('label');
-
-
-
-        if(message.senderId === [[${session.userId}]]){
-            messageElement.classList.add("sender");
-
-        }
-
-        else {
-            messageElement.classList.add("receiver");
-
-            labelTag.style.display = 'none';
-        }
-
-        // th:classappend="${#strings.toString(message.senderId) == session.userId} ? 'sender' : 'receiver'"
-
         messagesContainer.appendChild(messageElement);
-
     }
 
 </script>
+
 </html>
