@@ -46,6 +46,8 @@ public class MessageController {
         return "redirect:/messages/chat?receiverId=2";
     }
 
+
+
 //    @GetMapping("/get")
 //    @ResponseBody
 //    public String getSession(HttpSession session) {

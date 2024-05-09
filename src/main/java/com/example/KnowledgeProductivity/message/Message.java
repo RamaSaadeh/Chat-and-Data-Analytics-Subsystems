@@ -19,33 +19,28 @@ public class Message {
     private Long senderId;
     private Long receiverId;
     private Instant timeStamp;
+    private Long groupId;
 
 
     public Message() {
     }
 
-    public Instant getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(Instant timeStamp) {
-        this.timeStamp = timeStamp;
-    }
-
-    public Message(Long id, String content, String type, Long senderId, Long receiverId, Instant timestamp) {
+    public Message(Long id, String content, String type, Long senderId, Long receiverId, Instant timestamp, Long groupId) {
         this.id = id;
         this.content = content;
         this.type = type;
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.timeStamp = timestamp;
+        this.groupId = groupId;
     }
 
-    public Message(String content, String type, Long senderId, Long receiverId ,Instant timeStamp) {
+    public Message(String content, String type, Long senderId, Long receiverId ,Instant timeStamp, Long groupId) {
         this.content = content;
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.timeStamp = timeStamp;
+        this.groupId = groupId;
     }
 
 
@@ -89,4 +84,19 @@ public class Message {
         this.receiverId = receiverId;
     }
 
+    public Instant getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Instant timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public Long getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
+    }
 }

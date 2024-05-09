@@ -20,7 +20,8 @@ public class MessageConfig {
                     "Text",
                     1L,
                     2L,
-                    Instant.now()
+                    Instant.now(),
+                    null
             );
 
             Message alex = new Message(
@@ -28,7 +29,8 @@ public class MessageConfig {
                     "Text",
                     1L,
                     2L,
-                    Instant.now()
+                    Instant.now(),
+                    null
             );
 
             Message blue = new Message(
@@ -36,7 +38,8 @@ public class MessageConfig {
                     "Text",
                     2L,
                     1L,
-                    Instant.now()
+                    Instant.now(),
+                    null
             );
 
             Message red = new Message(
@@ -44,7 +47,8 @@ public class MessageConfig {
                     "Text",
                     1L,
                     3L,
-                    Instant.now()
+                    Instant.now(),
+                    null
             );
 
             Message green = new Message(
@@ -52,7 +56,8 @@ public class MessageConfig {
                     "Text",
                     3L,
                     1L,
-                    Instant.now()
+                    Instant.now(),
+                    null
             );
 
             messageRepository.saveAll(List.of(mariam,alex,blue,red,green));
