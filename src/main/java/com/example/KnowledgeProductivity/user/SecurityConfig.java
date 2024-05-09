@@ -9,21 +9,20 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private RestTemplate restTemplate;
 
     @Autowired
-    private UserService userService;
+    private CustomUserService userService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, HttpSecurity httpSecurity) throws Exception {
@@ -41,14 +40,27 @@ public class SecurityConfig {
     @Bean
     public AuthenticationSuccessHandler successHandler() {
         return (request, response, authentication) -> {
+            // Get principal from authentication object
             Object principal = authentication.getPrincipal();
 
+            // Cast principal to UserDetails to access user information
+            if (principal instanceof CustomUser) {
+                CustomUser userDetails = (CustomUser) principal;
 
+                // Assuming getUserId() is a method in your UserDetails that returns the user's ID
+                long userId = userDetails.getUserId(); // Replace getUserId() with the actual method you have
 
-            response.sendRedirect("/messages/set?userId=1");
+                // Redirect using the dynamic user ID
+                response.sendRedirect("/messages/set?userId=" + userId);
+            } else {
+                // Handle the case where the principal is not an instance of UserDetails
+                response.sendRedirect("/login?error=true");
 
+                System.out.println(("Attempting to redirect, principal type: " + principal.getClass().getName()));
+            }
         };
     }
+
 
     @Bean
     public UserDetailsService userDetailsService() {

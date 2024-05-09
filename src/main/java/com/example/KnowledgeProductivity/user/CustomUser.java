@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table
-public class User implements UserDetails {
+public class CustomUser implements UserDetails{
     @Id
     @SequenceGenerator(
             name = "student_sequence",
@@ -32,14 +32,14 @@ public class User implements UserDetails {
     @Transient
     private Integer age;
 
-    public User() {
+    public CustomUser() {
     }
 
-    public User(Long id,
-                String fname,
-                String lname,
-                String email,
-                LocalDate dob,String password) {
+    public CustomUser(Long id,
+                      String fname,
+                      String lname,
+                      String email,
+                      LocalDate dob, String password) {
         this.id = id;
         this.fname = fname;
         this.lname = lname;
@@ -48,10 +48,10 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public User(String fname,
-                String lname,
-                String email,
-                LocalDate dob,String password) {
+    public CustomUser(String fname,
+                      String lname,
+                      String email,
+                      LocalDate dob, String password) {
         this.fname = fname;
         this.lname = lname;
         this.email = email;
@@ -82,32 +82,36 @@ public class User implements UserDetails {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return this.fname;
+    }
+
+    public Long getUserId(){
+        return id;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     public void setPassword(String password) {

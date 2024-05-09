@@ -12,9 +12,9 @@ import java.util.List;
 public class UserConfig {
 
     @Bean
-    CommandLineRunner commandLineRunner(UserRepository studentRepository) {
+    CommandLineRunner commandLineRunner(CustomUserRepository studentRepository) {
         return args -> {
-           User mariam = new User(
+           CustomUser mariam = new CustomUser(
                     "Mariam",
                     "Snow",
                     "mariam@gmail.com",
@@ -22,7 +22,7 @@ public class UserConfig {
                    "$2a$12$e8djEMmjZrp2rVMx5JDPp.3QtVacqdR0bJvmh7a3dCi9OzDPpnVwK"
             );
 
-            User alex = new User(
+            CustomUser alex = new CustomUser(
                     "Alex",
                     "William",
                     "alex@gmail.com",
@@ -30,7 +30,7 @@ public class UserConfig {
                     "$2a$12$e8djEMmjZrp2rVMx5JDPp.3QtVacqdR0bJvmh7a3dCi9OzDPpnVwK"
             );
 
-            User blue = new User(
+            CustomUser blue = new CustomUser(
                     "Blue",
                     "William",
                     "blue@gmail.com",

@@ -1,7 +1,7 @@
 package com.example.KnowledgeProductivity.message;
 
-import com.example.KnowledgeProductivity.user.User;
-import com.example.KnowledgeProductivity.user.UserService;
+import com.example.KnowledgeProductivity.user.CustomUser;
+import com.example.KnowledgeProductivity.user.CustomUserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,7 +24,7 @@ public class MessageController {
 
     private final MessageService messageService;
     private final HttpSession httpSession;
-    private final UserService userService;
+    private final CustomUserService userService;
 
     @Autowired
     private SimpMessagingTemplate template;
@@ -32,7 +32,7 @@ public class MessageController {
 
 
     @Autowired
-    public MessageController(MessageService messageService, HttpSession httpSession,UserService userService) {
+    public MessageController(MessageService messageService, HttpSession httpSession, CustomUserService userService) {
         this.messageService = messageService;
         this.httpSession = httpSession;
         this.userService = userService;
@@ -76,7 +76,7 @@ public class MessageController {
 
         model.addAttribute("messages", receiverAndSenderMessages);
 
-        List<User> contactList = userService.getContacts(Long.parseLong(httpSession.getAttribute("userId").toString()));
+        List<CustomUser> contactList = userService.getContacts(Long.parseLong(httpSession.getAttribute("userId").toString()));
 
         model.addAttribute("contacts", contactList);
 

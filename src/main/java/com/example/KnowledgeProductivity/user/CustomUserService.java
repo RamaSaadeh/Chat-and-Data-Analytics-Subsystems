@@ -11,21 +11,21 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService implements UserDetailsService {
+public class CustomUserService implements UserDetailsService {
 
-    private final UserRepository studentRepository;
+    private final CustomUserRepository studentRepository;
 
     @Autowired
-    public UserService(UserRepository studentRepository) {
+    public CustomUserService(CustomUserRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
-    public List<User> getStudents() {
+    public List<CustomUser> getStudents() {
         return studentRepository.findAll();
     }
 
-    public void addNewStudent(User student) {
-        Optional<User> studentByEmail = studentRepository.findStudentByEmail(student.getEmail());
+    public void addNewStudent(CustomUser student) {
+        Optional<CustomUser> studentByEmail = studentRepository.findStudentByEmail(student.getEmail());
 
         if (studentByEmail.isPresent()) {
             throw new IllegalStateException("email taken");
@@ -44,27 +44,17 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void updateStudent(Long studentId, User name, String email) {
+    public void updateStudent(Long studentId, CustomUser name, String email) {
     }
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user =  studentRepository.findByFname(username);
-
-        if (user.isPresent()) {
-            var userObj = user.get();
-           return org.springframework.security.core.userdetails.User.builder()
-                    .username(userObj.getFname())
-                    .password(userObj.getPassword())
-                    .build();
-        }
-        else{
-            throw new UsernameNotFoundException("username not found");
-        }
+        return studentRepository.findByFname(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
     }
 
-    public List<User> getContacts(Long userId) {
+    public List<CustomUser> getContacts(Long userId) {
         System.out.println(studentRepository.findAll());
         return studentRepository.findAll();
     }

@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface CustomUserRepository extends JpaRepository<CustomUser, Long> {
 
-    Optional<User> findStudentByEmail(String email);
+    Optional<CustomUser> findStudentByEmail(String email);
 
-   Optional <User> findByFname(String username);
+   Optional <CustomUser> findByFname(String username);
 
    @Override
-   List<User> findAll();
+   List<CustomUser> findAll();
 }

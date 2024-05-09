@@ -11,26 +11,26 @@ public class UserController
 {
 
 
-    private final UserService studentService;
+    private final CustomUserService studentService;
 
     @Autowired
-    public UserController(UserService studentService) {
+    public UserController(CustomUserService studentService) {
         this.studentService = studentService;
     }
 
     @GetMapping
-    public List<User> getStudents() {
+    public List<CustomUser> getStudents() {
         return studentService.getStudents();
     }
 
     @PostMapping
-    public void registerNewStudent(@RequestBody User student) {
+    public void registerNewStudent(@RequestBody CustomUser student) {
         studentService.addNewStudent(student);
     }
 
     @PutMapping("{studentId}")
     public void updateStudent(@PathVariable("studentId") Long studentId,
-                              @RequestParam(required = false) User name,
+                              @RequestParam(required = false) CustomUser name,
                               @RequestParam(required = false) String email) {
         studentService.updateStudent(studentId, name, email);
     }
