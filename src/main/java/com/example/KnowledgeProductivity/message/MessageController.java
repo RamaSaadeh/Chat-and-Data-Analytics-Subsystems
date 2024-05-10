@@ -1,5 +1,9 @@
 package com.example.KnowledgeProductivity.message;
 
+import com.example.KnowledgeProductivity.group_user.GroupUser;
+import com.example.KnowledgeProductivity.group_user.GroupUserService;
+import com.example.KnowledgeProductivity.groups.GroupChat;
+import com.example.KnowledgeProductivity.groups.GroupChatService;
 import com.example.KnowledgeProductivity.user.CustomUser;
 import com.example.KnowledgeProductivity.user.CustomUserService;
 import jakarta.servlet.http.HttpSession;
@@ -25,6 +29,8 @@ public class MessageController {
     private final MessageService messageService;
     private final HttpSession httpSession;
     private final CustomUserService userService;
+    private final GroupUserService groupUserService;
+    private final GroupChatService groupChatService;
 
     @Autowired
     private SimpMessagingTemplate template;
@@ -32,10 +38,12 @@ public class MessageController {
 
 
     @Autowired
-    public MessageController(MessageService messageService, HttpSession httpSession, CustomUserService userService) {
+    public MessageController(MessageService messageService, HttpSession httpSession, CustomUserService userService, GroupUserService groupUserService, GroupChatService groupChatService) {
         this.messageService = messageService;
         this.httpSession = httpSession;
         this.userService = userService;
+        this.groupUserService = groupUserService;
+        this.groupChatService = groupChatService;
     }
 
     @GetMapping("/set")
@@ -75,12 +83,17 @@ public class MessageController {
         Collections.sort(receiverAndSenderMessages, Comparator.comparing(Message::getTimeStamp));
 
         model.addAttribute("messages", receiverAndSenderMessages);
+//        model.addAttribute("sessionId", getUserIdFromSession(this.httpSession));
 
         List<CustomUser> contactList = userService.getContacts(Long.parseLong(httpSession.getAttribute("userId").toString()));
 
         model.addAttribute("contacts", contactList);
 
+        List<GroupUser> listOfGroups = groupUserService.getCurrentUsersGroup(Long.parseLong(getUserIdFromSession(httpSession)));
+        List<GroupChat> groupDetails = groupChatService.getAllGroupDetails(listOfGroups);
 
+        model.addAttribute("groups", listOfGroups);
+        model.addAttribute("groupDetails", groupDetails);
         return "chat"; // Points to 'chat.html' Thymeleaf template
     }
 
@@ -121,4 +134,6 @@ public class MessageController {
         messageService.deleteMessage(messageId);
         template.convertAndSend("/topic/deletedMessages", messageId.toString());
     }
+
+
 }

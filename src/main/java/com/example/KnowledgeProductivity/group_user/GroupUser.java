@@ -1,5 +1,6 @@
 package com.example.KnowledgeProductivity.group_user;
 
+import com.example.KnowledgeProductivity.groups.GroupChat;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,8 +15,11 @@ public class GroupUser {
     private Long groupId;
     private Long userId;
 
+
+
     public GroupUser() {
     }
+
 
     public GroupUser(Long id, Long groupId, Long userId) {
         this.id = id;
@@ -27,4 +31,32 @@ public class GroupUser {
         this.groupId = groupId;
         this.userId = userId;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+
+
+
 }
