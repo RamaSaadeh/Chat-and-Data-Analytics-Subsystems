@@ -76,13 +76,14 @@ public class MessageController {
     //serve the html page
 
     @GetMapping("/chat")
-    public String chatPage(Model model, @RequestParam Long receiverId) {
+    public String chatPage(Model model,
+                           @RequestParam(required = false) Long receiverId,
+                           @RequestParam (required = false) Long groupId) {
         List<Message> receiverAndSenderMessages = new ArrayList<>(messageService.retrieveMessages(receiverId , Long.valueOf( getUserIdFromSession(httpSession))));
         receiverAndSenderMessages.addAll(messageService.retrieveMessages(Long.valueOf( getUserIdFromSession(httpSession)), receiverId));
 
         Collections.sort(receiverAndSenderMessages, Comparator.comparing(Message::getTimeStamp));
 
-        model.addAttribute("messages", receiverAndSenderMessages);
 //        model.addAttribute("sessionId", getUserIdFromSession(this.httpSession));
 
         List<CustomUser> contactList = userService.getContacts(Long.parseLong(httpSession.getAttribute("userId").toString()));
@@ -92,8 +93,20 @@ public class MessageController {
         List<GroupUser> listOfGroups = groupUserService.getCurrentUsersGroup(Long.parseLong(getUserIdFromSession(httpSession)));
         List<GroupChat> groupDetails = groupChatService.getAllGroupDetails(listOfGroups);
 
+        List<Message> groupChatMessages = messageService.getAllGroupChatMessages(groupId);
+        Collections.sort(groupChatMessages, Comparator.comparing(Message::getTimeStamp));
+
+        if(receiverId != null){
+            model.addAttribute("messages", receiverAndSenderMessages);
+        }
+
+        else if(groupId != null){
+            model.addAttribute("messages", groupChatMessages);
+        }
+
         model.addAttribute("groups", listOfGroups);
         model.addAttribute("groupDetails", groupDetails);
+        model.addAttribute(messageService.getMesagesByGroupId(groupId));
         return "chat"; // Points to 'chat.html' Thymeleaf template
     }
 
@@ -119,6 +132,7 @@ public class MessageController {
 
         return message;  // Send the message to the subscribed users
     }
+
 
 
     @ResponseBody

@@ -178,8 +178,13 @@
                 Contact
             </option>
 
-            <option th:each="group : ${groups}"
-                    th:value="'group-'+${group.getId()}"
+        </select>
+
+        <select id="group-select" th:onchange="'window.location.href=\'/messages/chat?groupId=\'+this.value'">
+            <option value="" disabled selected>Select Group</option>
+            <option th:each="group : ${groups}",
+                    th:if="${@groupUserService.isUserInGroup(group , session.userId)}"
+                    th:value="${group.getGroupId()}"
                     th:text="${@groupChatService.getGroupDetailForGroup(group)}">
             </option>
         </select>
@@ -292,13 +297,15 @@
 // Parse the query parameters
         const queryParams = new URLSearchParams(currentUrl.search);
         const receiverId = queryParams.get('receiverId');
+        const groupId = queryParams.get('groupId');
 
         const messageData = {
             content: messageInput,
             type: "Text",
             senderId: sessionId,
             receiverId: receiverId,
-            timeStamp: new Date().toISOString()
+            timeStamp: new Date().toISOString(),
+            groupId : groupId
         };
 
         if (stompClient) {

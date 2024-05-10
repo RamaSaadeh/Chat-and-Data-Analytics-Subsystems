@@ -14,5 +14,8 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
     // This just makes a sql query as follows SELECT * FROM message WHERE receiver_id = receiverId
     List<Message> findAllByReceiverIdAndSenderId(Long receiverId, Long senderId);
 
+    List<Message> findAllByGroupId(Long groupId);
+
+    List<Message> findMessageByGroupId(Long groupId);
 
 }

@@ -42,13 +42,12 @@ public class GroupChatService {
     }
 
     public String getGroupDetailForGroup(GroupUser group) {
-
-        System.out.println("Group ID: " + group.getGroupId()); // Debug log
         // Use Optional to safely handle the case where no GroupChat is found
         Optional<GroupChat> groupChat = groupChatRepository.findById(group.getGroupId());
 
         // Return the group name if present, otherwise return a default value or null
         return groupChat.map(GroupChat::getGroupName).orElse("Default Group Name"); // Or `orElse(null)` if you prefer
     }
+
 
 }

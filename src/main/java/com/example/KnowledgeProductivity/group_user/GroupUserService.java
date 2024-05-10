@@ -2,23 +2,23 @@ package com.example.KnowledgeProductivity.group_user;
 
 import com.example.KnowledgeProductivity.groups.GroupChat;
 import com.example.KnowledgeProductivity.groups.GroupChatRepository;
+import com.example.KnowledgeProductivity.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GroupUserService {
 
 
     private final GroupUserRepository groupUserRepository;
-    private final GroupChatRepository groupChatRepository;
 
     @Autowired
-    public GroupUserService(GroupUserRepository groupUserRepository, GroupChatRepository groupChatRepository) {
+    public GroupUserService(GroupUserRepository groupUserRepository ) {
         this.groupUserRepository = groupUserRepository;
-        this.groupChatRepository = groupChatRepository;
     }
 
     public void addUsersToGroup(List<Long> contactIds, Long groupChatId) {
@@ -31,6 +31,12 @@ public class GroupUserService {
     public List<GroupUser> getCurrentUsersGroup(Long userIdFromSession) {
 
         return groupUserRepository.findByUserId(userIdFromSession);
+    }
+
+    public boolean isUserInGroup(GroupUser group ,String userId){
+
+        Optional<GroupUser> result = groupUserRepository.findByUserIdAndGroupId(Long.parseLong(userId), group.getGroupId());
+        return result.isPresent();
     }
 
 

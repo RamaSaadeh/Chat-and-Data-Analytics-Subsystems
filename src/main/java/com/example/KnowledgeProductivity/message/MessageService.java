@@ -46,4 +46,12 @@ public class MessageService {
         //deletes the message of that unique id
         messageRepository.deleteById(messageId);
     }
+
+    public List<Message> getMesagesByGroupId(Long groupId) {
+        return messageRepository.findAllByGroupId(groupId);
+    }
+
+    public List<Message> getAllGroupChatMessages(Long groupId) {
+        return messageRepository.findMessageByGroupId(groupId);
+    }
 }
