@@ -75,6 +75,7 @@ public class MessageController {
         Collections.sort(receiverAndSenderMessages, Comparator.comparing(Message::getTimeStamp));
 
         model.addAttribute("messages", receiverAndSenderMessages);
+//        model.addAttribute("sessionId", getUserIdFromSession(this.httpSession));
 
         List<CustomUser> contactList = userService.getContacts(Long.parseLong(httpSession.getAttribute("userId").toString()));
 
