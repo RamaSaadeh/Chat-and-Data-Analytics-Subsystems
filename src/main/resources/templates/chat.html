@@ -267,54 +267,79 @@
 
 
     function connectWebsocket() {
+        // Create a new SockJS instance pointing to the server WebSocket endpoint
         var socket = new SockJS('/websocket');
+        // Create a STOMP client over the SockJS instance
         stompClient = Stomp.over(socket);
+
+        // Connect to the server through STOMP; the empty object is for headers if needed
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
-            stompClient.subscribe('/topic/messages', function (message) {
+
+            // Upon successful connection, subscribe to a user-specific queue to receive messages
+            stompClient.subscribe('/user/queue/messages', function (message) {
+                // Handle incoming messages, e.g., display them in the UI
                 showMessage(JSON.parse(message.body));
             });
 
+            // Optional: Subscribe to additional topics or queues if needed
+            // Example: Handling deleted messages or updates, subscribe to another queue/topic
             stompClient.subscribe('/topic/deletedMessages', function (message) {
-                const messageId = message.body;  // Since the ID is sent as a simple string
+                const messageId = message.body;  // Assume the message ID is sent as a simple string
                 const messageElement = document.getElementById(`message-${messageId}`);
                 if (messageElement) {
                     messageElement.parentNode.removeChild(messageElement);
                 }
             });
+        }, function (error) {
+            // Optionally handle connection errors
+            console.log('Connection error: ' + error);
+            alert('Connection error! Please check the console for details.');
         });
     }
 
 
     function sendMessage(event) {
-        event.preventDefault();
+        event.preventDefault();  // Prevent the form from submitting normally
+
+        // Retrieve the message content and sender ID from the input fields
         const messageInput = document.getElementById("message-input").value;
-        const sessionId = document.getElementById("session-id").value;  // Retrieve the sender ID from the hidden input
+        const sessionId = document.getElementById("session-id").value;
 
-        // Get the current URL
+        // Parse the URL to get query parameters
         const currentUrl = new URL(window.location.href);
-
-// Parse the query parameters
         const queryParams = new URLSearchParams(currentUrl.search);
         const receiverId = queryParams.get('receiverId');
         const groupId = queryParams.get('groupId');
 
+        // Prepare the message data structure
         const messageData = {
             content: messageInput,
             type: "Text",
             senderId: sessionId,
             receiverId: receiverId,
             timeStamp: new Date().toISOString(),
-            groupId : groupId
+            groupId: groupId
         };
 
+        // Send the message to the appropriate destination on the server
         if (stompClient) {
-            stompClient.send("/app/sendMessage", {}, JSON.stringify(messageData));
+            let destination = "/app/sendMessage";
+            if (receiverId) {
+                // If a receiverId is specified, send to a specific user
+                destination = "/app/privateMessage";
+            } else if (groupId) {
+                // If a groupId is specified, send to a group
+                destination = "/app/groupMessage";
+            }
+
+            stompClient.send(destination, {}, JSON.stringify(messageData));
             document.getElementById("message-input").value = ''; // Clear the input field after sending
         } else {
             console.error("Not connected to WebSocket.");
         }
     }
+
 
     function actionHandler(messageId) {
         const selectTagId = "actions-" + messageId;

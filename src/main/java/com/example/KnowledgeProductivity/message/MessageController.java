@@ -126,12 +126,13 @@ public class MessageController {
 
     @MessageMapping("/sendMessage")
     @SendTo("/topic/messages")
-    public Message sendMessage(Message message) {
+    public void sendMessage(Message message) {
         messageService.sendMessage(message);
 
 
-        return message;  // Send the message to the subscribed users
+        template.convertAndSendToUser(getUserIdFromSession(httpSession), "/queue/messages", message);
     }
+
 
 
 
