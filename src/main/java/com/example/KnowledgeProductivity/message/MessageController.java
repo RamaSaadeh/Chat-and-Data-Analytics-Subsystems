@@ -125,14 +125,23 @@ public class MessageController {
 
 
     @MessageMapping("/sendMessage")
-    @SendTo("/topic/messages")
     public void sendMessage(Message message) {
-        messageService.sendMessage(message);
+        messageService.sendMessage(message); // Handle the logic to save/send message as needed
 
+//        // Send the message to the user-specific channel
+//        String userDestination = "/private/" + (message.getSenderId() + message.getReceiverId());
+//
+//        String groupDestination = "/group/" + message.getGroupId();
 
-        template.convertAndSendToUser(getUserIdFromSession(httpSession), "/queue/messages", message);
+        if (message.getReceiverId() != null) {
+            String userDestination = "/private/" + (message.getSenderId() + message.getReceiverId());
+            template.convertAndSend(userDestination, message);
+        }
+        if (message.getGroupId() != null) {
+            String groupDestination = "/group/" + message.getGroupId();
+            template.convertAndSend(groupDestination, message);
+        }
     }
-
 
 
 
