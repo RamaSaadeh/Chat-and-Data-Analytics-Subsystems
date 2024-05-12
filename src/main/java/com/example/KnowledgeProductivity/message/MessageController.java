@@ -4,22 +4,21 @@ import com.example.KnowledgeProductivity.group_user.GroupUser;
 import com.example.KnowledgeProductivity.group_user.GroupUserService;
 import com.example.KnowledgeProductivity.groups.GroupChat;
 import com.example.KnowledgeProductivity.groups.GroupChatService;
-import com.example.KnowledgeProductivity.user.CustomUser;
-import com.example.KnowledgeProductivity.user.CustomUserService;
+import com.example.KnowledgeProductivity.user.User;
+import com.example.KnowledgeProductivity.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 
 @Controller
@@ -27,8 +26,7 @@ import java.util.List;
 public class MessageController {
 
     private final MessageService messageService;
-    private final HttpSession httpSession;
-    private final CustomUserService userService;
+    private final UserService userService;
     private final GroupUserService groupUserService;
     private final GroupChatService groupChatService;
 
@@ -36,61 +34,43 @@ public class MessageController {
     private SimpMessagingTemplate template;
 
 
+    Long globalUserId ;
+
+
+
 
     @Autowired
-    public MessageController(MessageService messageService, HttpSession httpSession, CustomUserService userService, GroupUserService groupUserService, GroupChatService groupChatService) {
+    public MessageController(MessageService messageService, UserService userService, GroupUserService groupUserService, GroupChatService groupChatService) {
         this.messageService = messageService;
-        this.httpSession = httpSession;
         this.userService = userService;
         this.groupUserService = groupUserService;
         this.groupChatService = groupChatService;
     }
 
+    @ResponseBody
     @GetMapping("/set")
-    public String setSession(HttpSession session, @RequestParam String userId) {
-        // Set session attribute
-        session.setAttribute("userId", userId); // currently set the session to 1 but needs to be changed to the person that logs in
-
-        return "redirect:/messages/chat?receiverId=2";
+    public void set(@RequestParam Long userId) {
+        globalUserId = userId;
     }
 
 
-
-//    @GetMapping("/get")
-//    @ResponseBody
-//    public String getSession(HttpSession session) {
-//        String userId = (String) session.getAttribute("userId");
-//        return "Session value for user ID is: " + (userId != null ? userId : "Not set");
-//    }
-
-    private String getUserIdFromSession(HttpSession session) {
-        return (String) session.getAttribute("userId");
-    }
-
-
-
-
-
-
-
-    //serve the html page
+//    serve the html page
 
     @GetMapping("/chat")
     public String chatPage(Model model,
                            @RequestParam(required = false) Long receiverId,
-                           @RequestParam (required = false) Long groupId) {
-        List<Message> receiverAndSenderMessages = new ArrayList<>(messageService.retrieveMessages(receiverId , Long.valueOf( getUserIdFromSession(httpSession))));
-        receiverAndSenderMessages.addAll(messageService.retrieveMessages(Long.valueOf( getUserIdFromSession(httpSession)), receiverId));
+                           @RequestParam (required = false) Long groupId)  {
 
-        Collections.sort(receiverAndSenderMessages, Comparator.comparing(Message::getTimeStamp));
+        List<Message> receiverAndSenderMessages = new ArrayList<>(messageService.retrieveMessages(receiverId , globalUserId));
+        receiverAndSenderMessages.addAll(messageService.retrieveMessages(globalUserId, receiverId));
 
-//        model.addAttribute("sessionId", getUserIdFromSession(this.httpSession));
+        receiverAndSenderMessages.sort(Comparator.comparing(Message::getTimeStamp));
 
-        List<CustomUser> contactList = userService.getContacts(Long.parseLong(httpSession.getAttribute("userId").toString()));
+        List<User> contactList = userService.getContacts(globalUserId);
 
         model.addAttribute("contacts", contactList);
 
-        List<GroupUser> listOfGroups = groupUserService.getCurrentUsersGroup(Long.parseLong(getUserIdFromSession(httpSession)));
+        List<GroupUser> listOfGroups = groupUserService.getCurrentUsersGroup(globalUserId);
         List<GroupChat> groupDetails = groupChatService.getAllGroupDetails(listOfGroups);
 
         List<Message> groupChatMessages = messageService.getAllGroupChatMessages(groupId);
@@ -104,24 +84,15 @@ public class MessageController {
             model.addAttribute("messages", groupChatMessages);
         }
 
+
+        model.addAttribute("userId", globalUserId);
+
         model.addAttribute("groups", listOfGroups);
         model.addAttribute("groupDetails", groupDetails);
         model.addAttribute(messageService.getMesagesByGroupId(groupId));
+
         return "chat"; // Points to 'chat.html' Thymeleaf template
     }
-
-
-
-//    @ResponseBody
-//    @GetMapping("/retrieveMessages/{sessions}")
-//    public List<List<Message>> retrieveMessages(@RequestParam() Long receiverId , @RequestParam HttpSession session) {
-//        List<Message> messagesUser = messageService.retrieveMessages(getUserIdFromSession(session));
-//        List<Message> recieverMessages = messageService.retrieveMessages(receiverId);
-//        List<List<Message>> messagesList = new ArrayList<>();
-//        messagesList.add(messagesUser);
-//        messagesList.add(recieverMessages);
-//        return messagesList;
-//    }
 
 
     @MessageMapping("/sendMessage")

@@ -1,44 +1,63 @@
 package com.example.KnowledgeProductivity.user;
 
+import com.example.KnowledgeProductivity.message.Message;
+import com.example.KnowledgeProductivity.message.MessageRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.time.LocalDate;
-import java.time.Month;
+import java.time.Instant;
 import java.util.List;
 
 @Configuration
 public class UserConfig {
 
     @Bean
-    CommandLineRunner commandLineRunner(CustomUserRepository studentRepository) {
+    CommandLineRunner commandLineRunner3(UserRepository userRepository) {
+
+
         return args -> {
-           CustomUser mariam = new CustomUser(
-                    "Mariam",
-                    "Snow",
-                    "mariam@gmail.com",
-                    LocalDate.of(2000, Month.JANUARY, 5),
-                   "$2a$12$e8djEMmjZrp2rVMx5JDPp.3QtVacqdR0bJvmh7a3dCi9OzDPpnVwK"
+            User mariam = new User(
+                 "Mariam",
+                    "$2a$12$e8djEMmjZrp2rVMx5JDPp.3QtVacqdR0bJvmh7a3dCi9OzDPpnVwK",
+                    "mariam@makeitall.co.uk",
+                    Role.USER
+
             );
 
-            CustomUser alex = new CustomUser(
+            User alex = new User(
                     "Alex",
-                    "William",
-                    "alex@gmail.com",
-                    LocalDate.of(2003, Month.JANUARY, 5),
-                    "$2a$12$e8djEMmjZrp2rVMx5JDPp.3QtVacqdR0bJvmh7a3dCi9OzDPpnVwK"
+                    "$2a$12$e8djEMmjZrp2rVMx5JDPp.3QtVacqdR0bJvmh7a3dCi9OzDPpnVwK",
+                    "alex@makeitall.co.uk",
+                    Role.USER
+
             );
 
-            CustomUser blue = new CustomUser(
+
+            User blue = new User(
                     "Blue",
-                    "William",
-                    "blue@gmail.com",
-                    LocalDate.of(2003, Month.JANUARY, 5),
-                    "$2a$12$e8djEMmjZrp2rVMx5JDPp.3QtVacqdR0bJvmh7a3dCi9OzDPpnVwK"
+                    "$2a$12$e8djEMmjZrp2rVMx5JDPp.3QtVacqdR0bJvmh7a3dCi9OzDPpnVwK",
+                    "blue@makeitall.co.uk",
+                    Role.USER
+
             );
 
-            studentRepository.saveAll(List.of(mariam,alex,blue));
+
+            User red = new User(
+                    "Red",
+                    "$2a$12$e8djEMmjZrp2rVMx5JDPp.3QtVacqdR0bJvmh7a3dCi9OzDPpnVwK",
+                    "red@makeitall.co.uk",
+                    Role.USER
+            );
+
+            User green = new User(
+                    "Green",
+                    "$2a$12$e8djEMmjZrp2rVMx5JDPp.3QtVacqdR0bJvmh7a3dCi9OzDPpnVwK",
+                    "green@makeitall.co.uk",
+                    Role.USER
+            );
+
+            userRepository.saveAll(List.of(mariam,alex,blue,red,green));
         };
     }
 }

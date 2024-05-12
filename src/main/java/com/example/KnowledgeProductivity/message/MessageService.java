@@ -1,10 +1,14 @@
 package com.example.KnowledgeProductivity.message;
 
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.Key;
+import java.security.SignatureException;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,4 +58,5 @@ public class MessageService {
     public List<Message> getAllGroupChatMessages(Long groupId) {
         return messageRepository.findMessageByGroupId(groupId);
     }
+
 }

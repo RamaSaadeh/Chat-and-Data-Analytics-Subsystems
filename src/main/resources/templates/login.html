@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<h1>Login</h1>
+<div th:if="${param.error}">
+    Invalid username and password.
+</div>
+<form id="loginForm">
+    <div>
+        <label for="username">Email:</label>
+        <input type="text" id="username" name="username" required autofocus>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    <div>
+        <button type="button" id="submitButton">Sign In</button>
+    </div>
+</form>
+
+</body>
+</html>
+
+<script>
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const submitButton = document.getElementById('submitButton');
+        submitButton.addEventListener('click', function(event) {
+            handleLogin(event);
+        });
+    });
+
+    function handleLogin(event) {
+        event.preventDefault(); // Prevent default form submission behavior
+
+        const email = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        fetch('/auth/authenticate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        })
+            .then(response => response.json()) // Assuming the server responds with JSON
+            .then(data => {
+                if (data.token) {
+                    localStorage.setItem('jwt', data.token); // Store the token in localStorage
+                    window.location.href = '/messages/chat?receiverId=2'
+                } else {
+                    alert('Login failed: ' + data.message);
+                    window.location.href = '/login-error'; // Redirect to login error page if no token
+                }
+            })
+            .catch(error => console.error('Error during login:', error));
+    }
+
+</script>
