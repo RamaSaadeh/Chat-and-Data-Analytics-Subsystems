@@ -273,16 +273,17 @@
 <body>
 <div id="chat-container" class="header">
     <div id="messages-container">
-        <<div id="chat-header" class="header"></div>
+        <div id="chat-header" class="header"></div>
 
         <div id="messages">
-            <div th:each="message : ${messages}"
-                 th:classappend="${#strings.toString(message.senderId) == session.userId} ? 'sender' : 'receiver'"
-                 class="message" th:id="'message-' + ${message.id}">
+            <div th:each="message : ${messages}" th:id="'message-' + ${message.id}"
+                 th:classappend="${#strings.toString(message.senderId) == userId} ? 'sender' : 'receiver'"
+                 class="message" >
                 <span th:text="${message.content}"></span>
-                <div th:if="${#strings.toString(message.senderId) == session.userId}" class="message-actions">
-                    <button class="edit-button" onclick="editMessage(${message.id})"><i class="fas fa-edit"></i></button>
-                    <button class="delete-button" onclick="deleteMessage(${message.id})"><i class="fas fa-trash-alt"></i></button>
+                <div th:if="${#strings.toString(message.senderId) == userId}" class="message-actions">
+                    <button class="edit-button" th:onclick="'editMessage(' + ${message.id} + ')'"><i class="fas fa-edit"></i></button>
+                    <button class="delete-button" th:onclick="'deleteMessage(' + ${message.id} + ')'"><i class="fas fa-trash-alt"></i></button>
+
                 </div>
             </div>
         </div>
@@ -298,7 +299,7 @@
     </div>
 
     <form id="message-input-container" onsubmit="sendMessage(event)">
-        <input type="hidden" id="session-id" name="sessionId" th:value="${session.userId}" />
+        <input type="hidden" id="session-id" name="sessionId" th:value="${userId}" />
         <input type="text" id="message-input" placeholder="Type your message..." required>
         <button id="send-button" type="submit">Send</button>
     </form>
@@ -321,7 +322,7 @@
         </div>
 
         <!-- Create Group Button -->
-        <button type="button" onclick="createGroup()" class="btn btn-primary">Create Group</button>
+        <button type="button" onclick="submitGroupForm()" class="btn btn-primary">Create Group</button>
     </form>
 </div>
 
@@ -330,80 +331,77 @@
     <ul id="contact-list">
         <li th:each="contact : ${contacts}" th:text="${contact.fname}" th:onclick="'window.location.href=\'/messages/chat?receiverId=' + ${contact.id} + '\''"></li>
     </ul>
+
+    <ul id="group-list">
+        <li th:each="group : ${groups}"
+            th:if="${@groupUserService.isUserInGroup(group, userId)}"
+            th:text="${@groupChatService.getGroupDetailForGroup(group)}"
+            th:onclick="'window.location.href=\'/messages/chat?groupId=' + ${group.getGroupId()} + '\''">
+        </li>
+    </ul>
     <!-- Navigation Bar at the bottom of the sidebar -->
     <div class="sidebar-nav">
-        <button id="new-group-button" class="btn btn-nav">New Group</button>
-        <button id="analytics-nav-button" class="btn btn-nav">Data Analytics</button>
+        <button id="new-group-button" class="btn btn-nav" onclick="createGroup()">New Group</button>
+        <button id="analytics-nav-button" class="btn btn-nav" onclick="redirectToAnalytic()">Data Analytics</button>
     </div>
 </div>
 
 
-<form id="message-input-container" onsubmit="sendMessage(event)">
-    <input type="hidden" id="session-id" name="sessionId" th:value="${userId}"/>
-    <input type="text" id="message-input" placeholder="Type your message..." required>
-    <button id="send-button" type="submit">Send</button>
-</form>
-</div>
 </body>
 
 
-<script>
-    // Assigning session userId to a JavaScript variable
-    var userId = [[${session.userId}]];
-</script>
+
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        connectWebSocket();
-        attachMessageEventListeners();
-
-document.getElementById("search-input").addEventListener("input", function () {
-    const searchInput = this.value.trim();
-
-    if (searchInput.length < 3) { // Only search if 3 or more characters are typed
-        return; // Optionally clear existing results or handle no input scenario
-    }
-
-    fetch(`/api/searchContacts?term=${encodeURIComponent(searchInput)}`)
-        .then(response => response.json())
-        .then(contacts => {
-            const contactList = document.getElementById('sidebar ul');
-            contactList.innerHTML = ''; // Clear previous results
-
-            contacts.forEach(contact => {
-                const li = document.createElement('li');
-                li.textContent = contact.name; // Assuming your contacts have a 'name' field
-                li.onclick = () => selectContact(contact.name);
-                contactList.appendChild(li);
-            });
-        })
-        .catch(error => console.error('Error fetching contacts:', error));
-});
-
-
-        document.getElementById("sidebar").addEventListener("click", function (event) {
-            const clickedElement = event.target;
-            if (clickedElement.tagName === 'LI') {
-                const selectedContact = clickedElement.textContent;
-                document.getElementById("chat-header").innerText = selectedContact;
-            }
-        });
-
-        document.getElementById("analytics-nav-button").addEventListener("click", function() {
-            window.location.href = "/data-analytics"; // Adjust the URL as needed
-        });
-
-        document.getElementById("new-group-button").addEventListener("click", function() {
-         // Assuming you have a function to display the form
-         createNewGroup();
-});
-
-
-    });
-
     var stompClient = null;
 
-    function connectWebSocket() {
+
+    function editMessage(messageId){
+
+            var element = document.getElementById("message-" + messageId).querySelector('span');
+            var inputElement = document.createElement("input");
+            inputElement.value = element.textContent;
+            element.innerHTML = "";
+            element.appendChild(inputElement);
+
+            inputElement.addEventListener("keypress", function (event) {
+                if (event.key === "Enter") {
+                    element.textContent = inputElement.value;
+
+                    fetch("/messages/editMessage/" + messageId + "?content=" + element.textContent, {
+                        method: "PUT"
+                    });
+                }
+            });
+
+    }
+
+    function deleteMessage(messageId){
+        fetch("/messages/delete/" + messageId, {
+            method: "DELETE"
+        });
+
+    }
+
+
+
+    window.onload = function () {
+        connectWebsocket();
+        document.getElementById("messages").addEventListener('change', function (event) {
+            if (event.target.tagName === 'SELECT' && event.target.id.startsWith('actions-')) {
+                const messageId = event.target.id.split('-')[1];
+                console.log(messageId)
+                actionHandler(messageId);
+            }
+        });
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+        attachMessageEventListeners();
+    });
+
+
+    function connectWebsocket() {
         var socket = new SockJS('/websocket');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
@@ -430,7 +428,7 @@ document.getElementById("search-input").addEventListener("input", function () {
             }
 
             stompClient.subscribe('/topic/deletedMessages', function (message) {
-                const messageId = message.body;
+                const messageId = message.body;  // Since the ID is sent as a simple string
                 const messageElement = document.getElementById(`message-${messageId}`);
                 if (messageElement) {
                     messageElement.parentNode.removeChild(messageElement);
@@ -439,27 +437,15 @@ document.getElementById("search-input").addEventListener("input", function () {
         });
     }
 
-    function attachMessageEventListeners() {
-        const messages = document.querySelectorAll('.message');
-        messages.forEach(function (message) {
-            message.addEventListener('mouseover', function () {
-                showMessageActions(this);
-            });
-
-            message.addEventListener('mouseout', function () {
-                hideMessageActions(this);
-            });
-        });
+    function redirectToAnalytic(){
+        window.location.href = '/analytic';
     }
+
 
     function sendMessage(event) {
         event.preventDefault();
         const messageInput = document.getElementById("message-input").value;
-        const sessionId = document.getElementById("session-id").value;
-
-        const currentUrl = new URL(window.location.href);
-        const queryParams = new URLSearchParams(currentUrl.search);
-        const receiverId = queryParams.get('receiverId');
+        const sessionId = document.getElementById("session-id").value;  // Retrieve the sender ID from the hidden input
 
         // Get the current URL
         const currentUrl = new URL(window.location.href);
@@ -480,31 +466,45 @@ document.getElementById("search-input").addEventListener("input", function () {
 
         if (stompClient) {
             stompClient.send("/app/sendMessage", {}, JSON.stringify(messageData));
-            document.getElementById("message-input").value = '';
+            document.getElementById("message-input").value = ''; // Clear the input field after sending
         } else {
             console.error("Not connected to WebSocket.");
         }
     }
 
-    function editMessage(messageId) {
-        const messageElement = document.getElementById(`message-${messageId}`);
-        const messageContentElement = messageElement.querySelector('span');
-        const messageContent = messageContentElement.innerText;
-        const newContent = prompt("Edit Message:", messageContent);
+    function actionHandler(messageId) {
+        const selectTagId = "actions-" + messageId;
+        const optionSelected = document.getElementById(selectTagId).value;
+        if (optionSelected === 'delete') {
+            fetch("/messages/delete/" + messageId, {
+                method: "DELETE"
+            });
 
-        if (newContent !== null) {
-            messageContentElement.innerText = newContent;
-            console.log(`Message ${messageId} edited. New content: ${newContent}`);
+        }
+
+        if (optionSelected === 'edit') {
+            var element = document.getElementById("message-" + messageId).querySelector('span');
+            var inputElement = document.createElement("input");
+            inputElement.value = element.textContent;
+            element.innerHTML = "";
+            element.appendChild(inputElement);
+
+            inputElement.addEventListener("keypress", function (event) {
+                if (event.key === "Enter") {
+                    element.textContent = inputElement.value;
+
+                    fetch("/messages/editMessage/" + messageId + "?content=" + element.textContent, {
+                        method: "PUT"
+                    });
+                }
+            });
         }
     }
 
-    function deleteMessage(messageId) {
-        if (confirm("Are you sure you want to delete this message?")) {
-            console.log(`Message ${messageId} deleted.`);
-            const messageElement = document.getElementById(`message-${messageId}`);
-            messageElement.remove();
-        }
-    }
+    // function dropdownListener(messageId) {
+    //     console.log(messageId);
+    //     document.getElementById("actions-" + messageId).addEventListener('change', () => actionHandler(messageId));
+    // }
 
     function showMessage(message) {
         var messagesContainer = document.getElementById("messages");
@@ -512,17 +512,16 @@ document.getElementById("search-input").addEventListener("input", function () {
         messageElement.id = 'message-' + message.id;
         messageElement.classList.add("message");
 
-
         if (message.senderId === [[${userId}]]) {
             messageElement.classList.add("sender");
-            messageElement.innerHTML = '<span>' + ${message.content} + '</span>' +
+            messageElement.innerHTML = '<span>' + message.content + '</span>' +
                 '<div class="message-actions">' +
                 '<button class="edit-button" onclick="editMessage(' + message.id + ')"><i class="fas fa-edit"></i></button>' +
                 '<button class="delete-button" onclick="deleteMessage(' + message.id + ')"><i class="fas fa-trash-alt"></i></button>' +
                 '</div>';
         } else {
             messageElement.classList.add("receiver");
-            messageElement.innerHTML = '<span>' + ${message.content} + '</span>';
+            messageElement.innerHTML = '<span>' + message.content + '</span>';
         }
 
         messagesContainer.appendChild(messageElement);
@@ -550,49 +549,46 @@ document.getElementById("search-input").addEventListener("input", function () {
         }
     }
 
-        function createNewGroup() {
-        var form = document.getElementById("create-group-form");
-        form.style.display = 'block'; // Show the form
-        form.style.opacity = '0';
-        setTimeout(function() {
-            form.style.opacity = '1';
-            form.style.transform = 'translate(-50%, -50%) scale(1)'; // Smooth scale transition
-        }, 10); // Timeout allows CSS transition to apply properly
-    }
-
-        function closeGroupForm() {
-            var form = document.getElementById("create-group-form");
-            form.style.opacity = '0';
-            form.style.transform = 'translate(-50%, -50%) scale(0.95)';
-            setTimeout(function() {
-                form.style.display = 'none';
-            }, 300); // Match this timeout to the duration of the fade effect
-        }
-
-        document.getElementById('close-form-button').addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent any form submission or default action
-            closeGroupForm();
-        });
-
-
 
     function createGroup() {
+
+        var modal = document.getElementById("create-group-form");
+        if (modal) {
+            modal.style.display = 'block'; // Ensure this is set in your CSS initially to 'none'
+        } else {
+            console.error("Modal element not found!");
+        }
+
+        // Optionally, populate the checkbox list dynamically here
+        // Assume getContacts() fetches your contacts; implement this as needed
+        getContacts().forEach(function(contact) {
+            var checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.value = contact.id;
+            checkbox.id = 'contact_' + contact.id;
+            var label = document.createElement('label');
+            label.htmlFor = 'contact_' + contact.id;
+            label.appendChild(document.createTextNode(contact.name));
+            modal.appendChild(checkbox);
+            modal.appendChild(label);
+        });
+    }
+
+    function submitGroupForm() {
         const groupName = document.getElementById("group-chat-name").value;
         var form = document.getElementById('create-group-form');
         var checkboxes = form.querySelectorAll('input[type="checkbox"]');
         var selectedContacts = [];
+        selectedContacts.push('[[${userId}]]'); // Presumed way of adding the admin
 
-        selectedContacts.push('[[${userId}]]');
-
-        checkboxes.forEach(function (checkbox) {
+        checkboxes.forEach(function(checkbox) {
             if (checkbox.checked) {
                 selectedContacts.push(checkbox.value);
             }
         });
 
         var requestEndpoint = '/createGroup?';
-
-        for (var i = 0; i < selectedContacts.length; i++) {
+        for(var i = 0; i < selectedContacts.length; i++){
             requestEndpoint += 'contactId=' + selectedContacts[i];
             if (i !== selectedContacts.length - 1) {
                 requestEndpoint += '&';
@@ -613,33 +609,49 @@ document.getElementById("search-input").addEventListener("input", function () {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(requestBody)
-        });
-
-        document.getElementById("create-group-form").style.display = 'none';
+        })
     }
 
-         function loadContacts() {
-            fetch('/api/contacts')
-            .then(response => response.json())
-            .then(data => {
-                const contactList = document.getElementById('contact-list');
-                contactList.innerHTML = ''; // Clear existing contacts
 
-                data.forEach(contact => {
-                    const li = document.createElement('li');
-                    li.textContent = contact.name;
-                    li.setAttribute('data-id', contact.id);
-                    // Attach event listener directly, preventing any default behavior
-                    li.addEventListener('click', (event) => {
-                        event.preventDefault(); // Stop any form submission
-                        selectContact(contact.name, contact.id);
-                    });
-                    contactList.appendChild(li);
-                });
-            })
-            .catch(error => console.error('Error loading contacts:', error));
+
+
+
+        function createNewGroup() {
+            console.log("Attempting to display the create group form.");
+            var form = document.getElementById("create-group-form");
+            if (!form) {
+                console.error("Create group form not found.");
+                return;
+            }
+            form.style.display = 'block'; // Show the form
+            form.style.opacity = '0';
+            setTimeout(function() {
+                form.style.opacity = '1';
+                form.style.transform = 'translate(-50%, -50%) scale(1)';
+            }, 10);
         }
 
+        function loadContacts() {
+            fetch('/api/contacts')
+                .then(response => response.json())
+                .then(data => {
+                    const contactList = document.getElementById('contact-list');
+                    contactList.innerHTML = ''; // Clear existing contacts
+
+                    data.forEach(contact => {
+                        const li = document.createElement('li');
+                        li.textContent = contact.name;
+                        li.setAttribute('data-id', contact.id);
+                        // Attach event listener directly, preventing any default behavior
+                        li.addEventListener('click', (event) => {
+                            event.preventDefault(); // Stop any form submission
+                            selectContact(contact.name, contact.id);
+                        });
+                        contactList.appendChild(li);
+                    });
+                })
+                .catch(error => console.error('Error loading contacts:', error));
+        }
 
         function selectContact(contactName, contactId) {
             event.preventDefault(); // Prevent any default action like form submission or link navigation
@@ -647,23 +659,102 @@ document.getElementById("search-input").addEventListener("input", function () {
             document.getElementById("message-input-container").dataset.receiverId = contactId;
         }
 
+        function filterContacts(searchText) {
+            const contacts = document.querySelectorAll('#contact-list li');
+            contacts.forEach(contact => {
+                if (contact.textContent.toLowerCase().includes(searchText.toLowerCase())) {
+                    contact.style.display = '';
+                } else {
+                    contact.style.display = 'none';
+                }
+            });
+        }
 
 
-    function filterContacts(searchText) {
-    const contacts = document.querySelectorAll('#contact-list li');
-    contacts.forEach(contact => {
-        if (contact.textContent.toLowerCase().includes(searchText.toLowerCase())) {
-            contact.style.display = '';
-        } else {
-            contact.style.display = 'none';
+
+
+        function closeGroupForm() {
+        var form = document.getElementById("create-group-form");
+        form.style.opacity = '0';
+        form.style.transform = 'translate(-50%, -50%) scale(0.95)';
+        setTimeout(function() {
+            form.style.display = 'none';
+        }, 300); // Match this timeout to the duration of the fade effect
+    }
+
+   document.getElementById('close-form-button').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent any form submission or default action
+        closeGroupForm();
+    });
+
+    document.getElementById("search-input").addEventListener("input", function () {
+        const searchInput = this.value.trim();
+
+        if (searchInput.length < 3) { // Only search if 3 or more characters are typed
+            return; // Optionally clear existing results or handle no input scenario
+        }
+
+
+
+
+
+        fetch(`/api/searchContacts?term=${encodeURIComponent(searchInput)}`)
+            .then(response => response.json())
+            .then(contacts => {
+                const contactList = document.getElementById('sidebar ul');
+                contactList.innerHTML = ''; // Clear previous results
+
+                contacts.forEach(contact => {
+                    const li = document.createElement('li');
+                    li.textContent = contact.name; // Assuming your contacts have a 'name' field
+                    li.onclick = () => selectContact(contact.name);
+                    contactList.appendChild(li);
+                });
+            })
+            .catch(error => console.error('Error fetching contacts:', error));
+    });
+
+    document.getElementById("sidebar").addEventListener("click", function (event) {
+        const clickedElement = event.target;
+        if (clickedElement.tagName === 'LI') {
+            const selectedContact = clickedElement.textContent;
+            document.getElementById("chat-header").innerText = selectedContact;
         }
     });
-}
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var newGroupButton = document.getElementById("new-group-button");
+            if (newGroupButton) {
+                newGroupButton.addEventListener("click", createNewGroup);
+            } else {
+                console.error("New Group button not found!");
+            }
+        });
+
+
+
+    function attachMessageEventListeners() {
+        const messages = document.querySelectorAll('.message');
+        messages.forEach(function (message) {
+            message.addEventListener('mouseover', function () {
+                showMessageActions(this);
+            });
+
+            message.addEventListener('mouseout', function () {
+                hideMessageActions(this);
+            });
+        });
+    }
+
+
+
+
 
 
 
 </script>
-</div>
-</body>
+
+
 
 </html>

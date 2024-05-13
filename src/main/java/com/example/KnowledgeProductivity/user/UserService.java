@@ -16,7 +16,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> getContacts(Long userId) {
+    public List<User> getContacts() {
         return userRepository.findAll();
     }
 

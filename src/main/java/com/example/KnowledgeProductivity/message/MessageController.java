@@ -34,7 +34,7 @@ public class MessageController {
     private SimpMessagingTemplate template;
 
 
-    Long globalUserId ;
+    String globalUserId ;
 
 
 
@@ -49,7 +49,7 @@ public class MessageController {
 
     @ResponseBody
     @GetMapping("/set")
-    public void set(@RequestParam Long userId) {
+    public void set(@RequestParam String userId) {
         globalUserId = userId;
     }
 
@@ -61,16 +61,16 @@ public class MessageController {
                            @RequestParam(required = false) Long receiverId,
                            @RequestParam (required = false) Long groupId)  {
 
-        List<Message> receiverAndSenderMessages = new ArrayList<>(messageService.retrieveMessages(receiverId , globalUserId));
-        receiverAndSenderMessages.addAll(messageService.retrieveMessages(globalUserId, receiverId));
+        List<Message> receiverAndSenderMessages = new ArrayList<>(messageService.retrieveMessages(receiverId , Long.parseLong(globalUserId)));
+        receiverAndSenderMessages.addAll(messageService.retrieveMessages(Long.parseLong(globalUserId), receiverId));
 
         receiverAndSenderMessages.sort(Comparator.comparing(Message::getTimeStamp));
 
-        List<User> contactList = userService.getContacts(globalUserId);
+        List<User> contactList = userService.getContacts();
 
         model.addAttribute("contacts", contactList);
 
-        List<GroupUser> listOfGroups = groupUserService.getCurrentUsersGroup(globalUserId);
+        List<GroupUser> listOfGroups = groupUserService.getCurrentUsersGroup(Long.parseLong(globalUserId));
         List<GroupChat> groupDetails = groupChatService.getAllGroupDetails(listOfGroups);
 
         List<Message> groupChatMessages = messageService.getAllGroupChatMessages(groupId);
