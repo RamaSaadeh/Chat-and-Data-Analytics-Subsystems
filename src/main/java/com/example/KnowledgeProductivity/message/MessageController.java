@@ -54,7 +54,7 @@ public class MessageController {
     }
 
 
-//    serve the html page
+    //serve the html page
 
     @GetMapping("/chat")
     public String chatPage(Model model,
@@ -93,6 +93,19 @@ public class MessageController {
 
         return "chat"; // Points to 'chat.html' Thymeleaf template
     }
+
+
+
+//    @ResponseBody
+//    @GetMapping("/retrieveMessages/{sessions}")
+//    public List<List<Message>> retrieveMessages(@RequestParam() Long receiverId , @RequestParam HttpSession session) {
+//        List<Message> messagesUser = messageService.retrieveMessages(getUserIdFromSession(session));
+//        List<Message> recieverMessages = messageService.retrieveMessages(receiverId);
+//        List<List<Message>> messagesList = new ArrayList<>();
+//        messagesList.add(messagesUser);
+//        messagesList.add(recieverMessages);
+//        return messagesList;
+//    }
 
 
     @MessageMapping("/sendMessage")

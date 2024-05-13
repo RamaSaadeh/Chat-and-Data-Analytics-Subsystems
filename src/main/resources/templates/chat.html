@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
 
     <style>
@@ -16,54 +16,59 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f2f2f2;
+            background-color: #d4d4d4;
         }
 
-        #chat-container {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
+        .sidebar {
+            width: 200px; /* Adjust width as needed */
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #ededed;
+            padding: 20px;
+            border-right: 1px solid #ddd; /* Add border for separation */
         }
+
+        #sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #sidebar li {
+            padding: 10px 0;
+            cursor: pointer;
+            border-bottom: 1px solid #ccc; /* Add a separator between users */
+        }
+
+        #sidebar li:hover {
+            background-color: #ccc; /* Change background color on hover */
+        }
+
+        #search-input {
+            width: calc(100%); /* Adjust width to leave space for icon */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            font-size: 16px;
+            outline: none;
+            margin-bottom: 10px; /* Add spacing below search input */
+        }
+
 
         .header {
             padding: 20px;
             border-bottom: 1px solid #ddd;
-            background-color: #fff;
-            text-align: center;
+            background-color: #ededed;
+            text-align: left;
             position: fixed;
             top: 0;
-            width: 100%;
+            left: 220px; /* This should match the width of your sidebar */
+            right: 20px; /* Consistent margin as the chat container */
             z-index: 2;
-        }
-
-        #search-select-container {
-            display: inline-block;
-            text-align: left;
-        }
-
-        #search-input {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background-color: #fff;
-            font-size: 16px;
-            outline: none;
-            margin-right: 10px;
-        }
-
-        #contact-select {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background-color: #fff;
-            font-size: 16px;
-            outline: none;
-            min-width: 150px;
+            box-sizing: border-box; /* Ensures padding is included in width calculation */
         }
 
         #messages-container {
@@ -82,31 +87,58 @@
         }
 
         .message {
-            background-color: #f5f5f5;
+            border: 1px solid #d3d3d3;
             border-radius: 8px;
             padding: 12px;
             margin-bottom: 12px;
             max-width: 80%;
             align-self: flex-start;
             word-wrap: break-word;
+            position: relative;
         }
 
-        .message.sent {
+        .message-actions {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            display: none;
+        }
+
+        .edit-button,
+        .delete-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            margin-left: 5px;
+            color: #888;
+        }
+
+        .edit-button:hover,
+        .delete-button:hover {
+            color: #333;
+        }
+
+        .sender {
             align-self: flex-end;
-            background-color: #d8c9e6; /* Slightly darker purple */
+            background-color: #ecd380;
+        }
+
+        .receiver {
+            align-self: flex-start;
+            background-color: #ffffff; /* Adjust background color as needed */
         }
 
         #message-input-container {
-            padding: 20px;
-            padding-right: 50px;
-            background-color: #f5f5f5;
-            border-top: 1px solid #ddd;
+            position: fixed; /* Position fixed to keep it at the bottom */
+            bottom: 0;
+            right: 20px; /* Adjust the right positioning */
             display: flex;
             align-items: center;
-            position: fixed;
-            bottom: 0;
-            width: calc(100% - 35px);
-            z-index: 1;
+            padding: 20px;
+            background-color: #ededed;
+            border-top: 1px solid #ddd;
+            width: calc(100% - 240px); /* Adjust based on sidebar and margin width */
         }
 
         #message-input {
@@ -122,7 +154,7 @@
 
         #send-button {
             padding: 10px 20px;
-            background-color: #007bff;
+            background-color: #2980b9;
             color: #fff;
             border: none;
             border-radius: 8px;
@@ -134,18 +166,10 @@
             background-color: #0056b3;
         }
 
-        .sender {
-            align-self: flex-end;
-            background-color: #d8c9e6;
-        }
-
-        .receiver {
-            align-self: flex-start;
-        }
-
         #new-group-button {
+            width: 100%; /* Expand button to fill sidebar */
             padding: 10px 20px;
-            background-color: #007bff;
+            background-color: #2980b9;
             color: #fff;
             border: none;
             border-radius: 8px;
@@ -159,26 +183,109 @@
 
         #create-group-form {
             display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: auto;
+            max-width: 80%;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ededed;
+            border-radius: 8px;
+            z-index: 1000;
+        }
+
+        #create-group-form .form-control, #create-group-form .btn {
+            margin-top: 10px;
         }
 
 
+        .sidebar-nav {
+            position: absolute;
+            bottom: 20px;
+            width: calc(100% - 40px); /* Adjust width considering padding */
+            text-align: center;
+        }
+
+        .btn-nav {
+            background-color: #2980b9; /* Blue background */
+            color: white;
+            border: none;
+            padding: 10px 20px; /* Sufficient padding for visibility */
+            width: 100%; /* Ensure full width within the sidebar */
+            border-radius: 8px; /* Rounded corners */
+            cursor: pointer;
+            margin-top: 10px; /* Space between buttons */
+            display: block; /* Ensures buttons do not inline */
+            text-align: center; /* Centers text within the button */
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-nav:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+         #chat-container {
+            margin-left: 220px; /* Offset to the right by the width of the sidebar */
+            margin-right: 20px; /* Right margin for spacing */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Minimum height to take full view height */
+            width: calc(100% - 240px); /* Calculate width to ensure it fills the remaining space */
+            background-color: #ffffff; /* White background for the chat area */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            border-radius: 8px; /* Rounded corners */
+            overflow: hidden; /* Prevents any overflow outside the container */
+            position: relative; /* Ensures the positioning of child elements relative to this container */
+            padding: 20px; /* Padding inside the container for spacing */
+            border: 1px solid #ccc; /* Light grey border for subtle separation */
+            z-index: 1; /* Make sure it's above other positioned elements if necessary */
+        }
+
+        @media (max-width: 768px) {
+            #chat-container {
+                margin-left: 0;
+                margin-right: 0;
+                width: 100%; /* Full width on small screens */
+                border-radius: 0; /* Optional: remove border-radius on small screens */
+            }
+        }
+
+        .btn-primary {
+            background-color: #2980b9; /* Normal state blue */
+            color: #fff; /* White text */
+            border: none; /* No border */
+            padding: 10px 20px; /* Adequate padding */
+            border-radius: 8px; /* Rounded corners */
+            cursor: pointer; /* Cursor indicates clickable */
+            transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
 
 
     </style>
 </head>
 
 <body>
-<div id="contacts" class="header">
-    <div id="search-select-container">
-        <!-- Search input and contact select dropdown -->
-        <input type="text" id="search-input" placeholder="Search Contact...">
-        <select id="contact-select" th:onchange="'window.location.href=\'/messages/chat?receiverId=\'+this.value'">
-            <option value="" disabled selected>Select Contact</option>
-            <option th:each="contact : ${contacts}" th:value="${contact.getId()}" th:text="${contact.getFname()}">Select
-                Contact
-            </option>
+<div id="chat-container" class="header">
+    <div id="messages-container">
+        <<div id="chat-header" class="header"></div>
 
-        </select>
+        <div id="messages">
+            <div th:each="message : ${messages}"
+                 th:classappend="${#strings.toString(message.senderId) == session.userId} ? 'sender' : 'receiver'"
+                 class="message" th:id="'message-' + ${message.id}">
+                <span th:text="${message.content}"></span>
+                <div th:if="${#strings.toString(message.senderId) == session.userId}" class="message-actions">
+                    <button class="edit-button" onclick="editMessage(${message.id})"><i class="fas fa-edit"></i></button>
+                    <button class="delete-button" onclick="deleteMessage(${message.id})"><i class="fas fa-trash-alt"></i></button>
+                </div>
+            </div>
+        </div>
 
         <select id="group-select" th:onchange="'window.location.href=\'/messages/chat?groupId=\'+this.value'">
             <option value="" disabled selected>Select Group</option>
@@ -189,14 +296,19 @@
             </option>
         </select>
     </div>
-    <!-- New Group button -->
-    <button id="new-group-button" th:onclick="createNewGroup()">New Group</button>
 
-    <form id="create-group-form">
+    <form id="message-input-container" onsubmit="sendMessage(event)">
+        <input type="hidden" id="session-id" name="sessionId" th:value="${session.userId}" />
+        <input type="text" id="message-input" placeholder="Type your message..." required>
+        <button id="send-button" type="submit">Send</button>
+    </form>
+
+    <form id="create-group-form" action="javascript:void(0);" method="post">
         <!-- Group Chat Name Textbox -->
         <div class="mb-2">
             <label for="group-chat-name" class="form-label">Group Chat Name:</label>
             <input type="text" id="group-chat-name" class="form-control">
+            <button id="close-form-button" type="button" class="btn btn-secondary">Close</button>
         </div>
 
         <!-- Contacts -->
@@ -211,32 +323,17 @@
         <!-- Create Group Button -->
         <button type="button" onclick="createGroup()" class="btn btn-primary">Create Group</button>
     </form>
-
 </div>
 
-
-<div id="chat-container">
-    <div id="messages-container">
-        <div id="messages">
-
-
-            <div th:each="message : ${messages}"
-                 th:classappend="${#strings.toString(message.senderId) == userId} ? 'sender' : 'receiver'"
-                 class="message" th:id="'message-' + ${message.id}">
-
-                <span th:text="${message.content}"></span>
-
-                <label th:if="${#strings.toString(message.senderId) == userId}">
-                    <select th:id="'actions-' + ${message.id}">
-                        <option> ^</option>
-                        <option value="edit">Edit</option>
-                        <option value="delete">Delete</option>
-                    </select>
-                </label>
-
-            </div>
-
-        </div>
+<div id="sidebar" class="sidebar">
+    <input type="text" id="search-input" placeholder="Search Contact..." oninput="filterContacts(this.value)">
+    <ul id="contact-list">
+        <li th:each="contact : ${contacts}" th:text="${contact.fname}" th:onclick="'window.location.href=\'/messages/chat?receiverId=' + ${contact.id} + '\''"></li>
+    </ul>
+    <!-- Navigation Bar at the bottom of the sidebar -->
+    <div class="sidebar-nav">
+        <button id="new-group-button" class="btn btn-nav">New Group</button>
+        <button id="analytics-nav-button" class="btn btn-nav">Data Analytics</button>
     </div>
 </div>
 
@@ -251,22 +348,62 @@
 
 
 <script>
-    var stompClient = null;
+    // Assigning session userId to a JavaScript variable
+    var userId = [[${session.userId}]];
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        connectWebSocket();
+        attachMessageEventListeners();
+
+document.getElementById("search-input").addEventListener("input", function () {
+    const searchInput = this.value.trim();
+
+    if (searchInput.length < 3) { // Only search if 3 or more characters are typed
+        return; // Optionally clear existing results or handle no input scenario
+    }
+
+    fetch(`/api/searchContacts?term=${encodeURIComponent(searchInput)}`)
+        .then(response => response.json())
+        .then(contacts => {
+            const contactList = document.getElementById('sidebar ul');
+            contactList.innerHTML = ''; // Clear previous results
+
+            contacts.forEach(contact => {
+                const li = document.createElement('li');
+                li.textContent = contact.name; // Assuming your contacts have a 'name' field
+                li.onclick = () => selectContact(contact.name);
+                contactList.appendChild(li);
+            });
+        })
+        .catch(error => console.error('Error fetching contacts:', error));
+});
 
 
-    window.onload = function () {
-        connectWebsocket();
-        document.getElementById("messages").addEventListener('change', function (event) {
-            if (event.target.tagName === 'SELECT' && event.target.id.startsWith('actions-')) {
-                const messageId = event.target.id.split('-')[1];
-                console.log(messageId)
-                actionHandler(messageId);
+        document.getElementById("sidebar").addEventListener("click", function (event) {
+            const clickedElement = event.target;
+            if (clickedElement.tagName === 'LI') {
+                const selectedContact = clickedElement.textContent;
+                document.getElementById("chat-header").innerText = selectedContact;
             }
         });
-    };
+
+        document.getElementById("analytics-nav-button").addEventListener("click", function() {
+            window.location.href = "/data-analytics"; // Adjust the URL as needed
+        });
+
+        document.getElementById("new-group-button").addEventListener("click", function() {
+         // Assuming you have a function to display the form
+         createNewGroup();
+});
 
 
-    function connectWebsocket() {
+    });
+
+    var stompClient = null;
+
+    function connectWebSocket() {
         var socket = new SockJS('/websocket');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
@@ -293,7 +430,7 @@
             }
 
             stompClient.subscribe('/topic/deletedMessages', function (message) {
-                const messageId = message.body;  // Since the ID is sent as a simple string
+                const messageId = message.body;
                 const messageElement = document.getElementById(`message-${messageId}`);
                 if (messageElement) {
                     messageElement.parentNode.removeChild(messageElement);
@@ -302,11 +439,27 @@
         });
     }
 
+    function attachMessageEventListeners() {
+        const messages = document.querySelectorAll('.message');
+        messages.forEach(function (message) {
+            message.addEventListener('mouseover', function () {
+                showMessageActions(this);
+            });
+
+            message.addEventListener('mouseout', function () {
+                hideMessageActions(this);
+            });
+        });
+    }
 
     function sendMessage(event) {
         event.preventDefault();
         const messageInput = document.getElementById("message-input").value;
-        const sessionId = document.getElementById("session-id").value;  // Retrieve the sender ID from the hidden input
+        const sessionId = document.getElementById("session-id").value;
+
+        const currentUrl = new URL(window.location.href);
+        const queryParams = new URLSearchParams(currentUrl.search);
+        const receiverId = queryParams.get('receiverId');
 
         // Get the current URL
         const currentUrl = new URL(window.location.href);
@@ -327,45 +480,31 @@
 
         if (stompClient) {
             stompClient.send("/app/sendMessage", {}, JSON.stringify(messageData));
-            document.getElementById("message-input").value = ''; // Clear the input field after sending
+            document.getElementById("message-input").value = '';
         } else {
             console.error("Not connected to WebSocket.");
         }
     }
 
-    function actionHandler(messageId) {
-        const selectTagId = "actions-" + messageId;
-        const optionSelected = document.getElementById(selectTagId).value;
-        if (optionSelected === 'delete') {
-            fetch("/messages/delete/" + messageId, {
-                method: "DELETE"
-            });
+    function editMessage(messageId) {
+        const messageElement = document.getElementById(`message-${messageId}`);
+        const messageContentElement = messageElement.querySelector('span');
+        const messageContent = messageContentElement.innerText;
+        const newContent = prompt("Edit Message:", messageContent);
 
-        }
-
-        if (optionSelected === 'edit') {
-            var element = document.getElementById("message-" + messageId).querySelector('span');
-            var inputElement = document.createElement("input");
-            inputElement.value = element.textContent;
-            element.innerHTML = "";
-            element.appendChild(inputElement);
-
-            inputElement.addEventListener("keypress", function (event) {
-                if (event.key === "Enter") {
-                    element.textContent = inputElement.value;
-
-                    fetch("/messages/editMessage/" + messageId + "?content=" + element.textContent, {
-                        method: "PUT"
-                    });
-                }
-            });
+        if (newContent !== null) {
+            messageContentElement.innerText = newContent;
+            console.log(`Message ${messageId} edited. New content: ${newContent}`);
         }
     }
 
-    // function dropdownListener(messageId) {
-    //     console.log(messageId);
-    //     document.getElementById("actions-" + messageId).addEventListener('change', () => actionHandler(messageId));
-    // }
+    function deleteMessage(messageId) {
+        if (confirm("Are you sure you want to delete this message?")) {
+            console.log(`Message ${messageId} deleted.`);
+            const messageElement = document.getElementById(`message-${messageId}`);
+            messageElement.remove();
+        }
+    }
 
     function showMessage(message) {
         var messagesContainer = document.getElementById("messages");
@@ -376,39 +515,68 @@
 
         if (message.senderId === [[${userId}]]) {
             messageElement.classList.add("sender");
-
-            messageElement.innerHTML = `
-                                <span>${message.content}</span>
-                                <label>
-                                    <select id='actions-${message.id}'>
-                                        <option></option>
-                                        <option value="edit">Edit</option>
-                                        <option value="delete">Delete</option>
-                                    </select>
-                                </label>`;
+            messageElement.innerHTML = '<span>' + ${message.content} + '</span>' +
+                '<div class="message-actions">' +
+                '<button class="edit-button" onclick="editMessage(' + message.id + ')"><i class="fas fa-edit"></i></button>' +
+                '<button class="delete-button" onclick="deleteMessage(' + message.id + ')"><i class="fas fa-trash-alt"></i></button>' +
+                '</div>';
         } else {
             messageElement.classList.add("receiver");
-
-            messageElement.innerHTML = `
-                                <span>${message.content}</span>`;
+            messageElement.innerHTML = '<span>' + ${message.content} + '</span>';
         }
 
-        // th:classappend="${#strings.toString(message.senderId) == session.userId} ? 'sender' : 'receiver'"
-
-
-
         messagesContainer.appendChild(messageElement);
+
+        messageElement.addEventListener('mouseover', function () {
+            showMessageActions(this);
+        });
+
+        messageElement.addEventListener('mouseout', function () {
+            hideMessageActions(this);
+        });
     }
 
-
-
-
-    function createNewGroup(){
-        document.getElementById("create-group-form").style.display = 'block';
-
+    function showMessageActions(messageElement) {
+        const messageActions = messageElement.querySelector('.message-actions');
+        if (messageActions) {
+            messageActions.style.display = 'block';
+        }
     }
 
-    function createGroup(){
+    function hideMessageActions(messageElement) {
+        const messageActions = messageElement.querySelector('.message-actions');
+        if (messageActions) {
+            messageActions.style.display = 'none';
+        }
+    }
+
+        function createNewGroup() {
+        var form = document.getElementById("create-group-form");
+        form.style.display = 'block'; // Show the form
+        form.style.opacity = '0';
+        setTimeout(function() {
+            form.style.opacity = '1';
+            form.style.transform = 'translate(-50%, -50%) scale(1)'; // Smooth scale transition
+        }, 10); // Timeout allows CSS transition to apply properly
+    }
+
+        function closeGroupForm() {
+            var form = document.getElementById("create-group-form");
+            form.style.opacity = '0';
+            form.style.transform = 'translate(-50%, -50%) scale(0.95)';
+            setTimeout(function() {
+                form.style.display = 'none';
+            }, 300); // Match this timeout to the duration of the fade effect
+        }
+
+        document.getElementById('close-form-button').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent any form submission or default action
+            closeGroupForm();
+        });
+
+
+
+    function createGroup() {
         const groupName = document.getElementById("group-chat-name").value;
         var form = document.getElementById('create-group-form');
         var checkboxes = form.querySelectorAll('input[type="checkbox"]');
@@ -416,7 +584,7 @@
 
         selectedContacts.push('[[${userId}]]');
 
-        checkboxes.forEach(function(checkbox) {
+        checkboxes.forEach(function (checkbox) {
             if (checkbox.checked) {
                 selectedContacts.push(checkbox.value);
             }
@@ -424,7 +592,7 @@
 
         var requestEndpoint = '/createGroup?';
 
-        for(var i = 0; i < selectedContacts.length; i++){
+        for (var i = 0; i < selectedContacts.length; i++) {
             requestEndpoint += 'contactId=' + selectedContacts[i];
             if (i !== selectedContacts.length - 1) {
                 requestEndpoint += '&';
@@ -448,13 +616,54 @@
         });
 
         document.getElementById("create-group-form").style.display = 'none';
-
-
     }
 
+         function loadContacts() {
+            fetch('/api/contacts')
+            .then(response => response.json())
+            .then(data => {
+                const contactList = document.getElementById('contact-list');
+                contactList.innerHTML = ''; // Clear existing contacts
+
+                data.forEach(contact => {
+                    const li = document.createElement('li');
+                    li.textContent = contact.name;
+                    li.setAttribute('data-id', contact.id);
+                    // Attach event listener directly, preventing any default behavior
+                    li.addEventListener('click', (event) => {
+                        event.preventDefault(); // Stop any form submission
+                        selectContact(contact.name, contact.id);
+                    });
+                    contactList.appendChild(li);
+                });
+            })
+            .catch(error => console.error('Error loading contacts:', error));
+        }
+
+
+        function selectContact(contactName, contactId) {
+            event.preventDefault(); // Prevent any default action like form submission or link navigation
+            document.getElementById("chat-header").innerText = contactName;
+            document.getElementById("message-input-container").dataset.receiverId = contactId;
+        }
+
+
+
+    function filterContacts(searchText) {
+    const contacts = document.querySelectorAll('#contact-list li');
+    contacts.forEach(contact => {
+        if (contact.textContent.toLowerCase().includes(searchText.toLowerCase())) {
+            contact.style.display = '';
+        } else {
+            contact.style.display = 'none';
+        }
+    });
+}
 
 
 
 </script>
+</div>
+</body>
 
 </html>
