@@ -160,11 +160,11 @@
             </div>
 
             <div class="charts-card">
-                <h2 class="chart-title">Project Status</h2>
+                <h2 class="chart-title">All Company Tasks Status</h2>
                 <div id="area-chart"></div>
             </div>
             <div class="charts-card">
-                <h2 class="chart-title">Countries</h2>
+                <h2 class="chart-title">Employee Demographics</h2>
                 <div id="countries-chart"></div>
 
                 <div id="chart-container">
@@ -405,7 +405,7 @@
 
     var options = {
         series: [{
-            data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+            data: [2,1,1,1,]
         }],
         chart: {
             type: 'bar',
@@ -422,8 +422,8 @@
             enabled: false
         },
         xaxis: {
-            categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan',
-                'United States', 'China', 'Germany'
+            categories: [ 'United Kingdom', 'Netherlands', 'Italy', 'France'
+
             ],
         }
     };
@@ -438,17 +438,17 @@
                 {
                     name: 'In Progress',
                     group: 'actual',
-                    data: [48000, 50000, 40000, 65000, 25000]
+                    data: [30, 20, 45, 33, 17]
                 },
                 {
                     name: 'Overdue',
                     group: 'budget',
-                    data: [13000, 36000, 20000, 8000, 13000]
+                    data: [4, 7, 10, 4, 2]
                 },
                 {
                     name: 'Completed',
                     group: 'actual',
-                    data: [20000, 40000, 25000, 10000, 12000]
+                    data: [10, 16, 18, 23, 3]
                 }
             ],
             chart: {
@@ -462,7 +462,7 @@
             },
             dataLabels: {
                 formatter: (val) => {
-                    return val / 1000 + 'K';
+                    return val  ;
                 }
             },
             plotOptions: {
@@ -480,7 +480,7 @@
                 ],
                 labels: {
                     formatter: (val) => {
-                        return val / 1000 + 'K';
+                        return val  ;
                     }
                 }
             },
