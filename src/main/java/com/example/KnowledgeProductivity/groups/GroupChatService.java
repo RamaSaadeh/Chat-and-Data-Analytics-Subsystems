@@ -50,4 +50,11 @@ public class GroupChatService {
     }
 
 
+    public String getGroupNameById(Long groupId) {
+        // Fetch the group using the repository
+        Optional<GroupChat> group = groupChatRepository.findById(groupId);
+
+        // Return the group name if the group exists
+        return group.map(GroupChat::getGroupName).orElse("Group not found");
+    }
 }

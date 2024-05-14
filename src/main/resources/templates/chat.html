@@ -314,14 +314,14 @@
         </div>
 
         <!-- Create Group Button -->
-        <button type="button" onclick="submitGroupForm()" class="btn btn-primary">Create Group</button>
+        <button id="create-group" type="button" class="btn btn-primary">Create Group</button>
     </form>
 </div>
 
 <div id="sidebar" class="sidebar">
     <input type="text" id="search-input" placeholder="Search Contact..." oninput="filterContacts(this.value)">
     <ul id="contact-list">
-        <li th:each="contact : ${contacts}" th:text="${contact.fname}" th:data-contact-id="${contact.id}"></li>
+        <li th:each="contact : ${contacts}" th:text="${contact.fname}" th:onclick="'window.location.href=\'/messages/chat?receiverId=' + ${contact.getId()} + '\''"></li>
     </ul>
 
     <ul id="group-list">
@@ -335,6 +335,7 @@
     <div class="sidebar-nav">
         <button id="new-group-button" class="btn btn-nav" onclick="createGroup()">New Group</button>
         <button id="analytics-nav-button" class="btn btn-nav" onclick="redirectToAnalytic()">Data Analytics</button>
+        <button id="logout" class="btn btn-nav" onclick="logout()">Logout</button>
     </div>
 </div>
 
@@ -388,27 +389,60 @@
         });
 
 
-        // Function to get a query parameter by name
         function getQueryParam(param) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
         }
 
-        // Retrieve the 'receiverId' from the URL parameters
-        const receiverId = getQueryParam('receiverId');
 
-        // Construct the API endpoint with the receiverId
-        const endpoint = "/name?receiverId=" + receiverId;
 
-        // Fetch the contact details from your server
-        fetch(endpoint)
-            .then(response => response.text())
-            .then(contact => {
-                // Update the chat header with the contact's first name
-                document.getElementById("chat-header").innerText = contact;
-            })
-            .catch(error => console.error('Failed to load contact details:', error));
+        if(getQueryParam('receiverId')) {
+            const receiverId = getQueryParam('receiverId');
+             const endpoint = "/name?receiverId=" + receiverId;
+
+            fetch(endpoint)
+                .then(response => response.text())
+                .then(contact => {
+                    document.getElementById("chat-header").innerText = contact;
+                })
+                .catch(error => console.error('Failed to load contact details:', error));
+        }
+
+        if(getQueryParam('groupId')) {
+            const groupId = getQueryParam('groupId');
+            const endpoint = "/groupName?groupId=" + groupId;
+
+            fetch(endpoint)
+                .then(response => response.text())
+                .then(contact => {
+                    document.getElementById("chat-header").innerText = contact;
+                })
+                .catch(error => console.error('Failed to load contact details:', error));
+        }
+
+
+
+
+
+
+
+
     };
+
+    function logout() {
+        fetch('/logout', {
+            method: 'GET',
+            credentials: 'include'
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                window.location.href = '/login';
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+
 
     document.addEventListener('DOMContentLoaded', function () {
         attachMessageEventListeners();
@@ -442,12 +476,54 @@
             }
 
             stompClient.subscribe('/topic/deletedMessages', function (message) {
-                const messageId = message.body;  // Since the ID is sent as a simple string
+                const messageId = message.body;
                 const messageElement = document.getElementById(`message-${messageId}`);
                 if (messageElement) {
                     messageElement.parentNode.removeChild(messageElement);
                 }
             });
+
+            stompClient.subscribe('/topic/editMessages', function (message) {
+                const editedMessage = JSON.parse(message.body);
+                const messageId = editedMessage.id;
+                const newContent = editedMessage.content;
+
+                const messageElement = document.getElementById(`message-${messageId}`);
+                if (messageElement) {
+
+                    messageElement.innerHTML = '';
+
+
+                    const contentSpan = document.createElement('span');
+                    contentSpan.textContent = newContent;
+                    messageElement.appendChild(contentSpan);
+
+
+                    const actionsDiv = document.createElement('div');
+                    actionsDiv.className = 'message-actions';
+
+
+                    const editButton = document.createElement('button');
+                    editButton.className = 'edit-button';
+                    editButton.innerHTML = '<i class="fas fa-edit"></i>';
+                    editButton.onclick = function() { editMessage(messageId); };
+
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.className = 'delete-button';
+                    deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+                    deleteButton.onclick = function() { deleteMessage(messageId); };
+
+
+                    actionsDiv.appendChild(editButton);
+                    actionsDiv.appendChild(deleteButton);
+
+
+                    messageElement.appendChild(actionsDiv);
+                }
+            });
+
+
         });
     }
 
@@ -459,7 +535,7 @@
     function sendMessage(event) {
         event.preventDefault();
         const messageInput = document.getElementById("message-input").value;
-        const sessionId = document.getElementById("session-id").value;  // Retrieve the sender ID from the hidden input
+        const sessionId = document.getElementById("session-id").value;
 
         // Get the current URL
         const currentUrl = new URL(window.location.href);
@@ -684,9 +760,7 @@
         }
     });
 
-    function redirect(contactId){
-        window.location.href='/messages/chat?receiverId=' + contactId ;
-    }
+
 
     document.getElementById("sidebar").addEventListener("click", function (event) {
         const clickedElement = event.target;
@@ -694,8 +768,7 @@
             // Prevent default action of the click event
             event.preventDefault();
 
-            redirect(clickedElement.getAttribute('data-contact-id'));
-            document.getElementById("chat-header").innerText = clickedElement.textContent;
+            // redirect(clickedElement.getAttribute('data-contact-id'));
 
 
 
@@ -727,24 +800,16 @@
         });
     }
 
+    document.getElementById('create-group').addEventListener('click', function() {
+        var chatName = document.getElementById('group-chat-name').value.trim();
+        if (chatName === '') {
+            alert('Please enter a name for the group chat.');
+            return false;
+        }else{
+            submitGroupForm();
+        }
+    });
 
-    // function login(username, password) {
-    //     fetch('/authenticate', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify({username: username, password: password})
-    //     })
-    //         .then(response => {
-    //             if (response.ok) {
-    //                 console.log("Authentication successful and token is stored in cookies");
-    //             } else {
-    //                 console.error("Authentication failed");
-    //             }
-    //         })
-    //         .catch(error => console.error('Error:', error));
-    // }
 
 
 

@@ -146,9 +146,14 @@ public class MessageController {
     @PutMapping("/editMessage/{messageId}")
     public void editMessage(@PathVariable Long messageId,
                             @RequestParam String content) {
-        messageService.editMessage(messageId,content);
-    }
+        messageService.editMessage(messageId, content);
 
+        Map<String, Object> messageDetails = new HashMap<>();
+        messageDetails.put("id", messageId);
+        messageDetails.put("content", content);
+
+        template.convertAndSend("/topic/editMessages", messageDetails);
+    }
     @ResponseBody
     @DeleteMapping("/delete/{messageId}")
     public void deleteMessage(@PathVariable Long messageId) {
