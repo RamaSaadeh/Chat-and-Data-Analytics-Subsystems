@@ -28,10 +28,10 @@ public class AuthenticationController {
 
     @GetMapping("/logout")
     public ResponseEntity<?> logout(HttpServletResponse response) {
-        Cookie cookie = new Cookie("jwt", null); // null value for the cookie
+        Cookie cookie = new Cookie("jwt", null);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
-        cookie.setSecure(true); // Set to true if using HTTPS
+        cookie.setSecure(false); // Set to true if using HTTPS
         cookie.setMaxAge(0); // Set expiration to a past date
         response.addCookie(cookie);
 
@@ -42,7 +42,7 @@ public class AuthenticationController {
         if (authResponse.getToken() != null && !authResponse.getToken().isEmpty()) {
             Cookie authCookie = new Cookie("jwt", authResponse.getToken());
             authCookie.setHttpOnly(true);
-            authCookie.setSecure(true); // Ensure that this is set to true if you are using HTTPS
+            authCookie.setSecure(false);
             authCookie.setPath("/");
 
             int cookieExpirationTimeInSeconds = 1800;
