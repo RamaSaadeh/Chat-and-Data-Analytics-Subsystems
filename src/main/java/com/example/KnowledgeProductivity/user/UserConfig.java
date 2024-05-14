@@ -19,6 +19,7 @@ public class UserConfig {
         return args -> {
             User mariam = new User(
                  "Mariam",
+                    "White",
                     "$2a$12$e8djEMmjZrp2rVMx5JDPp.3QtVacqdR0bJvmh7a3dCi9OzDPpnVwK",
                     "mariam@makeitall.co.uk",
                     Role.USER
@@ -27,6 +28,7 @@ public class UserConfig {
 
             User alex = new User(
                     "Alex",
+                    "William",
                     "$2a$12$e8djEMmjZrp2rVMx5JDPp.3QtVacqdR0bJvmh7a3dCi9OzDPpnVwK",
                     "alex@makeitall.co.uk",
                     Role.ADMIN
@@ -36,6 +38,7 @@ public class UserConfig {
 
             User blue = new User(
                     "Blue",
+                    "Gold",
                     "$2a$12$e8djEMmjZrp2rVMx5JDPp.3QtVacqdR0bJvmh7a3dCi9OzDPpnVwK",
                     "blue@makeitall.co.uk",
                     Role.USER
@@ -45,6 +48,7 @@ public class UserConfig {
 
             User red = new User(
                     "Red",
+                    "Neck",
                     "$2a$12$e8djEMmjZrp2rVMx5JDPp.3QtVacqdR0bJvmh7a3dCi9OzDPpnVwK",
                     "red@makeitall.co.uk",
                     Role.USER
@@ -52,6 +56,7 @@ public class UserConfig {
 
             User green = new User(
                     "Green",
+                    "Sprouts",
                     "$2a$12$e8djEMmjZrp2rVMx5JDPp.3QtVacqdR0bJvmh7a3dCi9OzDPpnVwK",
                     "green@makeitall.co.uk",
                     Role.USER

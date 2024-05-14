@@ -321,7 +321,7 @@
 <div id="sidebar" class="sidebar">
     <input type="text" id="search-input" placeholder="Search Contact..." oninput="filterContacts(this.value)">
     <ul id="contact-list">
-        <li th:each="contact : ${contacts}" th:text="${contact.fname}" th:onclick="'window.location.href=\'/messages/chat?receiverId=' + ${contact.getId()} + '\''"></li>
+        <li th:each="contact : ${contacts}" th:text="${contact.fname} +' ' + ${contact.lname}" th:onclick="'window.location.href=\'/messages/chat?receiverId=' + ${contact.getId()} + '\''"></li>
     </ul>
 
     <ul id="group-list">
@@ -398,9 +398,10 @@
 
         if(getQueryParam('receiverId')) {
             const receiverId = getQueryParam('receiverId');
-             const endpoint = "/name?receiverId=" + receiverId;
+            const endpoint = "/name?receiverId=" + receiverId;
 
             fetch(endpoint)
+                .then(handleErrors) // Check and handle errors first
                 .then(response => response.text())
                 .then(contact => {
                     document.getElementById("chat-header").innerText = contact;
@@ -408,17 +409,28 @@
                 .catch(error => console.error('Failed to load contact details:', error));
         }
 
-        if(getQueryParam('groupId')) {
+        if (getQueryParam('groupId')) {
             const groupId = getQueryParam('groupId');
             const endpoint = "/groupName?groupId=" + groupId;
 
             fetch(endpoint)
+                .then(handleErrors) // Check and handle server-side errors first
                 .then(response => response.text())
                 .then(contact => {
-                    document.getElementById("chat-header").innerText = contact;
+                    if (contact === "Group not found") {
+                        // Simulate a 404 error by redirecting or showing an error message
+                        throw new Error('404 Not Found - Group not found');
+                    } else {
+                        document.getElementById("chat-header").innerText = contact;
+                    }
                 })
-                .catch(error => console.error('Failed to load contact details:', error));
+                .catch(error => {
+                    console.error('Failed to load group details:', error);
+                    // Optional: Redirect to a custom 404 page if needed
+                    window.location.href = '/404.html';
+                });
         }
+
 
 
 
@@ -428,6 +440,19 @@
 
 
     };
+
+    function handleErrors(response) {
+        if (!response.ok) {
+            console.error('HTTP error, status = ' + response.status);
+            if (response.status === 404) {
+                window.location.href = '/404.html';  // Redirect to a custom 404 page
+            } else if (response.status === 500) {
+                window.location.href = '/500.html';  // Redirect to a custom 500 page
+            }
+            throw new Error('Something went wrong with the request: ' + response.statusText);
+        }
+        return response; // Only return response when it's ok.
+    }
 
     function logout() {
         fetch('/logout', {
@@ -662,6 +687,7 @@
             modal.appendChild(checkbox);
             modal.appendChild(label);
         });
+
     }
 
     function submitGroupForm() {
@@ -700,6 +726,10 @@
             },
             body: JSON.stringify(requestBody)
         })
+
+        setTimeout(function() {
+            window.location.reload();
+        }, 100);
     }
 
 

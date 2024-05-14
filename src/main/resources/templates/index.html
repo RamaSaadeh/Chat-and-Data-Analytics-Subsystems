@@ -147,6 +147,17 @@
             }
         }
 
+        #chart-container {
+            display: flex;
+            justify-content: space-around; /* This will space out the charts evenly */
+            align-items: center; /* This aligns the charts vertically in the center */
+        }
+
+        #countries-chart, #tasks-chart {
+            flex: 1; /* This gives each chart div an equal amount of space */
+            margin: 10px; /* Optional: adds space between the charts */
+        }
+
         /* Extra Small <= 576px */
 
         @media screen and (max-width: 576px) {
@@ -215,12 +226,18 @@
                 <h2 class="chart-title">Countries</h2>
                 <div id="countries-chart"></div>
 
-
+                <div id="chart-container">
             </div>
             <div class="charts-card">
                 <h2 class="chart-title"></h2>
                 <div id="tasks-chart"></div>
             </div>
+
+        </div>
+        <div class="charts-card">
+            <h2 class="chart-title"></h2>
+            <div id="tasks-chart2"></div>
+        </div>
 
         </div>
     </main>
@@ -470,74 +487,86 @@
         }
     };
 
-    var chart = new ApexCharts(document.querySelector("#countries-chart"), options);
-    chart.render();
-
-    //tasks
-    var options = {
-        series: [
-
-            {
-                name: 'In Progress',
-                group: 'actual',
-                data: [48000, 50000, 40000, 65000, 25000]
-            },
-            {
-                name: 'Overdue',
-                group: 'budget',
-                data: [13000, 36000, 20000, 8000, 13000]
-            },
-            {
-                name: 'Completed',
-                group: 'actual',
-                data: [20000, 40000, 25000, 10000, 12000]
-            }
-        ],
-        chart: {
-            type: 'bar',
-            height: 350,
-            stacked: true,
-        },
-        stroke: {
-            width: 1,
-            colors: ['#fff']
-        },
-        dataLabels: {
-            formatter: (val) => {
-                return val / 1000 + 'K'
-            }
-        },
-        plotOptions: {
-            bar: {
-                horizontal: true
-            }
-        },
-        xaxis: {
-            categories: [
-                'Project 5',
-                'Project 4',
-                'Project 3',
-                'Project 2',
-                'Project 1'
-            ],
-            labels: {
-                formatter: (val) => {
-                    return val / 1000 + 'K'
-                }
-            }
-        },
-        fill: {
-            opacity: 1,
-        },
-        colors: ['#80c7fd', '#008FFB', '#80f1cb', '#00E396'],
-        legend: {
-            position: 'top',
-            horizontalAlign: 'left'
-        }
-    };
-
     var chart = new ApexCharts(document.querySelector("#tasks-chart"), options);
     chart.render();
+
+    function transformProjectsToChartData() {
+        // Define options before using them
+        var options = {
+            series: [
+                {
+                    name: 'In Progress',
+                    group: 'actual',
+                    data: [48000, 50000, 40000, 65000, 25000]
+                },
+                {
+                    name: 'Overdue',
+                    group: 'budget',
+                    data: [13000, 36000, 20000, 8000, 13000]
+                },
+                {
+                    name: 'Completed',
+                    group: 'actual',
+                    data: [20000, 40000, 25000, 10000, 12000]
+                }
+            ],
+            chart: {
+                type: 'bar',
+                height: 350,
+                stacked: true,
+            },
+            stroke: {
+                width: 1,
+                colors: ['#fff']
+            },
+            dataLabels: {
+                formatter: (val) => {
+                    return val / 1000 + 'K';
+                }
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: true
+                }
+            },
+            xaxis: {
+                categories: [
+                    'Project 5',
+                    'Project 4',
+                    'Project 3',
+                    'Project 2',
+                    'Project 1'
+                ],
+                labels: {
+                    formatter: (val) => {
+                        return val / 1000 + 'K';
+                    }
+                }
+            },
+            fill: {
+                opacity: 1,
+            },
+            colors: ['#80c7fd', '#008FFB', '#80f1cb', '#00E396'],
+            legend: {
+                position: 'top',
+                horizontalAlign: 'left'
+            }
+        };
+
+        // Now use the defined options for initializing the chart
+        var chart = new ApexCharts(document.querySelector("#tasks-chart2 "), options);
+        chart.render();
+    }
+
+    // Modified fetch call to include calling transformProjectsToChartData
+    fetch('/api/projects')
+        .then(response => response.json())
+        .then(projects => {
+            console.log("Projects loaded:", projects);
+            transformProjectsToChartData(); // Call the function after ensuring data is fetched
+        })
+        .catch(error => console.error('Error loading the project data:', error));
+
 </script>
 </body>
 </html>

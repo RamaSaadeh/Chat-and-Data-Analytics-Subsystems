@@ -23,13 +23,15 @@ public class User implements UserDetails {
     @GeneratedValue
     private Long id;
     private String Fname;
+    private String Lname;
     private String password;
     private String email;
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public User(String fname, String password, String email, Role role) {
+    public User(String fname, String lname,String password, String email, Role role) {
         Fname = fname;
+        this.Lname = lname;
         this.password = password;
         this.email = email;
         this.role = role;

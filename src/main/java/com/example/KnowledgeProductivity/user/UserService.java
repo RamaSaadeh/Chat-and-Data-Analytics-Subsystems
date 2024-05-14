@@ -49,8 +49,17 @@ public class UserService {
         return new ArrayList<>(roleCounts.entrySet());
     }
 
-    public String getName(Long receiverId) {
+    public String getNameAndLastName(Long receiverId) {
+        // Find the user by ID using the userRepository
+        User user = userRepository.findUserById(receiverId);
 
-        return userRepository.findUserById(receiverId).getFname();
+        // Check if the user is not null to avoid NullPointerException
+        if (user != null) {
+            // Return the concatenated first name and last name with a space in between
+            return user.getFname() + " " + user.getLname();
+        } else {
+            // Optionally handle the case where no user is found
+            throw new IllegalArgumentException("No user found with ID: " + receiverId);
+        }
     }
 }

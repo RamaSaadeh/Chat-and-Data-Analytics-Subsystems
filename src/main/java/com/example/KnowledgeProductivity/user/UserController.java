@@ -30,6 +30,6 @@ public class UserController {
 
     @GetMapping("/name")
     public String getName(@RequestParam Long receiverId){
-        return userService.getName(receiverId);
+        return userService.getNameAndLastName(receiverId);
     }
 }
