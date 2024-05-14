@@ -1,47 +1,113 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-<h1>Login</h1>
-<div th:if="${param.error}">
-    Invalid username and password.
-</div>
-<form id="loginForm">
-    <div>
-        <label for="username">Email:</label>
-        <input type="text" id="username" name="username" required autofocus>
-    </div>
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-    </div>
-    <div>
-        <button type="button" id="submitButton">Sign In</button>
-    </div>
-</form>
 
-</body>
-</html>
+    <title>Login</title>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<style>
+    .page {
+        background-image: url('/login2.jpg');
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #loginForm {
+        display: flex;
+        justify-content: center;
+        border-radius: 12px;
+        background-color: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(3px);
+        height: 60vh;
+        transition: box-shadow 0.3s ease-in-out;
+        align-items: center;
+        background-size: cover;
+        background-position: center;
+        border: 4px solid #fdfdfd;
+    }
+
+    #loginForm:hover {
+        box-shadow: 0 0 10px rgb(255, 255, 255);
+        transform: scale(1.02);
+        transition: 0.3s ease-in-out;
+    }
+
+    label {
+        color: #ffffff;
+    }
+
+    input[type=text], input[type=password] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 30px 0;
+        display: inline-block;
+        border: 1px solid #ffffff;
+        border-radius: 12px;
+        box-sizing: border-box;
+    }
+
+    #login-button {
+        padding: 14px 20px;
+        margin: 8px 0;
+        background-color: transparent;
+        border: 3px solid #ffffff;
+        cursor: pointer;
+        color: #ffffff;
+        border-radius: 12px;
+        width: 40%;
+        font-weight: bold;
+    }
+</style>
+
+</head>
+
+<body>
+
+<div class="page">
+
+    <form id="loginForm" class="col-md-5">
+
+        <div class="container col-md-10" id="form-container">
+
+            <div class="col-sm-12 mx-auto text-center" id="title-container">
+                <h1 style="color: rgb(255, 255, 255);" id="title">Login</h1>
+            </div>
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" required>
+
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+
+
+            <div class="col-sm-12 mx-auto text-center">
+                <button type="submit" id="login-button">Login</button>
+            </div>
+
+        </div>
+    </form>
+</div>
 
 <script>
-
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const submitButton = document.getElementById('submitButton');
-        submitButton.addEventListener('click', function(event) {
-            handleLogin(event);
-        });
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        login(username, password);
     });
 
-    function handleLogin(event) {
-        event.preventDefault(); // Prevent default form submission behavior
-
-        const email = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-
+    function login(email, password) {
         fetch('/auth/authenticate', {
             method: 'POST',
             headers: {
@@ -49,17 +115,18 @@
             },
             body: JSON.stringify({ email, password })
         })
-            .then(response => response.json()) // Assuming the server responds with JSON
-            .then(data => {
-                if (data.token) {
-                    localStorage.setItem('jwt', data.token); // Store the token in localStorage
-                    window.location.href = '/messages/chat?receiverId=2'
+            .then(response => {
+                if (response.ok) {
+                    console.log("Authentication successful and token is stored in cookies");
+                    // Redirect or perform other actions on success
+                    window.location.href = '/messages/chat?receiverId=1';
                 } else {
-                    alert('Login failed: ' + data.message);
-                    window.location.href = '/login-error'; // Redirect to login error page if no token
+                    console.error("Authentication failed");
                 }
             })
-            .catch(error => console.error('Error during login:', error));
+            .catch(error => console.error('Error:', error));
     }
-
 </script>
+
+</body>
+</html>

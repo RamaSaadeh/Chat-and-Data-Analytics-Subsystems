@@ -31,6 +31,7 @@ public class SecurityConfig {
 
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/auth/**").permitAll()
                         .anyRequest().permitAll())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))  // Set session management to stateless

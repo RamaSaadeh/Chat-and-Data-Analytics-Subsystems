@@ -61,7 +61,13 @@ public class User implements UserDetails {
         return true;
     }
 
+    public String getFname() {
+        return Fname;
+    }
 
+    public void setFname(String fname) {
+        Fname = fname;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -29,7 +29,7 @@ public class UserConfig {
                     "Alex",
                     "$2a$12$e8djEMmjZrp2rVMx5JDPp.3QtVacqdR0bJvmh7a3dCi9OzDPpnVwK",
                     "alex@makeitall.co.uk",
-                    Role.USER
+                    Role.ADMIN
 
             );
 

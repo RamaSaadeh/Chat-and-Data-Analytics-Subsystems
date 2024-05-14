@@ -1,11 +1,14 @@
 package com.example.KnowledgeProductivity.message;
 
+import com.example.KnowledgeProductivity.config.JwtService;
 import com.example.KnowledgeProductivity.group_user.GroupUser;
 import com.example.KnowledgeProductivity.group_user.GroupUserService;
 import com.example.KnowledgeProductivity.groups.GroupChat;
 import com.example.KnowledgeProductivity.groups.GroupChatService;
 import com.example.KnowledgeProductivity.user.User;
 import com.example.KnowledgeProductivity.user.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -32,9 +35,11 @@ public class MessageController {
 
     @Autowired
     private SimpMessagingTemplate template;
+    @Autowired
+    private JwtService jwtService;
 
 
-    String globalUserId ;
+//    String globalUserId ;
 
 
 
@@ -47,22 +52,30 @@ public class MessageController {
         this.groupChatService = groupChatService;
     }
 
-    @ResponseBody
-    @GetMapping("/set")
-    public void set(@RequestParam String userId) {
-        globalUserId = userId;
-    }
+//    @ResponseBody
+//    @GetMapping("/set")
+//    public void set(@RequestParam String userId) {
+//        globalUserId = userId;
+//    }
 
 
     //serve the html page
 
     @GetMapping("/chat")
-    public String chatPage(Model model,
+    public String chatPage(Model model,HttpServletRequest request,
                            @RequestParam(required = false) Long receiverId,
                            @RequestParam (required = false) Long groupId)  {
 
-        List<Message> receiverAndSenderMessages = new ArrayList<>(messageService.retrieveMessages(receiverId , Long.parseLong(globalUserId)));
-        receiverAndSenderMessages.addAll(messageService.retrieveMessages(Long.parseLong(globalUserId), receiverId));
+        String jwtToken = extractJwtFromRequest(request);
+        String userEmail = jwtService.extractUserName(jwtToken);
+
+        // Use userEmail to fetch user-specific data
+        Long userId = userService.getUserIdByEmail(userEmail);
+
+        String userIdString = userId.toString();
+
+        List<Message> receiverAndSenderMessages = new ArrayList<>(messageService.retrieveMessages(receiverId , Long.parseLong(userIdString)));
+        receiverAndSenderMessages.addAll(messageService.retrieveMessages(Long.parseLong(userIdString), receiverId));
 
         receiverAndSenderMessages.sort(Comparator.comparing(Message::getTimeStamp));
 
@@ -70,7 +83,7 @@ public class MessageController {
 
         model.addAttribute("contacts", contactList);
 
-        List<GroupUser> listOfGroups = groupUserService.getCurrentUsersGroup(Long.parseLong(globalUserId));
+        List<GroupUser> listOfGroups = groupUserService.getCurrentUsersGroup(Long.parseLong(userIdString));
         List<GroupChat> groupDetails = groupChatService.getAllGroupDetails(listOfGroups);
 
         List<Message> groupChatMessages = messageService.getAllGroupChatMessages(groupId);
@@ -85,7 +98,7 @@ public class MessageController {
         }
 
 
-        model.addAttribute("userId", globalUserId);
+        model.addAttribute("userId", userIdString);
 
         model.addAttribute("groups", listOfGroups);
         model.addAttribute("groupDetails", groupDetails);
@@ -144,4 +157,20 @@ public class MessageController {
     }
 
 
+
+    private String extractJwtFromRequest(HttpServletRequest request) {
+        String jwtToken = null;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("jwt")) {
+                    jwtToken = cookie.getValue();
+                    break;
+                }
+            }
+        }
+        return jwtToken;
+    }
 }
+
+

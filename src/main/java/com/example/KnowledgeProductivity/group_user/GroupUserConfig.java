@@ -9,29 +9,4 @@ import java.util.List;
 
 public class GroupUserConfig {
 
-//    @Bean
-//    CommandLineRunner commandLineRunner2(GroupUserRepository groupUserRepository) {
-//
-//
-//        return args -> {
-//            GroupUser mariam = new GroupUser(
-//                    1L,
-//                    1L
-//            );
-//
-//            GroupUser alex = new GroupUser(
-//                    1L,
-//                    2L
-//                    );
-//
-//
-//
-//
-//
-//
-//
-//
-//            groupUserRepository.saveAll(List.of(mariam,alex));
-//        };
-//    }
 }

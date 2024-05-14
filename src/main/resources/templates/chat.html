@@ -288,14 +288,6 @@
             </div>
         </div>
 
-        <select id="group-select" th:onchange="'window.location.href=\'/messages/chat?groupId=\'+this.value'">
-            <option value="" disabled selected>Select Group</option>
-            <option th:each="group : ${groups}",
-                    th:if="${@groupUserService.isUserInGroup(group , userId)}"
-                    th:value="${group.getGroupId()}"
-                    th:text="${@groupChatService.getGroupDetailForGroup(group)}">
-            </option>
-        </select>
     </div>
 
     <form id="message-input-container" onsubmit="sendMessage(event)">
@@ -329,7 +321,7 @@
 <div id="sidebar" class="sidebar">
     <input type="text" id="search-input" placeholder="Search Contact..." oninput="filterContacts(this.value)">
     <ul id="contact-list">
-        <li th:each="contact : ${contacts}" th:text="${contact.fname}" th:onclick="'window.location.href=\'/messages/chat?receiverId=' + ${contact.id} + '\''"></li>
+        <li th:each="contact : ${contacts}" th:text="${contact.fname}" th:data-contact-id="${contact.id}"></li>
     </ul>
 
     <ul id="group-list">
@@ -394,6 +386,28 @@
                 actionHandler(messageId);
             }
         });
+
+
+        // Function to get a query parameter by name
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Retrieve the 'receiverId' from the URL parameters
+        const receiverId = getQueryParam('receiverId');
+
+        // Construct the API endpoint with the receiverId
+        const endpoint = "/name?receiverId=" + receiverId;
+
+        // Fetch the contact details from your server
+        fetch(endpoint)
+            .then(response => response.text())
+            .then(contact => {
+                // Update the chat header with the contact's first name
+                document.getElementById("chat-header").innerText = contact;
+            })
+            .catch(error => console.error('Failed to load contact details:', error));
     };
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -629,35 +643,10 @@
                 form.style.opacity = '1';
                 form.style.transform = 'translate(-50%, -50%) scale(1)';
             }, 10);
+
         }
 
-        function loadContacts() {
-            fetch('/api/contacts')
-                .then(response => response.json())
-                .then(data => {
-                    const contactList = document.getElementById('contact-list');
-                    contactList.innerHTML = ''; // Clear existing contacts
 
-                    data.forEach(contact => {
-                        const li = document.createElement('li');
-                        li.textContent = contact.name;
-                        li.setAttribute('data-id', contact.id);
-                        // Attach event listener directly, preventing any default behavior
-                        li.addEventListener('click', (event) => {
-                            event.preventDefault(); // Stop any form submission
-                            selectContact(contact.name, contact.id);
-                        });
-                        contactList.appendChild(li);
-                    });
-                })
-                .catch(error => console.error('Error loading contacts:', error));
-        }
-
-        function selectContact(contactName, contactId) {
-            event.preventDefault(); // Prevent any default action like form submission or link navigation
-            document.getElementById("chat-header").innerText = contactName;
-            document.getElementById("message-input-container").dataset.receiverId = contactId;
-        }
 
         function filterContacts(searchText) {
             const contacts = document.querySelectorAll('#contact-list li');
@@ -693,32 +682,23 @@
         if (searchInput.length < 3) { // Only search if 3 or more characters are typed
             return; // Optionally clear existing results or handle no input scenario
         }
-
-
-
-
-
-        fetch(`/api/searchContacts?term=${encodeURIComponent(searchInput)}`)
-            .then(response => response.json())
-            .then(contacts => {
-                const contactList = document.getElementById('sidebar ul');
-                contactList.innerHTML = ''; // Clear previous results
-
-                contacts.forEach(contact => {
-                    const li = document.createElement('li');
-                    li.textContent = contact.name; // Assuming your contacts have a 'name' field
-                    li.onclick = () => selectContact(contact.name);
-                    contactList.appendChild(li);
-                });
-            })
-            .catch(error => console.error('Error fetching contacts:', error));
     });
+
+    function redirect(contactId){
+        window.location.href='/messages/chat?receiverId=' + contactId ;
+    }
 
     document.getElementById("sidebar").addEventListener("click", function (event) {
         const clickedElement = event.target;
         if (clickedElement.tagName === 'LI') {
-            const selectedContact = clickedElement.textContent;
-            document.getElementById("chat-header").innerText = selectedContact;
+            // Prevent default action of the click event
+            event.preventDefault();
+
+            redirect(clickedElement.getAttribute('data-contact-id'));
+            document.getElementById("chat-header").innerText = clickedElement.textContent;
+
+
+
         }
     });
 
@@ -747,6 +727,24 @@
         });
     }
 
+
+    // function login(username, password) {
+    //     fetch('/authenticate', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({username: username, password: password})
+    //     })
+    //         .then(response => {
+    //             if (response.ok) {
+    //                 console.log("Authentication successful and token is stored in cookies");
+    //             } else {
+    //                 console.error("Authentication failed");
+    //             }
+    //         })
+    //         .catch(error => console.error('Error:', error));
+    // }
 
 
 
