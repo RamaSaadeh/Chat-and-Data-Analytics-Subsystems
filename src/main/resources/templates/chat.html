@@ -279,7 +279,7 @@
             <div th:each="message : ${messages}" th:id="'message-' + ${message.id}"
                  th:classappend="${#strings.toString(message.senderId) == userId} ? 'sender' : 'receiver'"
                  class="message" >
-                <span th:text="${message.content}"></span>
+                <span th:text="${message.content} "></span>
                 <div th:if="${#strings.toString(message.senderId) == userId}" class="message-actions">
                     <button class="edit-button" th:onclick="'editMessage(' + ${message.id} + ')'"><i class="fas fa-edit"></i></button>
                     <button class="delete-button" th:onclick="'deleteMessage(' + ${message.id} + ')'"><i class="fas fa-trash-alt"></i></button>

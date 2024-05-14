@@ -62,4 +62,14 @@ public class UserService {
             throw new IllegalArgumentException("No user found with ID: " + receiverId);
         }
     }
+
+    public String getFirstname(Long receiverId) {
+        User user = userRepository.findById(receiverId).orElse(null);
+
+        if (user != null) {
+            return user.getFname();
+        } else {
+            return null;
+        }
+    }
 }

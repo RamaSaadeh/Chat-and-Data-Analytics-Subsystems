@@ -34,7 +34,7 @@ public class MessageConfig {
             );
 
             Message blue = new Message(
-                    "Impsum Lorem , OMG IM DONE BLUD",
+                    "Impsum Lorem , OMG IM DONE ",
                     "Text",
                     2L,
                     1L,
